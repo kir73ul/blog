@@ -1,0 +1,68 @@
+.wrapper_block {
+    position: absolute;
+    height: 80px;
+    left: 0%;
+    right: 0%;
+    top: 0px;
+    background: #FFFFFF;
+}
+.header {
+
+}
+.title {
+    position: absolute;
+    width: 147px;
+    height: 56px;
+    left: 22px;
+    top: 9px;    
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.85);
+}
+.btn {
+
+}
+.SignInBtn {
+    position: absolute;
+    width: 84px;
+    height: 35px;
+    left: 1206px;
+    top: 22px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.85);   
+}
+.SignUpBtn {
+    position: absolute;
+    width: 72.67px;
+    height: 35px;
+    left: 1327.17px;
+    top: 22px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 28px; 
+    display: flex;
+    align-items: center;
+}
+.block_SignUnBtn {
+    position: absolute;
+    width: 109px;
+    height: 51px;
+    left: 1309px;
+    top: 16px;
+    border: 1px solid #52C41A;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
