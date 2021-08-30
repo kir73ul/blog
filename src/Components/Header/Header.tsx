@@ -7,9 +7,8 @@ export const Header = () => {
             <div className={styles.title}>Realworld Blog</div>
             <div className={styles.btn}>
                 <Button className={styles.SignInBtn}>Sign in</Button>
-                <div className={styles.block_SignUnBtn}>
-                    <Button className={styles.SignUpBtn}>Sign up</Button>
-                </div>
+                <div className={styles.block_SignUnBtn}>    </div>
+                <Button className={styles.SignUpBtn}>Sign up</Button>
             </div>
         </div>
     )
