@@ -1,17 +1,13 @@
 .wrap_block {
-    position: absolute;
+    position: relative;
     width: 938px;
     height: 140px;
     left: calc(50% - 938px/2);
     top: 106px;
-    
-    /* @shadow-2 */
-    
     filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
 }
-
 .articlePreview_block { 
-position: absolute;
+position: relative;
 width: 941px;
 height: 140px;
 left: -3px;
@@ -41,8 +37,8 @@ height: 20px;
 left: 16px;
 top: 47px;
 } */
-/* .tag_block {
-    position: absolute;
+.tag_block {
+  /*   position: a; */
     width: 27px;
     height: 15px;
     left: 21px;
@@ -53,7 +49,7 @@ top: 47px;
     font-size: 12px;
     line-height: 15px;
     color: rgba(0, 0, 0, 0.5);
-} */
+}
 .tag{
     position: absolute;
 width: 38px;
@@ -65,7 +61,7 @@ box-sizing: border-box;
 border-radius: 2px;
 }
 .likes_block {
-    position: absolute;
+    position: relative;
     width: 34px;
     height: 22px;
     left: 189px;
@@ -73,13 +69,14 @@ border-radius: 2px;
 }
 .icon {
     position: absolute;
-    width: 16px;
-    height: 16px;
-    left: 189px;
-    top: 21px;
+left: 0%;
+right: 0%;
+top: 5.47%;
+bottom: 5.56%;
+
 }
 .likes_count{
-    position: absolute;
+    position: relative;
     width: 13px;
     height: 22px;
     left: 210px;
@@ -134,7 +131,7 @@ width: 46px;
 height: 46px;
 right: 14px;
 top: 15px;
-background: url('../../assets/image/Rectangle 1.png');
+background: url('../../../assets/image/Rectangle 1.png');
 }
 .articleText {
     position: absolute;

@@ -1,15 +1,16 @@
 import styles from './ArticlePreview.module.scss';
-import LikesImage from '../../assets/image/Vector.png';
+import LikesImage from '../../../assets/image/Vector.png';
+import { Link } from 'react-router-dom';
 
 
 export const ArticlePreview = () => {
     return (
         <div className={styles.wrap_block}>
             <div className={styles.articlePreview_block}>
-                <div className={styles.title}>Some artical title</div>
+                <Link to='/articles/' className={styles.title}>Some artical title</Link>
                 <div className={styles.likes_block}>
                     <img src={LikesImage} alt="" className={styles.icon}></img>
-                    <span className={styles.likes_count}>12</span>
+                    <div className={styles.likes_count}>12</div>
                 </div>
                 <div className={styles.author_block}>
                     <div className={styles.author_name}>John Doe</div>
