@@ -3,6 +3,8 @@ import { Artical } from './Components/Article/Article';
 import { ArticalList } from './Components/ArticalList/ArticalList';
 import { Header } from './Components/Header/Header';
 import { Route } from 'react-router-dom';
+import { SignIn } from './Components/Auth/SignIn/SignIn';
+import { SignUp } from './Components/Auth/SignUp/SignUp';
 
 const App = () => {
   return (
@@ -10,6 +12,8 @@ const App = () => {
       <Header />
       <Route exact path={'/' || '/articles'} component={ArticalList} />
       <Route path='/articles/' component={Artical} />
+      <Route path='/sign-in' component={SignIn} />
+      <Route path='/sign-up' component={SignUp} />
     </div>
   );
 }
