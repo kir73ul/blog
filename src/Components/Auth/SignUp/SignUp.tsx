@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import YupPassword from 'yup-password';
 YupPassword(Yup);
 
+
 export const SignUp = () => {
     return (
         <>
@@ -42,22 +43,24 @@ export const SignUp = () => {
                                 </div>
                                 <div className={styles.repeatPassword_block}>
                                     <span className={styles.repeatPasswordlabel}>Repeat Password </span>
-                                    <Input placeholder='Password' className={styles.repeatPasswordInput} type="password" name="password" />
-                                    <ErrorMessage className={styles.error} name="password" component="div" />
+                                    <Input placeholder='Password' className={styles.repeatPasswordInput} type="password" name="repeatPassword" />
+                                    <ErrorMessage className={styles.error} name="repeatPassword" component="div" />
                                 </div>
 
 
                             </div>
+                            <span className={styles.line}></span>
                             <div className={styles.checkbox_block}>
-                                <span className={styles.checkboxlabel}>Repeat Password </span>
+                                <span className={styles.checkboxlabel}>Copy
+                                    I agree to the processing of my personal information </span>
                                 <Checkbox className={styles.checkbox} name="agriment" />
                                 <ErrorMessage className={styles.error} name="agriment" component="div" />
                             </div>
                             <div className={styles.button_block}>
                                 <button className={styles.button} type="submit">
-                                    Login
+                                    Create
                                 </button>
-                                <span className={styles.under_button}>Already have an account?' <Link to='/sign-in'>Sign In.</Link ></span>
+                                <span className={styles.under_button}>Already have an account?' <Link to='/sign-in'>Sign in.</Link ></span>
 
                             </div>
 
