@@ -389,9 +389,6 @@ margin: 10px 0px;
     right: 0px;
     top: 66px;
     bottom: 0px;
-    
-    /* Regular / 14px | 22px */
-    
     font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
@@ -399,13 +396,11 @@ margin: 10px 0px;
     line-height: 22px;
     color: #F5222D;
     background: #FFFFFF;
-    /* @highlight-color */
-    
-
-/* Inside Auto Layout */
-
 flex: none;
-/* order: 2;
- */flex-grow: 0;
+flex-grow: 0;
 margin: 2px 0px;
 }
+.inputError {
+
+border: 1px solid red !important;
+} 

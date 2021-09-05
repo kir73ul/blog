@@ -3,23 +3,36 @@ import { Form, Input } from 'formik-antd';
 import * as Yup from 'yup';
 import styles from './SignIn.module.scss';
 import { Link } from 'react-router-dom';
-import YupPassword from 'yup-password';
-YupPassword(Yup);
+import { getMeAuth } from '../../../redux/authReducer';
+import { UsersLType } from '../../../API/API';
+import { useDispatch } from 'react-redux';
+
+
 
 export const SignIn = () => {
+    const dispatch = useDispatch()
+
+    const initialValues: UsersLType = {
+        /*  users: { */
+        email: '',
+        password: ''
+        /*  } */
+    }
+
     return (
         <>
             <div className={styles.signIn_block}>
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={initialValues}
                     validationSchema={Yup.object({
                         email: Yup.string().email('Invalid email address').required('Required'),
-                        pasword: Yup.string().password().minSymbols(3, 'The pasword should be longer 3').required('Required')
+                        password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required')
                     })}
-                    onSubmit={(values) => alert(JSON.stringify(values))}
+                    //@ts-ignore
+                    onSubmit={(values) => { dispatch(getMeAuth(values.email, values.password)) }}
                 >
-                    {() => (
+                    {(formik) => (
                         <Form >
                             <div className={styles.form_block}>
                                 <div className={styles.email_block}>

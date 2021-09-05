@@ -41,14 +41,16 @@
     line-height: 28px;
     display: flex;
     align-items: center;
-    color: rgba(0, 0, 0, 0.85);   
+    color: rgba(0, 0, 0, 0.85); 
+    background-color: #FFFFFF; 
+    outline: none;
 }
 .SignUpBtn {
     position: absolute;
-    width: 72.67px;
-    height: 35px;
-    left: 1327.17px;
-    top: 22px;
+    width: 109px;
+    height: 51px;
+    left: 1309px;
+    top: 16px;
     font-family: Inter;
     font-style: normal;
     font-weight: normal;
@@ -56,7 +58,11 @@
     line-height: 28px; 
     display: flex;
     align-items: center;
+    justify-items: center;
     color: #52C41A;
+    border-radius: 5px;
+    border: 1px solid #52C41A;
+    background-color: #FFFFFF; 
 }
 .block_SignUnBtn {
     position: absolute;
@@ -70,4 +76,62 @@
     border: 1px solid #52C41A;
     box-sizing: border-box;
     border-radius: 5px;
+}
+.createArticleBtn {
+    position: absolute;
+width: 112.23px;
+height: 31.1px;
+left: 1003px;
+top: 25px;
+
+/* @success-color */
+
+border: 1px solid #52C41A;
+box-sizing: border-box;
+border-radius: 5px;
+}
+.userName {
+    position: absolute;
+width: 81px;
+height: 28px;
+right: 217px;
+top: 28px;
+
+/* H6 - Header 6 */
+
+font-family: Inter serif;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 28px;
+/* identical to box height, or 156% */
+
+display: flex;
+align-items: center;
+
+/* @heading-color */
+
+color: rgba(0, 0, 0, 0.85);
+}
+.userAva {
+    position: absolute;
+width: 46px;
+height: 46px;
+right: 158px;
+top: 19px;
+
+background: url('../../assets/image/userAva.png');
+}
+.logOutBtn {
+    position: absolute;
+width: 109px;
+height: 51px;
+left: 1309px;
+top: 16px;
+
+/* @text-color */
+
+border: 1px solid rgba(0, 0, 0, 0.75);
+box-sizing: border-box;
+border-radius: 5px;
 }

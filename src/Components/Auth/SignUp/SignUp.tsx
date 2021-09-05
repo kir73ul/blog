@@ -3,11 +3,13 @@ import { Form, Input, Checkbox } from 'formik-antd';
 import * as Yup from 'yup';
 import styles from './SignUp.module.scss';
 import { Link } from 'react-router-dom';
-import YupPassword from 'yup-password';
-YupPassword(Yup);
+import { useDispatch } from 'react-redux';
+import { getRegistration } from '../../../redux/authReducer';
+
 
 
 export const SignUp = () => {
+    const dispatch = useDispatch()
     return (
         <>
             <div className={styles.signUp_block}>
@@ -17,11 +19,12 @@ export const SignUp = () => {
                     validationSchema={Yup.object({
                         userName: Yup.string().required('Required'),
                         email: Yup.string().email('Invalid email address').required('Required'),
-                        pasword: Yup.string().password().minSymbols(3, 'The pasword should be longer 3').required('Required'),
-                        repeatPassword: Yup.string().password().minSymbols(3, 'The pasword should be longer 3').required('Required'),
-                        agriment: Yup.boolean().required('true')
+                        password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
+                        repeatPassword: Yup.string().oneOf([Yup.ref('password'), `Passwords don't match`]).min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
+                        agriment: Yup.boolean().oneOf([true], 'You should agree condition')
                     })}
-                    onSubmit={(values) => alert(JSON.stringify(values))}
+                    //@ts-ignore
+                    onSubmit={(values) => dispatch(getRegistration(values.userName, values.email, values.password))}
                 >
                     {() => (
                         <Form >
@@ -54,7 +57,7 @@ export const SignUp = () => {
                                 <span className={styles.checkboxlabel}>Copy
                                     I agree to the processing of my personal information </span>
                                 <Checkbox className={styles.checkbox} name="agriment" />
-                                <ErrorMessage className={styles.error} name="agriment" component="div" />
+                                <ErrorMessage className={styles.checkboxError} name="agriment" component="div" />
                             </div>
                             <div className={styles.button_block}>
                                 <button className={styles.button} type="submit">

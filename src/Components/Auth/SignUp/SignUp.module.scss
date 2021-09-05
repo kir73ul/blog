@@ -575,3 +575,26 @@ flex: none;
  */flex-grow: 0;
 margin: 2px 0px;
 }
+.checkboxError {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 40px;
+    bottom: 0px;
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    color: #F5222D;
+    background: #FFFFFF;
+    /* @highlight-color */
+    
+
+/* Inside Auto Layout */
+
+flex: none;
+/* order: 2;
+ */flex-grow: 0;
+margin: 2px 0px;
+}

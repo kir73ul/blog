@@ -2,7 +2,6 @@ import { Formik, ErrorMessage } from 'formik';
 import { Form, Input } from 'formik-antd';
 import * as Yup from 'yup';
 import styles from './EditProfile.module.scss';
-import { Link } from 'react-router-dom';
 
 export const EditProfile = () => {
     return (
@@ -14,12 +13,16 @@ export const EditProfile = () => {
                     validationSchema={Yup.object({
                         userName: Yup.string().required('Required'),
                         email: Yup.string().email('Invalid email address').required('Required'),
-                        newPassword: Yup.string().password().minSymbols(3, 'The pasword should be longer 3').required('Required'),
+                        newPassword: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
                         avatarImage: Yup.string()
                     })}
                     onSubmit={(values) => alert(JSON.stringify(values))}
                 >
-                    {() => (
+
+
+                    {(formik) => (
+
+
                         <Form >
                             <div className={styles.form_block}>
                                 <div className={styles.userName_block}>
@@ -29,7 +32,7 @@ export const EditProfile = () => {
                                 </div>
                                 <div className={styles.email_block}>
                                     <span className={styles.emailLabel}>Email address</span>
-                                    <Input placeholder='Email address' className={styles.emailInput} type="email" name="email" />
+                                    <Input placeholder='Email address' className={formik.errors.email ? styles.inputError && styles.emailInput : styles.emailInput} type="email" name="email" />
                                     <ErrorMessage className={styles.error} name="email" component="div" />
                                 </div>
                                 <div className={styles.password_block}>
@@ -47,6 +50,7 @@ export const EditProfile = () => {
                                 Save
                             </button>
                         </Form>
+
                     )}
                 </Formik>
             </div>
