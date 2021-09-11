@@ -1,6 +1,9 @@
 import { ArticlePreview } from '../ArticalList/ArticlePreview/ArticlePreview';
-import styles from './Artical.module.scss';
+import styles from '../ArticalList/ArticlePreview/ArticlePreview.module.scss';
 import ReactMarkdown from 'react-markdown'
+import { Link } from 'react-router-dom';
+import LikesImage from '../../assets/image/Vector.png';
+
 
 const markdown = `Est Ampyciden pater patent
 Amor saxa inpiger
@@ -21,7 +24,26 @@ Ulli labore facta. Io cervis non nosterque nullae, vides: aethere Delphice subit
 export const Artical = () => {
     return (
         <>
-            <ArticlePreview />
+            <div className={styles.wrap_block}>
+                <div className={styles.articlePreview_block}>
+                    <Link to='/articles/' className={styles.title}>Some artical title</Link>
+                    <div className={styles.likes_block}>
+                        <img src={LikesImage} alt="" className={styles.icon}></img>
+                        <div className={styles.likes_count}>12</div>
+                    </div>
+                    <div className={styles.author_block}>
+                        <div className={styles.author_name}>John Doe</div>
+                        <div className={styles.dateOfPublik}>March 5, 2020</div>
+                        <div className={styles.author_image}></div>
+                    </div>
+                    <div className={styles.tag_block}>
+                        <div className={styles.tag_wrap}>
+                            <span className={styles.tag}>Tag1</span>
+                        </div>
+                    </div>
+                    <p className={styles.articleText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
             <div className={styles.text_block_wrap}>
                 <div className={styles.text_block}>
                     <ReactMarkdown children={markdown} />

@@ -146,3 +146,29 @@ font-size: 12px;
 line-height: 22px;
 color: rgba(0, 0, 0, 0.75);
 }
+.text_block_wrap {
+    position: absolute;
+    width: 880px;
+    height: 685px;
+    left: 16px;
+    top: 153px;
+    font-family: Inter, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.75);
+    }
+    .text_block {
+        position: absolute;
+        width: 880px;
+        height: 685px;
+        left: 16px;
+        top: 153px; 
+        font-family: Inter, serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 28px;
+        color: rgba(0, 0, 0, 0.75);
+    }

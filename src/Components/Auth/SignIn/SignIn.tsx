@@ -5,20 +5,28 @@ import styles from './SignIn.module.scss';
 import { Link } from 'react-router-dom';
 import { getMeAuth } from '../../../redux/authReducer';
 import { UsersLType } from '../../../API/API';
-import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppStateType } from '../../../redux/rootReducer';
+import Preloader from '../../Common/Preloader';
 
 
 
 export const SignIn = () => {
-    const dispatch = useDispatch()
-
     const initialValues: UsersLType = {
-        /*  users: { */
         email: '',
         password: ''
-        /*  } */
     }
-
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
+    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    if (isAuth) {
+        history.push('/articles')
+    }
+    if (isFetching) {
+        return <Preloader />
+    }
     return (
         <>
             <div className={styles.signIn_block}>
@@ -29,8 +37,7 @@ export const SignIn = () => {
                         email: Yup.string().email('Invalid email address').required('Required'),
                         password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required')
                     })}
-                    //@ts-ignore
-                    onSubmit={(values) => { dispatch(getMeAuth(values.email, values.password)) }}
+                    onSubmit={(values) => { dispatch(getMeAuth(JSON.stringify({ user: { email: values.email, password: values.password } }))) }}
                 >
                     {(formik) => (
                         <Form >

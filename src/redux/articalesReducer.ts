@@ -91,6 +91,8 @@ export const getArticles = (currentPage: number, pageSize: number): ThunkAction<
     dispatch(setFetching(true))
     const response = await articaleData.getArticalePage(currentPage, pageSize)
     console.log(response);
+    dispatch(setFetching(false))
+
     
 
 }

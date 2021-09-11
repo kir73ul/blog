@@ -8,30 +8,50 @@ import React, { useEffect, useState } from 'react';
 import { removeTag, setTags } from '../../redux/newArticleReducer';
 import { AppStateType } from '../../redux/rootReducer';
 
-const taggsSchema = Yup.array().of(Yup.string())
-
-/* const TagsBlock = () => {
+const taggsSchema = Yup.array().of(Yup.string().min(1))
+/* 
+const TagsBlock = () => {
     const dispatch = useDispatch()
     const [localTag, SetLocalTag] = useState('')
     const tags = useSelector((state: AppStateType) => state.newArtical.tags)
     return tags.map((tag, idx) => {
         return (
-            <div key={tag} className={styles.singleTag_Block} >
-                <Input onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="input" name='tag' value={tag} />
-                <Button onClick={() => { dispatch(removeTag(localTag)) }} className={styles.singleTagBtn} type="primary" danger={true}> Delete</Button>
-                {(idx === tags.length - 1) ? <Button onClick={() => { dispatch(setTags(localTag)) }} className={styles.singleTagBtnAdd} type="primary" > Add</Button> : null}
-                <ErrorMessage className={styles.error} name='tag' component="div" />
-            </div>
+            <Formik
+                initialValues={{
+                    tags: [...tags]
+                }}
+                validationSchema={Yup.object({
+                    tags: taggsSchema
+                })}
+                onSubmit={(values) => console.log(((JSON.stringify(values))
+                }
+            >
+                <Form>
+                    <div key={tag} className={styles.singleTag_Block} >
+                        <Input onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="input" name='tag' value={tag} />
+                        <Button onClick={() => { dispatch(removeTag(localTag)) }} className={styles.singleTagBtn} type="primary" danger={true}> Delete</Button>
+                        {(idx === tags.length - 1) ? <Button onClick={() => { dispatch(setTags(localTag)) }} className={styles.singleTagBtnAdd} type="primary" > Add</Button> : null}
+                        <ErrorMessage className={styles.error} name='tag' component="div" />
+                    </div>
+                </Form>
+            </Formik>
+
         )
     })
-}
- */
+} */
+
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
     const [localTag, SetLocalTag] = useState('')
     const tags = useSelector((state: AppStateType) => state.newArtical.tags)
-    useEffect(() => { }, [tags])
+    const initialValues = {
+        title: '',
+        shortDescription: '',
+        text: '',
+        tags: [...tags]
+    }
+    useEffect(() =>  {}, [tags])
 
 
 
@@ -41,12 +61,7 @@ export const NewArticale = () => {
             <div className={styles.createArticle_block}>
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik
-                    initialValues={{
-                        title: '',
-                        shortDescription: '',
-                        text: '',
-                        tags: [...tags]
-                    }}
+                    initialValues={initialValues}
                     validationSchema={Yup.object({
                         title: Yup.string().required('Required'),
                         shortDescription: Yup.string().required('Required'),
@@ -76,11 +91,12 @@ export const NewArticale = () => {
                             <div className={styles.tags_block}>
                                 <span className={styles.textLabel}> Tags </span>
                                 {formik.values.tags.map((tag, idx) => {
+                                    const isLastTag = (idx === formik.values.tags.length - 1);
                                     return (
                                         <div key={tag} className={styles.singleTag_Block} >
-                                            <Input onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="input" name='tag' value={tag} />
-                                            <Button onClick={() => { dispatch(removeTag(localTag)) }} className={styles.singleTagBtn} type="primary" danger={true}> Delete</Button>
-                                            {(idx === formik.values.tags.length - 1) ? <Button onClick={() => { dispatch(setTags(localTag)) }} className={styles.singleTagBtnAdd} type="primary" > Add</Button> : null}
+                                            <Input disabled={!isLastTag} onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="text" name='tag' value={tag} />
+                                            <Button onClick={() => { dispatch(removeTag(tag)) }} className={styles.singleTagBtn} type="primary"> Delete</Button>
+                                            {isLastTag ? <Button onClick={() => { dispatch(setTags(localTag)) }} className={styles.singleTagBtnAdd} type="primary" > Add</Button> : null}
                                             <ErrorMessage className={styles.error} name='tag' component="div" />
                                         </div>
                                     )

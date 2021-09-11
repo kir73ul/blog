@@ -13,7 +13,7 @@ export const ArticalList = () => {
     const isFetching = useSelector((state: AppStateType) => state.articles.isFetching)
     const dispatch = useDispatch()
     useEffect(() => {
-        getArticles(currentPage, pageSize)
+        dispatch(getArticles(currentPage, pageSize))
     }, [])
     if (isFetching) {
         return <Preloader />
