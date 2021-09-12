@@ -1,28 +1,37 @@
 import styles from './ArticlePreview.module.scss';
 import LikesImage from '../../../assets/image/Vector.png';
 import { Link } from 'react-router-dom';
+import { articlesType } from '../../../redux/articalesReducer';
+import { convertDate } from '../../Common/helper';
 
 
-export const ArticlePreview = () => {
+export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favoritesCount, author }) => {
+
     return (
         <div className={styles.wrap_block}>
             <div className={styles.articlePreview_block}>
-                <Link to='/articles/' className={styles.title}>Some artical title</Link>
-                <div className={styles.likes_block}>
-                    <img src={LikesImage} alt="" className={styles.icon}></img>
-                    <div className={styles.likes_count}>12</div>
-                </div>
-                <div className={styles.author_block}>
-                    <div className={styles.author_name}>John Doe</div>
-                    <div className={styles.dateOfPublik}>March 5, 2020</div>
-                    <div className={styles.author_image}></div>
+                <div className={styles.title}>
+                    <Link to={`/articles/:${slug}`} className={styles.link}>{title}</Link>
+                    <div className={styles.likes_block}>
+                        <img src={LikesImage} alt="" className={styles.icon}></img>
+                        <div className={styles.likes_count}>{favoritesCount}</div>
+                    </div>
                 </div>
                 <div className={styles.tag_block}>
                     <div className={styles.tag_wrap}>
-                        <span className={styles.tag}>Tag1</span>
+                        {tagList.map((tag, idx) => {
+                            return <span key={tag} className={idx === 0 ? styles.tag && styles.firstTag : styles.tag} >{tag}</span>
+                        })}
                     </div>
                 </div>
-                <p className={styles.articleText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+                <div className={styles.author_block}>
+                    <div className={styles.author_name}>{author.username}</div>
+                    <div className={styles.dateOfPublik}>{convertDate(createdAt)}</div>
+                    <img className={styles.author_image} src={author.image || '../../../assets/image/Rectangle 1.png'} alt=''></img>
+                </div>
+
+                <p className={styles.articleText}>{description}</p>
             </div>
         </div>
     )

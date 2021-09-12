@@ -44,6 +44,14 @@ dd */ {
 
 
 }
+.responseError {
+    position: absolute;
+    color: red;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+    top: 15px;
+}
 
 .title {
     position: static;

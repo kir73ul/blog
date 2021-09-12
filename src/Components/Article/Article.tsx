@@ -3,6 +3,9 @@ import styles from '../ArticalList/ArticlePreview/ArticlePreview.module.scss';
 import ReactMarkdown from 'react-markdown'
 import { Link } from 'react-router-dom';
 import LikesImage from '../../assets/image/Vector.png';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppStateType } from '../../redux/rootReducer';
 
 
 const markdown = `Est Ampyciden pater patent
@@ -22,6 +25,10 @@ Ulli labore facta. Io cervis non nosterque nullae, vides: aethere Delphice subit
 5. Tremore hoste Esse sed perstat capillis siqua`
 
 export const Artical = () => {
+    const dispatch = useDispatch()
+/*     useEffect(() => {
+        dispatch(getSingleArticle())
+    }, []) */
     return (
         <>
             <div className={styles.wrap_block}>

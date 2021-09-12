@@ -1,3 +1,4 @@
+import { singleArticle } from './../API/API';
 import { ThunkAction } from "redux-thunk";
 import { articaleData } from "../API/API";
 import { AppDispatch, AppStateType } from "./rootReducer";
@@ -5,24 +6,7 @@ import { AppDispatch, AppStateType } from "./rootReducer";
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_FETCHING = 'SET_FETCHING';
 const SET_ARTICLES = 'SET_ARTICLES';
-
-/* {
-    "slug": "how-to-train-your-dragon",
-    "title": "How to train your dragon",
-    "description": "Ever wonder how?",
-    "body": "It takes a Jacobian",
-    "tagList": ["dragons", "training"],
-    "createdAt": "2016-02-18T03:22:56.637Z",
-    "updatedAt": "2016-02-18T03:48:35.824Z",
-    "favorited": false,
-    "favoritesCount": 0,
-    "author": {
-      "username": "jake",
-      "bio": "I work at statefarm",
-      "image": "https://i.stack.imgur.com/xHWG8.jpg",
-      "following": false
-    }
-  } */
+const GET_TOTAL_ARTICLES = 'GET_TOTAL_ARTICLES';
 
 interface authorType {
     username: string;
@@ -31,16 +15,17 @@ interface authorType {
     following: boolean;
 
 }
-interface articlesType {
+export interface articlesType {
     slug: string;
     title: string;
     description: string;
     body: string;
-    createdAt: Date;
+    createdAt: string;
     updatedAt: Date;
     favorited: boolean;
     favoritesCount: number;
-    author: authorType
+    author: authorType;
+    tagList: string[];
 
 }
 
@@ -48,14 +33,16 @@ interface articlesReducerType {
     currentPage: number;
     pageSize: number;
     isFetching: boolean;
-    articles: Array<articlesType>
+    articles: Array<articlesType>;
+    total: number;
 }
 
 const initialState = {
     currentPage: 1,
     pageSize: 5,
     isFetching: false,
-    articles: [] as Array<articlesType>
+    articles: [] as Array<articlesType>,
+    total: 0
 }
 
 export const articalesReducer = (state: articlesReducerType = initialState, action: newArticalActionType) => {
@@ -75,24 +62,35 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 ...state,
                 articles: action.articles
             }
+        case GET_TOTAL_ARTICLES:
+            return {
+                ...state,
+                total: action.total
+            }
 
         default: return state
     }
 }
-type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType
+type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType
 interface setCurrentPageType { type: typeof SET_CURRENT_PAGE, currentPage: number };
 export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage });
 interface setFetchingType { type: typeof SET_FETCHING, isFetching: boolean };
 export const setFetching = (isFetching: boolean): setFetchingType => ({ type: SET_FETCHING, isFetching });
 interface setArticlesType { type: typeof SET_ARTICLES, articles: Array<articlesType> };
 export const setArticles = (articles: Array<articlesType>): setArticlesType => ({ type: SET_ARTICLES, articles });
+interface getTotalArticlesType { type: typeof GET_TOTAL_ARTICLES, total: number };
+export const getTotalArticles = (total: number): getTotalArticlesType => ({ type: GET_TOTAL_ARTICLES, total });
 
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articaleData.getArticalePage(currentPage, pageSize)
+    dispatch(getTotalArticles(response.articlesCount))
+    dispatch(setArticles(response.articles))
+    dispatch(setFetching(false))
+}
+export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    dispatch(setFetching(true))
+    const response = await singleArticle.getsingleArticleData(slug)
     console.log(response);
     dispatch(setFetching(false))
-
-    
-
 }

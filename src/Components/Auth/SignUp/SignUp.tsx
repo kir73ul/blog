@@ -13,17 +13,24 @@ import Preloader from '../../Common/Preloader';
 export const SignUp = () => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const error = useSelector((state: AppStateType) => state.auth.error)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     if (isAuth) {
         history.push('/articles')
     }
     if (isFetching) {
-      return  <Preloader />
+        return <Preloader />
     }
     return (
         <>
             <div className={styles.signUp_block}>
+                {(error) ?
+                    <p className={styles.responseError}>{
+                        Object.entries(error).map(([key, values]) => {
+                            return <span> {`${key} -${values}`}<br /></span>
+                        })
+                    }</p> : null}
                 <h1 className={styles.title}>Create new account</h1>
                 <Formik
                     initialValues={{ userName: '', email: '', password: '', repeatPassword: '', agriment: false }}

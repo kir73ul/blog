@@ -12,7 +12,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <Route exact path='/articles/' component={Artical} />
+      <Route exact path='/articles/:' component={Artical} />
       <Route exact path={'/' || '/articles'} component={ArticalList} />
       <Route path='/sign-in' component={SignIn} />
       <Route path='/sign-up' component={SignUp} />

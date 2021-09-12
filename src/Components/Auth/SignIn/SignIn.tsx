@@ -20,6 +20,7 @@ export const SignIn = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
+    const error = useSelector((state: AppStateType) => state.auth.error)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     if (isAuth) {
         history.push('/articles')
@@ -30,6 +31,12 @@ export const SignIn = () => {
     return (
         <>
             <div className={styles.signIn_block}>
+                {(error) ?
+                    <p className={styles.responseError}>{
+                        Object.entries(error).map(([key, values]) => {
+                            return <span> {`${key} -${values}`}<br /></span>
+                        })
+                    }</p> : null}
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik
                     initialValues={initialValues}

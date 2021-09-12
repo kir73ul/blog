@@ -14,21 +14,31 @@ left: -3px;
 top: 0px;
 background: #FFFFFF;
 border-radius: 5px;
+margin-top: 26px;
 }
 .title {
     position: absolute;
-width: 160px;
+width: 682px;
 height: 28px;
 left: 16px;
 top: 15px;
-font-family: Inter, serif;
 font-style: normal;
 font-weight: normal;
 font-size: 20px;
 line-height: 28px;
 display: flex;
 align-items: center;
-color: #1890FF;
+
+}
+.link {
+    color: #1890FF;
+font-family: Inter, serif;
+font-style: normal;
+font-weight: normal;
+font-size: 20px;
+line-height: 28px;
+text-decoration: none;
+
 }
 /* .tag_wrap { 
 position: absolute;
@@ -38,10 +48,10 @@ left: 16px;
 top: 47px;
 } */
 .tag_block {
-  /*   position: a; */
-    width: 27px;
-    height: 15px;
-    left: 21px;
+    position: absolute;
+    width: 682px;
+    height: 20px;
+    left: 19px;
     top: 49px;
     font-family: Inter, serif;
     font-style: normal;
@@ -50,22 +60,36 @@ top: 47px;
     line-height: 15px;
     color: rgba(0, 0, 0, 0.5);
 }
+.firstTag {
+    border: 1px solid rgba(0, 0, 0, 1); 
+    color: black;
+    position: relative;
+    width: auto;
+    height: 20px;
+    left: 0px;
+    top: 4px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    margin-right: 8px;
+    padding: 2px 5px 3px 6px;
+}
 .tag{
-    position: absolute;
-width: 38px;
+    position: relative;
+width: auto;
 height: 20px;
-left: 16px;
-top: 47px;
+left: 0px;
+top: 6px;
 border: 1px solid rgba(0, 0, 0, 0.5);
 box-sizing: border-box;
 border-radius: 2px;
+margin-right: 8px;
+padding: 2px 5px 3px 6px;
 }
 .likes_block {
     position: relative;
     width: 34px;
     height: 22px;
-    left: 189px;
-    top: 18px;
+margin-left: 13px;
 }
 .icon {
     position: absolute;
@@ -73,6 +97,7 @@ left: 0%;
 right: 0%;
 top: 5.47%;
 bottom: 5.56%;
+padding: 1px 3.89px 1px 3.89px;
 
 }
 .likes_count{
@@ -87,17 +112,19 @@ bottom: 5.56%;
     font-size: 12px;
     line-height: 22px;
     color: rgba(0, 0, 0, 0.75);
+padding: 1px 3.89px 1px 3.89px;
+
 }
 .author_block {
     position: absolute;
-width: 141px;
+width: auto;
 height: 46px;
-left: 783px;
+right:  14px;
 top: 15px;
 }
 .author_name {
-    position: absolute;
-width: 81px;
+    position: relative;
+width: auto;
 height: 28px;
 right: 72px;
 top: 15px;
@@ -111,11 +138,11 @@ align-items: center;
 color: rgba(0, 0, 0, 0.85);
 }
 .dateOfPublik {
-    position: absolute;
-width: 83px;
+    position: relative;
+width: auto;
 height: 22px;
 right: 72px;
-top: 39px;
+top: 13px;
 font-family: Inter, serif;
 font-style: normal;
 font-weight: normal;
@@ -131,7 +158,8 @@ width: 46px;
 height: 46px;
 right: 14px;
 top: 15px;
-background: url('../../../assets/image/Rectangle 1.png');
+border-radius: 50%;
+/* background: url('../../../assets/image/Rectangle 1.png'); */
 }
 .articleText {
     position: absolute;
@@ -147,7 +175,7 @@ line-height: 22px;
 color: rgba(0, 0, 0, 0.75);
 }
 .text_block_wrap {
-    position: absolute;
+    position: relative;
     width: 880px;
     height: 685px;
     left: 16px;

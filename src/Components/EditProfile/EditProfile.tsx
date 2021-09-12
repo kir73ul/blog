@@ -1,28 +1,47 @@
 import { Formik, ErrorMessage } from 'formik';
 import { Form, Input } from 'formik-antd';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { updateUserInfo } from '../../redux/authReducer';
+import { AppStateType } from '../../redux/rootReducer';
+import Preloader from '../Common/Preloader';
 import styles from './EditProfile.module.scss';
 
 export const EditProfile = () => {
+    const dispatch = useDispatch()
+    const username = useSelector((state: AppStateType) => state.auth.users?.username)
+    const email = useSelector((state: AppStateType) => state.auth.users?.email)
+    const avatarImage = useSelector((state: AppStateType) => state.auth.users?.image)
+    const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
+    const error = useSelector((state: AppStateType) => state.auth.error)
+
+
+    if (isFetching) {
+        return <Preloader />
+    }
     return (
         <>
             <div className={styles.editProfile_block}>
-                <h1 className={styles.title}>Create new account</h1>
+                {(error) ?
+                    <p className={styles.responseError}>{
+                        Object.entries(error).map(([key, values]) => {
+                            return <span> {`${key} -${values}`}<br /></span>
+                        })
+                    }</p> : null}
+                <h1 className={styles.title}>Edit Profile</h1>
                 <Formik
-                    initialValues={{ userName: '', email: '', newPassword: '', avatarImage: '' }}
+                    initialValues={{ userName: { username }, email: { email }, newPassword: '', avatarImage: { avatarImage } }}
                     validationSchema={Yup.object({
                         userName: Yup.string().required('Required'),
                         email: Yup.string().email('Invalid email address').required('Required'),
                         newPassword: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
                         avatarImage: Yup.string()
                     })}
-                    onSubmit={(values) => alert(JSON.stringify(values))}
+                    //@ts-ignore
+                    onSubmit={(values) => dispatch(updateUserInfo(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.newPassword, image: values.avatarImage } })))}
+
                 >
-
-
                     {(formik) => (
-
-
                         <Form >
                             <div className={styles.form_block}>
                                 <div className={styles.userName_block}>
@@ -41,8 +60,8 @@ export const EditProfile = () => {
                                     <ErrorMessage className={styles.error} name="newPassword" component="div" />
                                 </div>
                                 <div className={styles.avatarImage_block}>
-                                    <span className={styles.avatarImagelabel}>Avatar image</span>
-                                    <Input placeholder='Avatar image' className={styles.avatarImageInput} type="file" name="avatarImage" />
+                                    <span className={styles.avatarImagelabel}>Avatar image (url)</span>
+                                    <Input placeholder='Avatar image' className={styles.avatarImageInput} type="text" name="avatarImage" />
                                     <ErrorMessage className={styles.error} name="avatarImage" component="div" />
                                 </div>
                             </div>
@@ -50,7 +69,6 @@ export const EditProfile = () => {
                                 Save
                             </button>
                         </Form>
-
                     )}
                 </Formik>
             </div>
