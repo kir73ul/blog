@@ -1,19 +1,32 @@
 import styles from './ArticlePreview.module.scss';
 import LikesImage from '../../../assets/image/Vector.png';
+import FavoriteImage from '../../../assets/image/path4.png';
 import { Link } from 'react-router-dom';
-import { articlesType } from '../../../redux/articalesReducer';
+import { articlesType, makeFavorite } from '../../../redux/articalesReducer';
 import { convertDate } from '../../Common/helper';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../../redux/rootReducer';
 
 
-export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favoritesCount, author }) => {
+export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favorited, favoritesCount, author }) => {
+
+    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    const setLikeOrDislike = (slug: string) => {
+        if (isAuth) {
+            if (!favorited) {
+                makeFavorite(slug)
+            }
+        }
+        return
+    }
 
     return (
         <div className={styles.wrap_block}>
             <div className={styles.articlePreview_block}>
                 <div className={styles.title}>
                     <Link to={`/articles/:${slug}`} className={styles.link}>{title}</Link>
-                    <div className={styles.likes_block}>
-                        <img src={LikesImage} alt="" className={styles.icon}></img>
+                    <div onClick={() => { setLikeOrDislike(slug) }} className={styles.likes_block}>
+                        <img src={favorited ? FavoriteImage : LikesImage} alt="" className={styles.icon}></img>
                         <div className={styles.likes_count}>{favoritesCount}</div>
                     </div>
                 </div>

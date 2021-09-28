@@ -1,4 +1,4 @@
-import { singleArticle } from './../API/API';
+import { singleArticle, likeAPI } from './../API/API';
 import { ThunkAction } from "redux-thunk";
 import { articaleData } from "../API/API";
 import { AppDispatch, AppStateType } from "./rootReducer";
@@ -7,6 +7,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_FETCHING = 'SET_FETCHING';
 const SET_ARTICLES = 'SET_ARTICLES';
 const GET_TOTAL_ARTICLES = 'GET_TOTAL_ARTICLES';
+const SET_FAVORITE_UNFAVORITE = 'SET_FAVORITE_UNFAVORITE';
 
 interface authorType {
     username: string;
@@ -67,11 +68,17 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 ...state,
                 total: action.total
             }
+        case SET_FAVORITE_UNFAVORITE:
+            return {
+                ...state,
+                ...state.articles,
+                favorited: action.favorited
+            }
 
         default: return state
     }
 }
-type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType
+type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType
 interface setCurrentPageType { type: typeof SET_CURRENT_PAGE, currentPage: number };
 export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage });
 interface setFetchingType { type: typeof SET_FETCHING, isFetching: boolean };
@@ -80,6 +87,10 @@ interface setArticlesType { type: typeof SET_ARTICLES, articles: Array<articlesT
 export const setArticles = (articles: Array<articlesType>): setArticlesType => ({ type: SET_ARTICLES, articles });
 interface getTotalArticlesType { type: typeof GET_TOTAL_ARTICLES, total: number };
 export const getTotalArticles = (total: number): getTotalArticlesType => ({ type: GET_TOTAL_ARTICLES, total });
+interface setFavoriteUnfavoriteType { type: typeof SET_FAVORITE_UNFAVORITE, favorited: boolean };
+export const setFavoriteUnfavorite = (favorited: boolean): setFavoriteUnfavoriteType => ({ type: SET_FAVORITE_UNFAVORITE, favorited });
+
+
 
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
@@ -93,4 +104,11 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
     const response = await singleArticle.getsingleArticleData(slug)
     console.log(response);
     dispatch(setFetching(false))
+}
+
+export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    const response = await likeAPI.addLike(slug)
+    if (response.status === 'ok') {
+        setFavoriteUnfavorite(true)
+    }
 }

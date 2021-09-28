@@ -12,26 +12,35 @@ interface errorsType {
     [key: string]: string[];
 }
 interface usersType {
-    bio: string | null;
+    bio: string;
     createdAt: string;
     email: string;
-    id: number;
-    image: null | string;
-    token: string;
+    id: number | null;
+    image: string;
+    token: null | string;
     updatedAt: string;
     username: string;
 }
 interface authReducerType {
     isFetching: boolean;
     isAuth: boolean;
-    users: usersType | null;
+    users: usersType;
     error: errorsType | null;
 }
 
 const initialState = {
     isFetching: false,
     isAuth: false,
-    users: null,
+    users: {
+        bio: '',
+        createdAt: '',
+        email: '',
+        id: null,
+        image: '',
+        token: null,
+        updatedAt: '',
+        username: ''
+    },
     error: null
 }
 
@@ -55,7 +64,7 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
         case GET_USERS_DATA:
             return {
                 ...state,
-                users: action.usersData
+                users: { ...state.users, ...action.usersData }
             }
         case CLEAN_ERROR:
             return {
@@ -107,10 +116,10 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
         dispatch(getError(response.data.errors))
     }
 }
-export const updateUserInfo = (updateData: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
+export const updateUserInfo = (updateData: string, token: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(cleanError())
     dispatch(setFetching(true))
-    const response = await loginAPI.updateUserData(updateData);
+    const response = await loginAPI.updateUserData(updateData, token);
     debugger
     if (response.data.user) {
         debugger

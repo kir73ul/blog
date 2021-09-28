@@ -6,7 +6,7 @@ import { AppStateType } from '../../redux/rootReducer';
 
 export const Header = () => {
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
-    const username = useSelector((state: AppStateType) => state.auth.users?.username)
+    const username = useSelector((state: AppStateType) => state.auth.users.username)
     const history = useHistory()
     const redirectToSignIn = () => {
         history.push('/sign-in')

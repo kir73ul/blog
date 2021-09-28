@@ -9,11 +9,12 @@ import styles from './EditProfile.module.scss';
 
 export const EditProfile = () => {
     const dispatch = useDispatch()
-    const username = useSelector((state: AppStateType) => state.auth.users?.username)
-    const email = useSelector((state: AppStateType) => state.auth.users?.email)
-    const avatarImage = useSelector((state: AppStateType) => state.auth.users?.image)
+    let username = useSelector((state: AppStateType) => state.auth.users.username)
+    let userEmail = useSelector((state: AppStateType) => state.auth.users.email)
+    let userAvatarImage = useSelector((state: AppStateType) => state.auth.users.image)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const error = useSelector((state: AppStateType) => state.auth.error)
+    const token = useSelector((state: AppStateType) => state.auth.users.token)
 
 
     if (isFetching) {
@@ -30,15 +31,15 @@ export const EditProfile = () => {
                     }</p> : null}
                 <h1 className={styles.title}>Edit Profile</h1>
                 <Formik
-                    initialValues={{ userName: { username }, email: { email }, newPassword: '', avatarImage: { avatarImage } }}
+                    initialValues={{ userName: username, email: userEmail, newPassword: '', avatarImage: userAvatarImage }}
                     validationSchema={Yup.object({
                         userName: Yup.string().required('Required'),
                         email: Yup.string().email('Invalid email address').required('Required'),
-                        newPassword: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
+                        newPassword: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`),
                         avatarImage: Yup.string()
                     })}
                     //@ts-ignore
-                    onSubmit={(values) => dispatch(updateUserInfo(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.newPassword, image: values.avatarImage } })))}
+                    onSubmit={(values) => dispatch(updateUserInfo(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.newPassword, image: values.avatarImage } }, token)))}
 
                 >
                     {(formik) => (
