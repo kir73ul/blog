@@ -4,17 +4,21 @@ import FavoriteImage from '../../../assets/image/path4.png';
 import { Link } from 'react-router-dom';
 import { articlesType, makeFavorite } from '../../../redux/articalesReducer';
 import { convertDate } from '../../Common/helper';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/rootReducer';
+import { useEffect } from 'react';
 
 
 export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favorited, favoritesCount, author }) => {
 
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    const dispatch = useDispatch()
+
+
     const setLikeOrDislike = (slug: string) => {
         if (isAuth) {
             if (!favorited) {
-                makeFavorite(slug)
+                dispatch(makeFavorite(slug))
             }
         }
         return

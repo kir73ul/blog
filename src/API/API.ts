@@ -1,14 +1,19 @@
 import axios from 'axios';
 import { store } from '../redux/rootReducer';
 
+export const saveToken = (userData: JSON) => {
+    return localStorage.setItem('tokenData', JSON.stringify(userData));
+
+}
+
 const instance = axios.create({
+    baseURL: 'https://conduit.productionready.io/api/',
 /*     withCredentials: true,
- */    baseURL: 'https://conduit.productionready.io/api/',
-    headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Accept': '/',
-        'Access-Control-Allow-Origin': 'http://localhost:3000'
-    }
+ */    headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Accept': '/',
+    'Access-Control-Allow-Origin': 'http://localhost:3000'
+}
 })
 
 
@@ -54,7 +59,11 @@ export const singleArticle = {
 
 export const likeAPI = {
     addLike(slug: string) {
-        return instance.post(`articles/:${slug}/favorite`).then(response => (response.data)).catch(error => (error));
+        return instance.post(`articles/:${slug}/favorite`/* , {
+            headers: {
+                Authorization: `Token ${token}`
+            }
+        } */).then(response => (response.data)).catch(error => (error));
     },
     removeLike(slug: string) {
         return instance.delete(`articles/:${slug}/favorite`).then(response => (response.data)).catch(error => (error));

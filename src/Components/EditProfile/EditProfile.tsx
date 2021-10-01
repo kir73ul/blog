@@ -15,7 +15,7 @@ export const EditProfile = () => {
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const error = useSelector((state: AppStateType) => state.auth.error)
     const token = useSelector((state: AppStateType) => state.auth.users.token)
-
+    const regMatch = /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
 
     if (isFetching) {
         return <Preloader />
@@ -36,7 +36,7 @@ export const EditProfile = () => {
                         userName: Yup.string().required('Required'),
                         email: Yup.string().email('Invalid email address').required('Required'),
                         newPassword: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`),
-                        avatarImage: Yup.string()
+                        avatarImage: Yup.string().matches(regMatch || '', "Website should be a valid URL")
                     })}
                     //@ts-ignore
                     onSubmit={(values) => dispatch(updateUserInfo(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.newPassword, image: values.avatarImage } }, token)))}

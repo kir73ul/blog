@@ -23,7 +23,7 @@ export const SignIn = () => {
     const error = useSelector((state: AppStateType) => state.auth.error)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     if (isAuth) {
-        history.push('/articles')
+        history.push('/')
     }
     if (isFetching) {
         return <Preloader />

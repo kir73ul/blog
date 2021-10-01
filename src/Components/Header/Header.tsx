@@ -5,9 +5,12 @@ import { useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/rootReducer';
 
 export const Header = () => {
-    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
-    const username = useSelector((state: AppStateType) => state.auth.users.username)
-    const history = useHistory()
+    const isAuth = (localStorage.length !== 0)
+/*     const tokenData = localStorage.getItem(JSON.parse('tokenData'))
+ */    const history = useHistory()
+    const logOut = () => {
+        localStorage.clear()
+    }
     const redirectToSignIn = () => {
         history.push('/sign-in')
     }
@@ -26,9 +29,9 @@ export const Header = () => {
             {isAuth ?
                 <div className={styles.withAuth_block}>
                     <Button onClick={() => redirectToCreateArticle()} className={styles.createArticleBtn}>Create article</Button>
-                    <div className={styles.userName}>{username}</div>
+                    <div className={styles.userName}>{ }</div>
                     <div onClick={() => redirectToEditProfile()} className={styles.userAva} ></div>
-                    <Button onClick={() => { }} className={styles.logOutBtn}>Log out</Button>
+                    <Button onClick={() => logOut()} className={styles.logOutBtn}>Log out</Button>
                 </div>
                 :
                 <div className={styles.btn}>
