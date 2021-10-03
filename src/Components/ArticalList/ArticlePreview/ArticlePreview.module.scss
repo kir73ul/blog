@@ -187,16 +187,64 @@ color: rgba(0, 0, 0, 0.75);
     line-height: 28px;
     color: rgba(0, 0, 0, 0.75);
     }
-    .text_block {
-        position: absolute;
-        width: 880px;
-        height: 685px;
-        left: 16px;
-        top: 153px; 
-        font-family: Inter, serif;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 20px;
-        line-height: 28px;
-        color: rgba(0, 0, 0, 0.75);
+
+    .wrap_article_block {
+        position: relative;
+width: 938px;
+height: 807px;
+left: calc(50% - 938px/2);
+top: 106px;
+filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
+background: #FFFFFF;
+
     }
+    .single_article_block{
+        position: absolute;
+width: 941px;
+height: 870px;
+left: -3px;
+top: -2px;
+    }
+    .buttons_block {
+        position: absolute;
+        top: 93px;
+        right: 13.77px;
+        width: 155px;
+        height: 31,1px;
+    }
+    .delete_btn {
+           position: absolute;
+           width: 78px;
+           height: 31.1px;  
+           align-items: center;
+       text-align: center;
+       font-size: 16px;
+       line-height: 24px;
+       border: 1px solid #F5222D;
+       box-sizing: border-box;
+       border-radius: 5px;
+       color: #F5222D;
+           /* Grey / grey-1 */
+           
+           background: #FFFFFF;
+           /* Grey / grey-5 */
+       
+       
+       }
+       .edit_btn {
+        position: absolute;
+        width: 65.23px;
+        height: 31.1px;  
+        align-items: center;
+        left: 90px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #52C41A;
+    box-sizing: border-box;
+    border-radius: 5px;
+    color: #52C41A;
+        /* Grey / grey-1 */
+        
+        background: #FFFFFF;       }
+       

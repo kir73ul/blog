@@ -23,9 +23,12 @@ export const Header = () => {
     const redirectToCreateArticle = () => {
         history.push('/new-article')
     }
+    const redirectToMainPage = () => {
+        history.push('/')
+    }
     return (
         <div className={styles.wrapper_block}>
-            <div className={styles.title}>Realworld Blog</div>
+            <div onClick={() => { redirectToMainPage() }} className={styles.title}>Realworld Blog</div>
             {isAuth ?
                 <div className={styles.withAuth_block}>
                     <Button onClick={() => redirectToCreateArticle()} className={styles.createArticleBtn}>Create article</Button>

@@ -22,8 +22,16 @@ export const SignIn = () => {
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const error = useSelector((state: AppStateType) => state.auth.error)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    const username = useSelector((state: AppStateType) => state.auth.users.username)
     if (isAuth) {
-        history.push('/')
+        setTimeout(() => {
+            history.push('/')
+        }, 3000);
+    }
+    if (isAuth) {
+        return (
+            <span className={styles.success}>{`${username} you're succesefully login`}</span>
+        )
     }
     if (isFetching) {
         return <Preloader />
@@ -31,6 +39,7 @@ export const SignIn = () => {
     return (
         <>
             <div className={styles.signIn_block}>
+
                 {(error) ?
                     <p className={styles.responseError}>{
                         Object.entries(error).map(([key, values]) => {

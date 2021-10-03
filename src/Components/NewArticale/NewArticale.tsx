@@ -9,37 +9,6 @@ import { removeTag, setTags } from '../../redux/newArticleReducer';
 import { AppStateType } from '../../redux/rootReducer';
 
 const taggsSchema = Yup.array().of(Yup.string().min(1))
-/* 
-const TagsBlock = () => {
-    const dispatch = useDispatch()
-    const [localTag, SetLocalTag] = useState('')
-    const tags = useSelector((state: AppStateType) => state.newArtical.tags)
-    return tags.map((tag, idx) => {
-        return (
-            <Formik
-                initialValues={{
-                    tags: [...tags]
-                }}
-                validationSchema={Yup.object({
-                    tags: taggsSchema
-                })}
-                onSubmit={(values) => console.log(((JSON.stringify(values))
-                }
-            >
-                <Form>
-                    <div key={tag} className={styles.singleTag_Block} >
-                        <Input onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="input" name='tag' value={tag} />
-                        <Button onClick={() => { dispatch(removeTag(localTag)) }} className={styles.singleTagBtn} type="primary" danger={true}> Delete</Button>
-                        {(idx === tags.length - 1) ? <Button onClick={() => { dispatch(setTags(localTag)) }} className={styles.singleTagBtnAdd} type="primary" > Add</Button> : null}
-                        <ErrorMessage className={styles.error} name='tag' component="div" />
-                    </div>
-                </Form>
-            </Formik>
-
-        )
-    })
-} */
-
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
@@ -51,7 +20,9 @@ export const NewArticale = () => {
         text: '',
         tags: [...tags]
     }
-    useEffect(() =>  {}, [tags])
+    useEffect(() => {
+/*         dispatch(setTags(localTag))
+ */    }, [tags])
 
 
 

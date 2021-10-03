@@ -7,7 +7,10 @@
     top: 0px;
     background: #FFFFFF;
 }
-.header {
+.title:hover {
+    border: 1px solid #52C41A;
+    color:#52C41A;
+    text-align: center; 
 
 }
 .title {
@@ -15,7 +18,7 @@
     width: 147px;
     height: 56px;
     left: 22px;
-    top: 9px;    
+    top: 9px;   
     font-family: Inter;
     font-style: normal;
     font-weight: normal;

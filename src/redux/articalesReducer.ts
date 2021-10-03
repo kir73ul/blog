@@ -8,6 +8,9 @@ const SET_FETCHING = 'SET_FETCHING';
 const SET_ARTICLES = 'SET_ARTICLES';
 const GET_TOTAL_ARTICLES = 'GET_TOTAL_ARTICLES';
 const SET_FAVORITE_UNFAVORITE = 'SET_FAVORITE_UNFAVORITE';
+const SET_CURRENT_SLUG = 'SET_CURRENT_SLUG';
+const SET_CURRENT_ARTICLE = 'SET_CURRENT_ARTICLE';
+
 
 interface authorType {
     username: string;
@@ -35,7 +38,9 @@ interface articlesReducerType {
     pageSize: number;
     isFetching: boolean;
     articles: Array<articlesType>;
+    currentArticle: articlesType | null;
     total: number;
+    currentSlug: string;
 }
 
 const initialState = {
@@ -43,7 +48,9 @@ const initialState = {
     pageSize: 5,
     isFetching: false,
     articles: [] as Array<articlesType>,
-    total: 0
+    currentArticle: null,
+    total: 0,
+    currentSlug: ''
 }
 
 export const articalesReducer = (state: articlesReducerType = initialState, action: newArticalActionType) => {
@@ -74,11 +81,21 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 ...state.articles,
                 favorited: action.favorited
             }
+        case SET_CURRENT_SLUG:
+            return {
+                ...state,
+                currentSlug: action.slug
+            }
+        case SET_CURRENT_ARTICLE:
+            return {
+                ...state,
+                currentArticle: { ...state.currentArticle, ...action.currentArticle }
+            }
 
         default: return state
     }
 }
-type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType
+type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType
 interface setCurrentPageType { type: typeof SET_CURRENT_PAGE, currentPage: number };
 export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage });
 interface setFetchingType { type: typeof SET_FETCHING, isFetching: boolean };
@@ -89,6 +106,10 @@ interface getTotalArticlesType { type: typeof GET_TOTAL_ARTICLES, total: number 
 export const getTotalArticles = (total: number): getTotalArticlesType => ({ type: GET_TOTAL_ARTICLES, total });
 interface setFavoriteUnfavoriteType { type: typeof SET_FAVORITE_UNFAVORITE, favorited: boolean };
 export const setFavoriteUnfavorite = (favorited: boolean): setFavoriteUnfavoriteType => ({ type: SET_FAVORITE_UNFAVORITE, favorited });
+interface setCurrentSlugType { type: typeof SET_CURRENT_SLUG, slug: string };
+export const setCurrentSlug = (slug: string): setCurrentSlugType => ({ type: SET_CURRENT_SLUG, slug });
+interface setCurrentArticleType { type: typeof SET_CURRENT_ARTICLE, currentArticle: articlesType };
+export const setCurrentArticle = (currentArticle: articlesType): setCurrentArticleType => ({ type: SET_CURRENT_ARTICLE, currentArticle });
 
 
 
@@ -102,7 +123,7 @@ export const getArticles = (currentPage: number, pageSize: number): ThunkAction<
 export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await singleArticle.getsingleArticleData(slug)
-    console.log(response);
+    dispatch(setCurrentArticle(response))
     dispatch(setFetching(false))
 }
 

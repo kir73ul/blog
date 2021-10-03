@@ -1,41 +1,23 @@
 body,
-/* h1,
-h2,
-h3,
-h4, */
 h1,
 p, 
 div,
 button,
 span
-/* ul[class],
-ol[class],
-li,
-figure,
-figcaption,
-blockquote,
-dl,
-dd */ {
+ {
   margin: 0;
 }
-
 .editProfile_block {
     display: flex;
 flex-direction: column;
 align-items: flex-start;
 padding: 48px 32px;
-
 position: absolute;
 width: 384px;
 height: 498px;
 left: 523px;
 top: 139px;
-
-/* Grey / grey-1 */
-
 background: #FFFFFF;
-/* Grey / grey-5 */
-
 border: 1px solid #D9D9D9;
 box-sizing: border-box;
 box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198), 0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035), 0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
@@ -47,25 +29,13 @@ width: 311px;
 height: 28px;
 left: 36.5px;
 top: 48px;
-
-/* Semibold / 20 px | 28 px */
-
 font-family: Roboto serif;
 font-style: normal;
 font-weight: 500;
 font-size: 20px;
 line-height: 28px;
-/* identical to box height, or 140% */
-
 text-align: center;
-
-/* Grey / grey-9 */
-
 color: #262626;
-
-
-/* Inside Auto Layout */
-
 flex: none;
 order: 0;
 align-self: center;
@@ -77,16 +47,11 @@ margin: 21px 0px;
 flex-direction: column;
 align-items: center;
 padding: 0px;
-
 position: absolute;
 width: 320px;
 height: 292px;
 left: 32px;
 top: 97px;
-
-
-/* Inside Auto Layout */
-
 flex: none;
 order: 1;
 align-self: flex-start;
@@ -98,16 +63,11 @@ margin: 21px 0px;
 flex-direction: row;
 align-items: center;
 padding: 0px;
-
 position: absolute;
 width: 320px;
 height: 64px;
 left: 0px;
 top: 0px;
-
-
-/* Inside Auto Layout */
-
 flex: none;
 order: 0;
 flex-grow: 0;
@@ -119,26 +79,14 @@ height: 22px;
 left: 0px;
 right: 0px;
 top: 0px;
-
-/* Regular / 14px | 22px */
-
 font-family: Roboto serif;
 font-style: normal;
 font-weight: normal;
 font-size: 14px;
 line-height: 22px;
-/* identical to box height, or 157% */
-
 display: flex;
 align-items: center;
-
-/* Grey / grey-9 */
-
 color: #262626;
-
-
-/* Inside Auto Layout */
-
 flex: none;
 order: 0;
 flex-grow: 0;
@@ -149,13 +97,7 @@ margin: 2px 0px;
 width: 320px;
 height: 40px;
 top: 26px;
-
-
-/* Grey / grey-1 */
-
 background: #FFFFFF;
-/* Grey / grey-5 */
-
 border: 1px solid #D9D9D9;
 box-sizing: border-box;
 border-radius: 4px;
@@ -342,12 +284,7 @@ margin: 2px 0px;
     width: 320px;
     height: 40px;
     top: 26px;
-
-/* Grey / grey-1 */
-
 background: #FFFFFF;
-/* Grey / grey-5 */
-
 border: 1px solid #D9D9D9;
 box-sizing: border-box;
 border-radius: 4px;
@@ -357,7 +294,6 @@ border-radius: 4px;
 flex-direction: column;
 align-items: center;
 padding: 8px 16px;
-
 position: absolute;
 left: 32px;
 right: 33px;
@@ -365,8 +301,6 @@ top: 410px;
 bottom: 48px;
 width: 320px;
 height: 40px;
-
-/* Daybreak Blue / blue-6 */
 color: white;
 font-family: Roboto;
 font-style: normal;
@@ -375,9 +309,6 @@ font-size: 16px;
 line-height: 24px;
 background: #1890FF;
 border-radius: 4px;
-
-/* Inside Auto Layout */
-
 flex: none;
 order: 0;
 flex-grow: 0;
@@ -387,20 +318,30 @@ margin: 10px 0px;
     position: absolute;
     left: 0px;
     right: 0px;
-    top: 66px;
-    bottom: 0px;
+    top: 30px;
+    text-align: center;
     font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
-    line-height: 22px;
     color: #F5222D;
     background: #FFFFFF;
-flex: none;
-flex-grow: 0;
-margin: 2px 0px;
 }
-.inputError {
+.success {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    top: 30px;
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    color: #52C41A;
+    background: #FFFFFF;
+    margin: 2px 0px;
+}
 
+.inputError {
 border: 1px solid red !important;
 } 

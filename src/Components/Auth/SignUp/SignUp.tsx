@@ -8,16 +8,18 @@ import { getRegistration } from '../../../redux/authReducer';
 import { AppStateType } from '../../../redux/rootReducer';
 import { useHistory } from 'react-router-dom';
 import Preloader from '../../Common/Preloader';
+import { useState } from 'react';
 
 
 export const SignUp = () => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const [isSuccess, setIsSuccess] = useState(false)
     const error = useSelector((state: AppStateType) => state.auth.error)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     if (isAuth) {
-        history.push('/articles')
+        setTimeout(() => { history.push('/articles'); setIsSuccess(false)}, 2500)
     }
     if (isFetching) {
         return <Preloader />
@@ -25,6 +27,7 @@ export const SignUp = () => {
     return (
         <>
             <div className={styles.signUp_block}>
+                {isSuccess ? <span className={styles.success}>&#9989; Your account succesefully created</span> : null}
                 {(error) ?
                     <p className={styles.responseError}>{
                         Object.entries(error).map(([key, values]) => {
@@ -42,7 +45,7 @@ export const SignUp = () => {
                         agriment: Yup.boolean().oneOf([true], 'You should agree condition')
                     })}
                     //@ts-ignore
-                    onSubmit={(values) => dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } })))}
+                    onSubmit={(values) => { dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } }))); setIsSuccess(true) }}
                 >
                     {() => (
                         <Form >

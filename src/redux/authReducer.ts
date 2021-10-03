@@ -8,6 +8,7 @@ const GET_ERROR = 'GET_ERROR';
 const GET_USERS_DATA = 'GET_USERS_DATA';
 const SET_IS_FETCHING = 'SET_FETCHING';
 const CLEAN_ERROR = 'CLEAN_ERROR';
+const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 
 interface errorsType {
     [key: string]: string[];
@@ -18,9 +19,15 @@ interface usersType {
     email: string;
     id: number | null;
     image: string;
-    token: null | string;
+    token: string | null;
     updatedAt: string;
     username: string;
+}
+export interface userUpdateType {
+    email: string;
+    image: string;
+    username: string;
+    password: string;
 }
 interface authReducerType {
     isFetching: boolean;
@@ -72,10 +79,15 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
                 ...state,
                 error: null
             }
+        case UPDATE_USER_DATA:
+            return {
+                ...state,
+                users: { ...state.users, ...action.updateData }
+            }
         default: return state
     }
 }
-type AuthActionType = setUserAuthType | getErrorType | setIsFetchingType | getUsersDataType | cleanErrorType
+type AuthActionType = setUserAuthType | getErrorType | setIsFetchingType | getUsersDataType | cleanErrorType | updateUserDataType
 interface setUserAuthType { type: typeof AUTH_USER };
 export const setUserAuth = (): setUserAuthType => ({ type: AUTH_USER });
 interface getErrorType { type: typeof GET_ERROR, error: errorsType };
@@ -86,6 +98,8 @@ interface setIsFetchingType { type: typeof SET_IS_FETCHING, isFetching: boolean 
 const setFetching = (isFetching: boolean): setIsFetchingType => ({ type: SET_IS_FETCHING, isFetching });
 interface cleanErrorType { type: typeof CLEAN_ERROR };
 export const cleanError = (): cleanErrorType => ({ type: CLEAN_ERROR });
+interface updateUserDataType { type: typeof UPDATE_USER_DATA, updateData: userUpdateType };
+export const updateUserData = (updateData: userUpdateType): updateUserDataType => ({ type: UPDATE_USER_DATA, updateData });
 
 
 
@@ -118,16 +132,14 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
         dispatch(getError(response.data.errors))
     }
 }
-export const updateUserInfo = (updateData: string, token: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
+export const updateUserInfo = (updateData: userUpdateType): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(cleanError())
     dispatch(setFetching(true))
-    const response = await loginAPI.updateUserData(updateData, token);
-    debugger
-    if (response.data.user) {
-        debugger
-
+    const response = await loginAPI.updateUserData(updateData);
+    dispatch(setFetching(false))
+    if (response.status === 'OK') {
+        dispatch(updateUserData(updateData))
     } else if (response.data.errors) {
-        dispatch(setFetching(false))
         dispatch(getError(response.data.errors))
     }
 
