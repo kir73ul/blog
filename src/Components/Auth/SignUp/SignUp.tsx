@@ -19,7 +19,7 @@ export const SignUp = () => {
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     if (isAuth) {
-        setTimeout(() => { history.push('/articles'); setIsSuccess(false)}, 2500)
+        setTimeout(() => { history.push('/articles'); setIsSuccess(false) }, 2500)
     }
     if (isFetching) {
         return <Preloader />
@@ -47,13 +47,13 @@ export const SignUp = () => {
                     //@ts-ignore
                     onSubmit={(values) => { dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } }))); setIsSuccess(true) }}
                 >
-                    {() => (
+                    {(formik) => (
                         <Form >
                             <div className={styles.form_block}>
                                 <div className={styles.userName_block}>
                                     <span className={styles.userNameLabel}>Username</span>
                                     <Input placeholder='Username' className={styles.userNameInput} type="string" name="userName" />
-                                    <ErrorMessage className={styles.error} name="userName" component="p" />
+                                    {formik.errors.userName ? <ErrorMessage className={styles.error} name="userName" component="p" /> : null}
                                 </div>
                                 <div className={styles.email_block}>
                                     <span className={styles.emailLabel}>Email address</span>
@@ -71,8 +71,9 @@ export const SignUp = () => {
                                     <ErrorMessage className={styles.error} name="repeatPassword" component="div" />
                                 </div>
                             </div>
-                            <span className={styles.line}></span>
+
                             <div className={styles.checkbox_block}>
+                                <p className={styles.line}></p>
                                 <span className={styles.checkboxlabel}>Copy
                                     I agree to the processing of my personal information </span>
                                 <Checkbox className={styles.checkbox} name="agriment" />

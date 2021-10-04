@@ -9,7 +9,7 @@ interface newArticalReducerType {
 }
 
 const initialState = {
-    tags: ['', 'hi', 'there']
+    tags: [ 'hi', 'there']
 
 }
 
