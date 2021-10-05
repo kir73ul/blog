@@ -8,31 +8,25 @@ import React, { useEffect, useState } from 'react';
 import { removeTag, setTags } from '../../redux/newArticleReducer';
 import { AppStateType } from '../../redux/rootReducer';
 
-const taggsSchema = Yup.array().of(Yup.string().min(1))
+const taggsSchema = Yup.array().of(Yup.string().max(1, `It shouldn't be empty`))
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
-    const [localTag, SetLocalTag] = useState('')
     const tags = useSelector((state: AppStateType) => state.newArtical.tags)
+    const [localTag, SetLocalTag] = useState('')
     const initialValues = {
         title: '',
         shortDescription: '',
         text: '',
         tags: [...tags]
     }
-    useEffect(() => {
-/*         dispatch(setTags(localTag))
- */    }, [tags])
-
-
-
-
     return (
         <>
             <div className={styles.createArticle_block}>
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik
                     initialValues={initialValues}
+                    enableReinitialize
                     validationSchema={Yup.object({
                         title: Yup.string().required('Required'),
                         shortDescription: Yup.string().required('Required'),
@@ -40,7 +34,9 @@ export const NewArticale = () => {
                         tags: taggsSchema
                     })}
 
-                    onSubmit={(values) => alert((JSON.stringify(values)))}
+                    onSubmit={(values) => {
+                        alert((JSON.stringify(values))); console.log(values);
+                    }}
                 >
                     {(formik) => (
                         <Form >
@@ -61,17 +57,22 @@ export const NewArticale = () => {
                             </div>
                             <div className={styles.tags_block}>
                                 <span className={styles.textLabel}> Tags </span>
-                                {formik.values.tags.map((tag, idx) => {
-                                    const isLastTag = (idx === formik.values.tags.length - 1);
+                                {formik.values.tags.map((tag) => {
                                     return (
                                         <div key={tag} className={styles.singleTag_Block} >
-                                            <Input disabled={!isLastTag} onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="text" name='tag' value={tag} />
+                                            <Input disabled={true} className={styles.singleTagInput} type="text" name='tag' value={tag} />
                                             <Button onClick={() => { dispatch(removeTag(tag)) }} className={styles.singleTagBtn} type="primary"> Delete</Button>
-                                            {isLastTag ? <Button onClick={() => { dispatch(setTags(localTag)) }} className={styles.singleTagBtnAdd} type="primary" > Add</Button> : null}
                                             <ErrorMessage className={styles.error} name='tag' component="div" />
                                         </div>
                                     )
                                 })}
+                                <div className={styles.singleTag_Block}>
+                                    <Input onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="text" name='tag' />
+                                    <Button onClick={() => { }} className={styles.singleTagBtn} type="primary"> Delete</Button>
+                                    <Button onClick={() => { dispatch(setTags(localTag)); SetLocalTag('') }} className={styles.singleTagBtnAdd} type="primary" > Add</Button>
+                                    <ErrorMessage className={styles.error} name='tag' component="div" />
+
+                                </div>
                             </div>
                             <button className={styles.button} type="submit">
                                 Send

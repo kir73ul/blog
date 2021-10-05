@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/rootReducer';
 
 export const Header = () => {
-    const isAuth = (localStorage.length !== 0)
+/*     const isAuth = (localStorage.length !== 0)
+ */    const isAuth = useSelector((state:AppStateType) => state.auth.isAuth)
 /*     const tokenData = localStorage.getItem(JSON.parse('tokenData'))
  */    const history = useHistory()
     const logOut = () => {

@@ -108,7 +108,7 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
     dispatch(setFetching(true))
     const response = await loginAPI.aythtorizeMe(loginData)
     if (response.data.user) {
-        saveToken(response.data.user)
+        saveToken(response.data.user.token)
         dispatch(setFetching(false))
         dispatch(setUserAuth())
         dispatch(getUsersData(response.data.user))
@@ -123,7 +123,7 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
     dispatch(setFetching(true))
     const response = await loginAPI.registrateMe(redisterData)
     if (response.data.user) {
-        saveToken(response.data.user)
+        saveToken(response.data.user.token)
         dispatch(setFetching(false))
         dispatch(setUserAuth())
         dispatch(getUsersData(response.data.user))
