@@ -9,6 +9,7 @@ const GET_USERS_DATA = 'GET_USERS_DATA';
 const SET_IS_FETCHING = 'SET_FETCHING';
 const CLEAN_ERROR = 'CLEAN_ERROR';
 const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
+const LOG_OUT = 'LOG_OUT';
 
 interface errorsType {
     [key: string]: string[];
@@ -84,10 +85,15 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
                 ...state,
                 users: { ...state.users, ...action.updateData }
             }
+        case LOG_OUT:
+            return {
+                ...state,
+                isAuth: false
+            }
         default: return state
     }
 }
-type AuthActionType = setUserAuthType | getErrorType | setIsFetchingType | getUsersDataType | cleanErrorType | updateUserDataType
+type AuthActionType = setUserAuthType | getErrorType | setIsFetchingType | getUsersDataType | cleanErrorType | updateUserDataType | logOutType
 interface setUserAuthType { type: typeof AUTH_USER };
 export const setUserAuth = (): setUserAuthType => ({ type: AUTH_USER });
 interface getErrorType { type: typeof GET_ERROR, error: errorsType };
@@ -100,6 +106,8 @@ interface cleanErrorType { type: typeof CLEAN_ERROR };
 export const cleanError = (): cleanErrorType => ({ type: CLEAN_ERROR });
 interface updateUserDataType { type: typeof UPDATE_USER_DATA, updateData: userUpdateType };
 export const updateUserData = (updateData: userUpdateType): updateUserDataType => ({ type: UPDATE_USER_DATA, updateData });
+interface logOutType { type: typeof LOG_OUT };
+const logOut = (): logOutType => ({ type: LOG_OUT });
 
 
 
@@ -135,12 +143,17 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
 export const updateUserInfo = (updateData: userUpdateType): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(cleanError())
     dispatch(setFetching(true))
+    debugger
     const response = await loginAPI.updateUserData(updateData);
     dispatch(setFetching(false))
     if (response.status === 'OK') {
         dispatch(updateUserData(updateData))
-    } else if (response.data.errors) {
-        dispatch(getError(response.data.errors))
+    } else {
+        dispatch(getError(response.data))
     }
 
+}
+export const logout = (): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
+    localStorage.clear()
+    dispatch(logOut())
 }

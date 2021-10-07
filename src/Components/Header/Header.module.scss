@@ -50,10 +50,12 @@
     text-align: center;
 }
 .SignUpBtn {
-    position: absolute;
+    position: relative;
     width: 109px;
     height: 51px;
-    left: 1309px;
+    float: right;
+margin-right: 22px;
+   /*  left: 1309px; */
     top: 16px;
     font-family: Inter;
     font-style: normal;
@@ -62,8 +64,8 @@
     line-height: 28px; 
     display: flex;
     text-align: center;
-    align-items: center;
-    justify-items: center;
+   /*  align-items: center;
+    justify-items: center; */
     color: #52C41A;
     border-radius: 5px;
     border: 1px solid #52C41A;
@@ -82,60 +84,58 @@
     box-sizing: border-box;
     border-radius: 5px;
 }
+.withAuth_block{
+    position: relative;
+    float: right;
+    min-width: 400px;
+    height: 80px;
+    margin-right: 22px;
+}
 .createArticleBtn {
-    position: absolute;
+    position: relative;
 width: 112.23px;
 height: 31.1px;
-left: 1003px;
 top: 25px;
-
-/* @success-color */
-
+float: left;
+margin-right: 27px;
+color:#52C41A ;
 border: 1px solid #52C41A;
 box-sizing: border-box;
 border-radius: 5px;
+background-color: white;
 }
 .userName {
-    position: absolute;
-width: 81px;
+    position: relative;
 height: 28px;
-right: 217px;
+min-width: 10px;
 top: 28px;
-
-/* H6 - Header 6 */
-
 font-family: Inter serif;
 font-style: normal;
 font-weight: normal;
 font-size: 18px;
 line-height: 28px;
-/* identical to box height, or 156% */
-
+float: left;
+margin-right: 12px;
 display: flex;
-align-items: center;
-
-/* @heading-color */
-
+align-items: flex-end;
 color: rgba(0, 0, 0, 0.85);
 }
 .userAva {
-    position: absolute;
+    position: relative;
 width: 46px;
 height: 46px;
-right: 158px;
 top: 19px;
-
+margin-right: 27px;
+float: left;
 background: url('../../assets/image/userAva.png');
 }
 .logOutBtn {
-    position: absolute;
-width: 109px;
-height: 51px;
-left: 1309px;
-top: 16px;
-
-/* @text-color */
-
+    position: relative;
+    width: 109px;
+    height: 51px;
+    top: 16px;
+    float: left;
+position: relative;
 border: 1px solid rgba(0, 0, 0, 0.75);
 box-sizing: border-box;
 border-radius: 5px;

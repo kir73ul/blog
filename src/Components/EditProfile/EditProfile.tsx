@@ -37,11 +37,11 @@ export const EditProfile = () => {
                 {isSuccess ? <span className={styles.success}>&#9989; {`${username}, your data was updated`}</span> : null}
                 {isSomethingChanged ? <span className={styles.error}>{`${username}, you should change at least one parametr`}</span> : null}
                 {(error) ?
-                    <p className={styles.responseError}>{
-                        Object.entries(error).map(([key, values]) => {
-                            return <span> {`${key} -${values}`}<br /></span>
-                        })
-                    }</p> : null}
+                    <p className={styles.responseError}>{error
+                        /* Object.entries(error).map(([key, values]) => {
+                            return <span> {`${key} -${values}`}<br /></span> */
+                    }
+                    </p> : null}
                 <h1 className={styles.title}>Edit Profile</h1>
                 <Formik
                     initialValues={initialValuesData}
@@ -59,19 +59,20 @@ export const EditProfile = () => {
                             image: values.avatarImage
                         }
                         if (!_.isEqual(user, initialValuesData)) {
-                            dispatch(updateUserInfo(user))
+                            dispatch(updateUserInfo(user))/* 
                             setIsSuccess(true)
-                            setTimeout(() => { setIsSuccess(false) }, 3000)
+                            setTimeout(() => { setIsSuccess(false) }, 3000) */
+                        } else if (_.isEqual(user, initialValuesData)) {
+                            setisSomethingChanged(true)
+                            setTimeout(() => { setisSomethingChanged(false) }, 3000)
                         }
-                        setisSomethingChanged(true)
-                        setTimeout(() => { setisSomethingChanged(false) }, 3000)
                     }}
                 >
                     {(formik) => (
                         <Form >
                             <div className={styles.form_block}>
                                 <div className={styles.userName_block}>
-                                    <span className={styles.userNameLabel}>Username</span>
+                                    <div className={styles.userNameLabel}>Username</div><br />
                                     <Input placeholder='Username' className={styles.userNameInput} type="string" name="userName" />
                                     <ErrorMessage className={styles.error} name="userName" component="p" />
                                 </div>

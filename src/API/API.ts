@@ -2,8 +2,8 @@ import { userUpdateType } from './../redux/authReducer';
 import axios from 'axios';
 import { store } from '../redux/rootReducer';
 
-export const saveToken = (userData: JSON) => {
-    return localStorage.setItem('tokenData', JSON.stringify(('Token ' + userData)));
+export const saveToken = (userData: string) => {
+    return localStorage.setItem('tokenData', ('Token ' + userData));
 }
 
 const instanceWithoutAuth = axios.create({
@@ -16,20 +16,25 @@ const instanceWithoutAuth = axios.create({
          */
     }
 })
+const token = localStorage.getItem('tokenData')
 const instanceWithAuth = axios.create({
     baseURL: 'https://api.realworld.io/api',
-/*     withCredentials: true,
- */    headers: {
-        'Credential': 'true',
-        'Set-Cookie': 'HttpOnly',
-        'Authorization': localStorage.getItem('tokenData'),
+    withCredentials: true,
+    headers: {
+        /* 'Credential': 'true',
+        'Set-Cookie': 'HttpOnly', */
+        /* 'Authorization': token, */
         'Content-Type': 'application/json; charset=utf-8',
-        /*         'Accept': '/',
-                'Host': 'https://api.realworld.io/api',
-                'Origin': 'http://localhost:3000/' */
+        'Origin': 'http://localhost:3000/',
+        'Access-Control-Allow-Origin': 'https://api.realworld.io/api',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Access-Control-Allow-Origin'
+
     }
 })
-
+instanceWithAuth.interceptors.request.use((config) => {
+    config.headers.Authorization = token;
+    return config
+})
 export interface UsersLType {
     email: string;
     password: string;
@@ -48,6 +53,7 @@ export const loginAPI = {
         return instanceWithoutAuth.post<RegistrateType>('users', redisterData).then(resp => resp).catch(error => error.response)
     },
     updateUserData(updateData: userUpdateType) {
+        debugger
         return instanceWithAuth.put('user', JSON.stringify(updateData))
             .then(resp => resp).catch(error => error.response)
     }
