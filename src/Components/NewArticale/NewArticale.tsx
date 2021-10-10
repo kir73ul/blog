@@ -5,25 +5,33 @@ import * as Yup from 'yup';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import { removeTag, setTags } from '../../redux/newArticleReducer';
+import { createNewArticle, removeTag, setTags } from '../../redux/newArticleReducer';
 import { AppStateType } from '../../redux/rootReducer';
+import Preloader from '../Common/Preloader';
 
-const taggsSchema = Yup.array().of(Yup.string().max(1, `It shouldn't be empty`))
+const taggsSchema = Yup.array().of(Yup.string().min(1, `It shouldn't be empty`))
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
     const tags = useSelector((state: AppStateType) => state.newArtical.tags)
+    const isFetching = useSelector((state: AppStateType) => state.newArtical.isFetching)
     const [localTag, SetLocalTag] = useState('')
+    const [localTitle, SetlocalTitle] = useState('')
+    const [localShortDescription, SetlocalShortDescription] = useState('')
+    const [localText, SetlocalText] = useState('')
     const initialValues = {
-        title: '',
-        shortDescription: '',
-        text: '',
+        title: localTitle,
+        shortDescription: localShortDescription,
+        text: localText,
         tags: [...tags]
+    }
+    if (isFetching) {
+        return <Preloader />
     }
     return (
         <>
             <div className={styles.createArticle_block}>
-                <h1 className={styles.title}>Sign in</h1>
+                <h1 className={styles.title}>Create new article</h1>
                 <Formik
                     initialValues={initialValues}
                     enableReinitialize
@@ -31,28 +39,34 @@ export const NewArticale = () => {
                         title: Yup.string().required('Required'),
                         shortDescription: Yup.string().required('Required'),
                         text: Yup.string().required('Required'),
-                        tags: taggsSchema
+                        tags: Yup.array().of(Yup.string().min(1, `It shouldn't be empty`))
                     })}
-
                     onSubmit={(values) => {
-                        alert((JSON.stringify(values))); console.log(values);
+                        dispatch(createNewArticle((JSON.stringify({
+                            article: {
+                                title: values.title,
+                                description: values.shortDescription,
+                                body: values.text,
+                                tagList: values.tags
+                            }
+                        }))))
                     }}
                 >
                     {(formik) => (
                         <Form >
                             <div className={styles.title_block}>
                                 <span className={styles.titleLabel}>Title</span>
-                                <Input placeholder='Title' className={styles.titleInput} type="input" name="title" />
+                                <Input onChange={(event) => SetlocalTitle(event.target.value)} placeholder='Title' className={styles.titleInput} type="input" name="title" />
                                 <ErrorMessage className={styles.error} name="title" component="div" />
                             </div>
                             <div className={styles.shortDescription_block}>
                                 <span className={styles.shortDescriptionlabel}> Short description </span>
-                                <Input placeholder='Short description' className={styles.shortDescriptionInput} type="input" name="shortDescription" />
+                                <Input onChange={(event) => SetlocalShortDescription(event.target.value)} placeholder='Short description' className={styles.shortDescriptionInput} type="input" name="shortDescription" />
                                 <ErrorMessage className={styles.error} name="shortDescription" component="div" />
                             </div>
                             <div className={styles.text_block}>
                                 <span className={styles.textLabel}> Text </span>
-                                <Input.TextArea placeholder='text' className={styles.textInput} name="text" />
+                                <Input.TextArea onChange={(event) => SetlocalText(event.target.value)} placeholder='text' className={styles.textInput} name="text" />
                                 <ErrorMessage className={styles.error} name="text" component="div" />
                             </div>
                             <div className={styles.tags_block}>
@@ -71,7 +85,6 @@ export const NewArticale = () => {
                                     <Button onClick={() => { }} className={styles.singleTagBtn} type="primary"> Delete</Button>
                                     <Button onClick={() => { dispatch(setTags(localTag)); SetLocalTag('') }} className={styles.singleTagBtnAdd} type="primary" > Add</Button>
                                     <ErrorMessage className={styles.error} name='tag' component="div" />
-
                                 </div>
                             </div>
                             <button className={styles.button} type="submit">

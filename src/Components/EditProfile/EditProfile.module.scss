@@ -230,10 +230,11 @@ border-radius: 4px;
     display: flex;
 flex-direction: column;
 padding: 0px;
+height: auto;
 
 position: relative;
 width: 320px;
-height: 64px;
+min-height: 64px;
 
 
 
@@ -250,26 +251,14 @@ height: 22px;
 left: 0px;
 right: 0px;
 top: 0px;
-
-/* Regular / 14px | 22px */
-
 font-family: Roboto serif;
 font-style: normal;
 font-weight: normal;
 font-size: 14px;
 line-height: 22px;
-/* identical to box height, or 157% */
-
 display: flex;
 align-items: center;
-
-/* Grey / grey-9 */
-
 color: #262626;
-
-
-/* Inside Auto Layout */
-
 flex: none;
 order: 0;
 flex-grow: 0;
@@ -321,6 +310,8 @@ margin: 10px 0px;
     font-weight: normal;
     font-size: 14px;
     color: #F5222D;
+    height: auto;
+    margin: 2px 0px;
     background: #FFFFFF;
 }
 .success {
@@ -335,11 +326,10 @@ margin: 10px 0px;
     font-size: 14px;
     color: #52C41A;
     background: #FFFFFF;
-    margin: 2px 0px;
 }
 .responseError {
     width: 311px;
-    height: 30px;
+    height: auto;
     position: relative;
     color: red;
     text-align: center;
@@ -348,6 +338,7 @@ margin: 10px 0px;
     top: 15px;
     padding-bottom:10px;
 }
+//auto
 .inputError {
 border: 1px solid red !important;
 } 

@@ -116,6 +116,7 @@ export const setCurrentArticle = (currentArticle: articlesType): setCurrentArtic
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articaleData.getArticalePage(currentPage, pageSize)
+    debugger
     dispatch(getTotalArticles(response.articlesCount))
     dispatch(setArticles(response.articles))
     dispatch(setFetching(false))
@@ -129,7 +130,7 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
 
 export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     const response = await likeAPI.addLike(slug)
-    if (response.status === 'ok') {
+    if (response.status === '200') {
         setFavoriteUnfavorite(true)
     }
 }

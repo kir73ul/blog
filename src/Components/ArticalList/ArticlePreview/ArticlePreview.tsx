@@ -13,7 +13,8 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
 
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const dispatch = useDispatch()
- const setLikeOrDislike = (slug: string) => {
+    const setLikeOrDislike = (slug: string) => {
+        debugger
         if (isAuth) {
             if (!favorited) {
                 dispatch(makeFavorite(slug))

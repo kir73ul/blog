@@ -12,12 +12,12 @@ import _ from 'lodash';
 export const EditProfile = () => {
     const [isSuccess, setIsSuccess] = useState(false)
     const [isSomethingChanged, setisSomethingChanged] = useState(false)
-
     const dispatch = useDispatch()
-
     let username = useSelector((state: AppStateType) => state.auth.users.username)
     let userEmail = useSelector((state: AppStateType) => state.auth.users.email)
     let userAvatarImage = useSelector((state: AppStateType) => state.auth.users.image)
+    console.log(userAvatarImage);
+
     const initialValuesData = {
         userName: username,
         email: userEmail,
@@ -26,8 +26,7 @@ export const EditProfile = () => {
     }
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const error = useSelector((state: AppStateType) => state.auth.error)
-    const regMatch = /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
-
+    const regMatch = '' || /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
     if (isFetching) {
         return <Preloader />
     }
@@ -35,7 +34,7 @@ export const EditProfile = () => {
         <>
             <div className={styles.editProfile_block}>
                 {isSuccess ? <span className={styles.success}>&#9989; {`${username}, your data was updated`}</span> : null}
-                {isSomethingChanged ? <span className={styles.error}>{`${username}, you should change at least one parametr`}</span> : null}
+                {isSomethingChanged ? <span className={styles.error}>{`${username}, you should change at least one parameter`}</span> : null}
                 {(error) ?
                     <p className={styles.responseError}>{error
                         /* Object.entries(error).map(([key, values]) => {
@@ -48,21 +47,24 @@ export const EditProfile = () => {
                     validationSchema={Yup.object({
                         userName: Yup.string().required('Required'),
                         email: Yup.string().email('Invalid email address').required('Required'),
-                        newPassword: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`),
+                        newPassword: Yup.string().nullable().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`),
                         avatarImage: Yup.string().matches(regMatch || '', "Website should be a valid URL")
                     })}
                     onSubmit={(values) => {
-                        const user = {
-                            username: values.userName,
-                            email: values.email,
-                            password: values.newPassword,
-                            image: values.avatarImage
+                        const userData = {
+                            user: {
+                                email: values.email,
+                                username: values.userName,
+                                password: values.newPassword,
+                                image: values.avatarImage
+                            }
                         }
-                        if (!_.isEqual(user, initialValuesData)) {
-                            dispatch(updateUserInfo(user))/* 
+                        debugger
+                        if (!_.isEqual(userData.user, initialValuesData)) {
+                            dispatch(updateUserInfo(userData))/* 
                             setIsSuccess(true)
                             setTimeout(() => { setIsSuccess(false) }, 3000) */
-                        } else if (_.isEqual(user, initialValuesData)) {
+                        } else if (_.isEqual(userData.user, initialValuesData)) {
                             setisSomethingChanged(true)
                             setTimeout(() => { setisSomethingChanged(false) }, 3000)
                         }

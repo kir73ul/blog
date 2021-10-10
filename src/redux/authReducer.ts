@@ -11,7 +11,7 @@ const CLEAN_ERROR = 'CLEAN_ERROR';
 const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 const LOG_OUT = 'LOG_OUT';
 
-interface errorsType {
+export interface errorsType {
     [key: string]: string[];
 }
 interface usersType {
@@ -23,6 +23,9 @@ interface usersType {
     token: string | null;
     updatedAt: string;
     username: string;
+}
+export interface userDataType {
+    user: userUpdateType
 }
 export interface userUpdateType {
     email: string;
@@ -96,14 +99,14 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
 type AuthActionType = setUserAuthType | getErrorType | setIsFetchingType | getUsersDataType | cleanErrorType | updateUserDataType | logOutType
 interface setUserAuthType { type: typeof AUTH_USER };
 export const setUserAuth = (): setUserAuthType => ({ type: AUTH_USER });
-interface getErrorType { type: typeof GET_ERROR, error: errorsType };
-export const getError = (error: errorsType): getErrorType => ({ type: GET_ERROR, error });
 interface getUsersDataType { type: typeof GET_USERS_DATA, usersData: usersType };
 export const getUsersData = (usersData: usersType): getUsersDataType => ({ type: GET_USERS_DATA, usersData });
 interface setIsFetchingType { type: typeof SET_IS_FETCHING, isFetching: boolean };
 const setFetching = (isFetching: boolean): setIsFetchingType => ({ type: SET_IS_FETCHING, isFetching });
 interface cleanErrorType { type: typeof CLEAN_ERROR };
 export const cleanError = (): cleanErrorType => ({ type: CLEAN_ERROR });
+interface getErrorType { type: typeof GET_ERROR, error: errorsType };
+export const getError = (error: errorsType): getErrorType => ({ type: GET_ERROR, error });
 interface updateUserDataType { type: typeof UPDATE_USER_DATA, updateData: userUpdateType };
 export const updateUserData = (updateData: userUpdateType): updateUserDataType => ({ type: UPDATE_USER_DATA, updateData });
 interface logOutType { type: typeof LOG_OUT };
@@ -140,16 +143,17 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
         dispatch(getError(response.data.errors))
     }
 }
-export const updateUserInfo = (updateData: userUpdateType): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
+export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
+    const updateDataJSON = JSON.stringify(updateData)
     dispatch(cleanError())
     dispatch(setFetching(true))
+    const response = await loginAPI.updateUserData(updateDataJSON);
     debugger
-    const response = await loginAPI.updateUserData(updateData);
     dispatch(setFetching(false))
-    if (response.status === 'OK') {
-        dispatch(updateUserData(updateData))
-    } else {
-        dispatch(getError(response.data))
+    if (response.status === '200') {
+        return dispatch(updateUserData(updateData.user))
+    } else if (response.status !== '200') {
+        return dispatch(getError(response.data))
     }
 
 }

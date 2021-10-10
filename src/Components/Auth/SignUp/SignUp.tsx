@@ -19,7 +19,7 @@ export const SignUp = () => {
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     if (isAuth) {
-        setTimeout(() => { history.push('/articles'); setIsSuccess(false) }, 2500)
+        setTimeout(() => { history.push('/'); setIsSuccess(false) }, 2500)
     }
     if (isFetching) {
         return <Preloader />
@@ -29,10 +29,10 @@ export const SignUp = () => {
             <div className={styles.signUp_block}>
                 {isSuccess ? <span className={styles.success}>&#9989; Your account succesefully created</span> : null}
                 {(error) ?
-                    <p className={styles.responseError}>{
-                        Object.entries(error).map(([key, values]) => {
-                            return <span> {`${key} -${values}`}<br /></span>
-                        })
+                    <p className={styles.responseError}>{error
+                        /*       Object.entries(error).map(([key, values]) => {
+                                  return <span> {`${key} -${values}`}<br /></span>
+                          }) */
                     }</p> : null}
                 <h1 className={styles.title}>Create new account</h1>
                 <Formik
