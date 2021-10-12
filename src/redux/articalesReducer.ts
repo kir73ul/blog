@@ -130,7 +130,7 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
 
 export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     const response = await likeAPI.addLike(slug)
-    if (response.status === '200') {
+    if (response.status === 200) {
         setFavoriteUnfavorite(true)
     }
 }

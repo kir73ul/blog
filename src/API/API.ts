@@ -69,7 +69,7 @@ export const singleArticle = {
 
 export const likeAPI = {
     addLike(slug: string) {
-        return instanceWithAuth.post(`articles/:${slug}/favorite`).then(response => (response)).catch(error => (error));
+        return instanceWithAuth.post(`articles/${slug}/favorite`).then(response => (response)).catch(error => (error));
     },
     removeLike(slug: string) {
         return instanceWithAuth.delete(`articles/:${slug}/favorite`).then(response => (response)).catch(error => (error));

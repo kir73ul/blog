@@ -9,7 +9,7 @@ import { createNewArticle, removeTag, setTags } from '../../redux/newArticleRedu
 import { AppStateType } from '../../redux/rootReducer';
 import Preloader from '../Common/Preloader';
 
-const taggsSchema = Yup.array().of(Yup.string().min(1, `It shouldn't be empty`))
+const taggsSchema = Yup.array().of(Yup.string().nullable().min(1, `It shouldn't be empty`))
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
@@ -19,6 +19,7 @@ export const NewArticale = () => {
     const [localTitle, SetlocalTitle] = useState('')
     const [localShortDescription, SetlocalShortDescription] = useState('')
     const [localText, SetlocalText] = useState('')
+    let [count, setCount] = useState(-1)
     const initialValues = {
         title: localTitle,
         shortDescription: localShortDescription,
@@ -39,7 +40,7 @@ export const NewArticale = () => {
                         title: Yup.string().required('Required'),
                         shortDescription: Yup.string().required('Required'),
                         text: Yup.string().required('Required'),
-                        tags: Yup.array().of(Yup.string().min(1, `It shouldn't be empty`))
+                        tags: Yup.array().of(Yup.string().nullable().min(1, `It shouldn't be empty`))
                     })}
                     onSubmit={(values) => {
                         dispatch(createNewArticle((JSON.stringify({
@@ -72,17 +73,18 @@ export const NewArticale = () => {
                             <div className={styles.tags_block}>
                                 <span className={styles.textLabel}> Tags </span>
                                 {formik.values.tags.map((tag) => {
+                                    setCount(count)
                                     return (
-                                        <div key={tag} className={styles.singleTag_Block} >
+                                        <div key={count} className={styles.singleTag_Block} >
                                             <Input disabled={true} className={styles.singleTagInput} type="text" name='tag' value={tag} />
-                                            <Button onClick={() => { dispatch(removeTag(tag)) }} className={styles.singleTagBtn} type="primary"> Delete</Button>
+                                            <Button onClick={() => { dispatch(removeTag(count)) }} className={styles.singleTagBtn} type="primary"> Delete</Button>
                                             <ErrorMessage className={styles.error} name='tag' component="div" />
                                         </div>
                                     )
                                 })}
                                 <div className={styles.singleTag_Block}>
                                     <Input onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="text" name='tag' />
-                                    <Button onClick={() => { }} className={styles.singleTagBtn} type="primary"> Delete</Button>
+                                    <Button onClick={() => { setTags('') }} className={styles.singleTagBtn} type="primary"> Delete</Button>
                                     <Button onClick={() => { dispatch(setTags(localTag)); SetLocalTag('') }} className={styles.singleTagBtnAdd} type="primary" > Add</Button>
                                     <ErrorMessage className={styles.error} name='tag' component="div" />
                                 </div>

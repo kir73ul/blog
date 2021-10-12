@@ -50,7 +50,7 @@ export const Artical = () => {
                         </div>
                         {article.author.username === username ? <div className={styles.buttons_block}>
                             <Button className={styles.delete_btn}>Delete</Button>
-                            <Button className={styles.edit_btn}>Edit</Button>
+                            <Button onClick={() => { }} className={styles.edit_btn}>Edit</Button>
                         </div> : null}
                         <p className={styles.articleText}>{article.description}</p>
                     </div>

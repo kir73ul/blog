@@ -127,8 +127,9 @@ height: 46px;
 top: 19px;
 margin-right: 27px;
 float: left;
-background: url('../../assets/image/userAva.png');
-}
+border-radius: 50%;
+/* background: url('../../assets/image/userAva.png');
+ */}
 .logOutBtn {
     position: relative;
     width: 109px;

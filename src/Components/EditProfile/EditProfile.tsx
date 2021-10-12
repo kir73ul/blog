@@ -8,15 +8,17 @@ import { AppStateType } from '../../redux/rootReducer';
 import Preloader from '../Common/Preloader';
 import styles from './EditProfile.module.scss';
 import _ from 'lodash';
+import { compareObjValues } from '../Common/helper';
 
 export const EditProfile = () => {
-    const [isSuccess, setIsSuccess] = useState(false)
     const [isSomethingChanged, setisSomethingChanged] = useState(false)
     const dispatch = useDispatch()
     let username = useSelector((state: AppStateType) => state.auth.users.username)
     let userEmail = useSelector((state: AppStateType) => state.auth.users.email)
     let userAvatarImage = useSelector((state: AppStateType) => state.auth.users.image)
-    console.log(userAvatarImage);
+    const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
+    const isSuccess = useSelector((state: AppStateType) => state.auth.isSuccess)
+    const error = useSelector((state: AppStateType) => state.auth.error)
 
     const initialValuesData = {
         userName: username,
@@ -24,9 +26,8 @@ export const EditProfile = () => {
         newPassword: '',
         avatarImage: userAvatarImage
     }
-    const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
-    const error = useSelector((state: AppStateType) => state.auth.error)
     const regMatch = '' || /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
+
     if (isFetching) {
         return <Preloader />
     }
@@ -36,11 +37,7 @@ export const EditProfile = () => {
                 {isSuccess ? <span className={styles.success}>&#9989; {`${username}, your data was updated`}</span> : null}
                 {isSomethingChanged ? <span className={styles.error}>{`${username}, you should change at least one parameter`}</span> : null}
                 {(error) ?
-                    <p className={styles.responseError}>{error
-                        /* Object.entries(error).map(([key, values]) => {
-                            return <span> {`${key} -${values}`}<br /></span> */
-                    }
-                    </p> : null}
+                    <p className={styles.responseError}>{error} </p> : null}
                 <h1 className={styles.title}>Edit Profile</h1>
                 <Formik
                     initialValues={initialValuesData}
@@ -61,9 +58,7 @@ export const EditProfile = () => {
                         }
                         debugger
                         if (!_.isEqual(userData.user, initialValuesData)) {
-                            dispatch(updateUserInfo(userData))/* 
-                            setIsSuccess(true)
-                            setTimeout(() => { setIsSuccess(false) }, 3000) */
+                            dispatch(updateUserInfo(userData))
                         } else if (_.isEqual(userData.user, initialValuesData)) {
                             setisSomethingChanged(true)
                             setTimeout(() => { setisSomethingChanged(false) }, 3000)

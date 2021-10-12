@@ -53,7 +53,7 @@ export const newArticalReducer = (state: newArticalReducerType = initialState, a
         case REMOVE_TAG:
             return {
                 ...state,
-                tags: [...state.tags.filter(tag => tag !== action.tag)]
+                tags: [...state.tags.filter((tag, idx) => idx !== action.index)]
             }
         case SET_NEW_ARTICLE:
             const parsedArticleData = JSON.parse(action.articleData)
@@ -77,8 +77,8 @@ export const newArticalReducer = (state: newArticalReducerType = initialState, a
 type newArticalActionType = setTagsType | removeTagType | setNewArticleDataType | setIsFetchingType | getErrorType
 interface setTagsType { type: typeof SET_TAGS, tag: string };
 export const setTags = (tag: string): setTagsType => ({ type: SET_TAGS, tag });
-interface removeTagType { type: typeof REMOVE_TAG, tag: string };
-export const removeTag = (tag: string): removeTagType => ({ type: REMOVE_TAG, tag });
+interface removeTagType { type: typeof REMOVE_TAG, index: number };
+export const removeTag = (index: number): removeTagType => ({ type: REMOVE_TAG, index });
 interface setNewArticleDataType { type: typeof SET_NEW_ARTICLE, articleData: string };
 export const setNewArticleData = (articleData: string): setNewArticleDataType => ({ type: SET_NEW_ARTICLE, articleData });
 interface setIsFetchingType { type: typeof SET_IS_FETCHING, isFetching: boolean };
