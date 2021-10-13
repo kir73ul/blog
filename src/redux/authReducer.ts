@@ -1,4 +1,4 @@
-import { saveToken } from './../API/API';
+import { saveToken, saveUserData } from './../API/API';
 import { loginAPI } from "../API/API";
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
@@ -121,7 +121,9 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
     dispatch(setFetching(true))
     const response = await loginAPI.aythtorizeMe(loginData)
     if (response.data.user) {
+        debugger
         saveToken(response.data.user.token)
+        saveUserData(response.data.user)
         dispatch(setFetching(false))
         dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))

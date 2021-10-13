@@ -29,11 +29,7 @@ export const SignUp = () => {
             <div className={styles.signUp_block}>
                 {isSuccess ? <span className={styles.success}>&#9989; Your account succesefully created</span> : null}
                 {(error) ?
-                    <p className={styles.responseError}>{error
-                        /*       Object.entries(error).map(([key, values]) => {
-                                  return <span> {`${key} -${values}`}<br /></span>
-                          }) */
-                    }</p> : null}
+                    <p className={styles.responseError}>{error}</p> : null}
                 <h1 className={styles.title}>Create new account</h1>
                 <Formik
                     initialValues={{ userName: '', email: '', password: '', repeatPassword: '', agriment: false }}

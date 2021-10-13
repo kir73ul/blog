@@ -2,16 +2,19 @@ import { userDataType } from './../redux/authReducer';
 import axios from 'axios';
 import { store } from '../redux/rootReducer';
 
-export const saveToken = (userData: string) => {
-    return localStorage.setItem('tokenData', ('Token ' + userData));
+export const saveToken = (token: string) => {
+    return localStorage.setItem('tokenData', ('Token ' + token));
+}
+export const saveUserData = (userData: string) => {
+    return localStorage.setItem('userData', (userData));
 }
 
-const instanceWithoutAuth = axios.create({
+/* const instanceWithoutAuth = axios.create({
     baseURL: 'https://api.realworld.io/api/',
     headers: {
         'Content-Type': 'application/json; charset=utf-8',
     }
-})
+}) */
 const token = localStorage.getItem('tokenData')
 const instanceWithAuth = axios.create({
     baseURL: 'https://api.realworld.io/api/',
@@ -43,10 +46,10 @@ export interface RegistrateType {
 
 export const loginAPI = {
     aythtorizeMe(loginData: string) {
-        return instanceWithoutAuth.post<UsersLType>('users/login', loginData).then(resp => resp).catch(error => error.response)
+        return instanceWithAuth.post<UsersLType>('users/login', loginData).then(resp => resp).catch(error => error.response)
     },
     registrateMe(redisterData: string) {
-        return instanceWithoutAuth.post<RegistrateType>('users', redisterData).then(resp => resp).catch(error => error.response)
+        return instanceWithAuth.post<RegistrateType>('users', redisterData).then(resp => resp).catch(error => error.response)
     },
     updateUserData(updateData: string) {
         return instanceWithAuth.put('user', updateData)
@@ -55,15 +58,15 @@ export const loginAPI = {
 }
 
 export const articaleData = {
-    getArticalePage(currentPage = 1, pageSize = 5) {
+    getArticalePage(currentPage = 0, pageSize = 5) {
 
-        return instanceWithoutAuth.get(`articles?limit=${pageSize}?offset=${currentPage}`).then(response => (response.data)).catch(error => (error));
+        return instanceWithAuth.get(`articles?limit=${pageSize}?offset=${currentPage}`).then(response => (response.data)).catch(error => (error));
     }
 }
 
 export const singleArticle = {
     getsingleArticleData(slug: string) {
-        return instanceWithoutAuth.get(`articles/${slug}`).then(response => (response.data.article)).catch(error => (error));
+        return instanceWithAuth.get(`articles/${slug}`).then(response => (response.data.article)).catch(error => (error));
     }
 }
 

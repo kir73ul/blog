@@ -15,11 +15,14 @@ export const NewArticale = () => {
     const dispatch = useDispatch()
     const tags = useSelector((state: AppStateType) => state.newArtical.tags)
     const isFetching = useSelector((state: AppStateType) => state.newArtical.isFetching)
+    const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
+    const slug = useSelector((state: AppStateType) => state.newArtical.articleData.slug)
     const [localTag, SetLocalTag] = useState('')
     const [localTitle, SetlocalTitle] = useState('')
     const [localShortDescription, SetlocalShortDescription] = useState('')
     const [localText, SetlocalText] = useState('')
     let [count, setCount] = useState(-1)
+
     const initialValues = {
         title: localTitle,
         shortDescription: localShortDescription,
@@ -28,6 +31,14 @@ export const NewArticale = () => {
     }
     if (isFetching) {
         return <Preloader />
+    }
+    if (isSuccess) {
+        return (
+            <p className={styles.articleSuccess}>
+                <p className={styles.success}>&#9989;{`${slug} is succesefully created`}</p>
+            </p>
+        )
+
     }
     return (
         <>
@@ -73,7 +84,6 @@ export const NewArticale = () => {
                             <div className={styles.tags_block}>
                                 <span className={styles.textLabel}> Tags </span>
                                 {formik.values.tags.map((tag) => {
-                                    setCount(count)
                                     return (
                                         <div key={count} className={styles.singleTag_Block} >
                                             <Input disabled={true} className={styles.singleTagInput} type="text" name='tag' value={tag} />
@@ -83,8 +93,8 @@ export const NewArticale = () => {
                                     )
                                 })}
                                 <div className={styles.singleTag_Block}>
-                                    <Input onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="text" name='tag' />
-                                    <Button onClick={() => { setTags('') }} className={styles.singleTagBtn} type="primary"> Delete</Button>
+                                    <Input onChange={(event) => SetLocalTag(event.target.value)} placeholder='Tag' className={styles.singleTagInput} type="text" name='tag' value={localTag} />
+                                    <Button onClick={() => { SetLocalTag('') }} className={styles.singleTagBtn} type="primary"> Delete</Button>
                                     <Button onClick={() => { dispatch(setTags(localTag)); SetLocalTag('') }} className={styles.singleTagBtnAdd} type="primary" > Add</Button>
                                     <ErrorMessage className={styles.error} name='tag' component="div" />
                                 </div>

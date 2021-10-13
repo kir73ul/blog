@@ -25,9 +25,21 @@ box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 
 
 }
 
-.success_block {
+%succsessStyle {
+    position: absolute;
+    right: 0px;
+    left: calc(100%/2 - 384px/2);
+    top: 140px;
+    width: 384px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid grey ;
+    border-radius: 6px;  
+}
 
-position: absolute;
+.success_block {
+@extend %succsessStyle;
+/* position: absolute;
 right: 0px;
 left: calc(100%/2 - 384px/2);
 top: 140px;
@@ -35,7 +47,7 @@ width: 384px;
 height: 100px;
 background-color: white;
 border: 1px solid grey ;
-border-radius: 6px;
+border-radius: 6px; */
 }
 .success{
     position: relative;

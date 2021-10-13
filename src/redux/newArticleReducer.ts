@@ -8,7 +8,9 @@ const SET_TAGS = 'SET_TAGS';
 const REMOVE_TAG = 'REMOVE_TAG';
 const SET_IS_FETCHING = 'SET_FETCHING';
 const SET_NEW_ARTICLE = 'SET_NEW_ARTICLE';
+const SET_SUCCESS = 'SET_SUCCESS';
 const GET_ERROR = 'GET_ERROR';
+const SET_CREATED_ARTICLE = 'SET_CREATED_ARTICLE';
 
 
 interface articleDataType {
@@ -28,19 +30,21 @@ interface articleDataType {
         following: boolean
     }
 }
+
 interface newArticalReducerType {
     tags: string[];
-    articleData: any,
-    isFetching: boolean,
-    error: errorsType | null
+    articleData: any;
+    isFetching: boolean;
+    isSuccess: boolean;
+    error: errorsType | null;
 }
 
 const initialState = {
-    tags: ['hi', 'there'],
+    tags: [],
     articleData: {},
     isFetching: false,
-    error: null
-
+    error: null,
+    isSuccess: false,
 }
 
 export const newArticalReducer = (state: newArticalReducerType = initialState, action: newArticalActionType) => {
@@ -71,10 +75,15 @@ export const newArticalReducer = (state: newArticalReducerType = initialState, a
                 ...state,
                 error: action.error
             }
+        case SET_SUCCESS:
+            return {
+                ...state,
+                isSuccess: action.isSuccess
+            }
         default: return state
     }
 }
-type newArticalActionType = setTagsType | removeTagType | setNewArticleDataType | setIsFetchingType | getErrorType
+type newArticalActionType = setTagsType | removeTagType | setNewArticleDataType | setIsFetchingType | getErrorType | setSuccsesType
 interface setTagsType { type: typeof SET_TAGS, tag: string };
 export const setTags = (tag: string): setTagsType => ({ type: SET_TAGS, tag });
 interface removeTagType { type: typeof REMOVE_TAG, index: number };
@@ -85,14 +94,20 @@ interface setIsFetchingType { type: typeof SET_IS_FETCHING, isFetching: boolean 
 const setFetching = (isFetching: boolean): setIsFetchingType => ({ type: SET_IS_FETCHING, isFetching });
 interface getErrorType { type: typeof GET_ERROR, error: errorsType };
 export const getError = (error: errorsType): getErrorType => ({ type: GET_ERROR, error });
+interface setSuccsesType { type: typeof SET_SUCCESS, isSuccess: boolean };
+const setSuccses = (isSuccess: boolean): setSuccsesType => ({ type: SET_SUCCESS, isSuccess });
 
 export const createNewArticle = (articleData: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await createOrEditArticle.createArticle(articleData);
-    dispatch(setFetching(true))
+    dispatch(setFetching(false))
     debugger
     if (response.status === 200) {
         dispatch(setNewArticleData(response.data.article))
+        dispatch(setSuccses(true))
+        setTimeout(() => {
+            dispatch(setSuccses(false))
+        }, 4000)
     }
     else if (response.data.error) {
         dispatch(getError(response.data.errors))

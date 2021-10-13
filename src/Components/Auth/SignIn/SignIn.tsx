@@ -44,13 +44,8 @@ export const SignIn = () => {
     return (
         <>
             <div className={styles.signIn_block}>
-
                 {(error) ?
-                    <p className={styles.responseError}>{error
-                        /*  Object.entries(error).map(([key, values]) => {
-                             return <span> {`${key} -${values}`}<br /></span>
-                         }) */
-                    }</p> : null}
+                    <p className={styles.responseError}>{error}</p> : null}
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik
                     initialValues={initialValues}
@@ -79,9 +74,7 @@ export const SignIn = () => {
                                     Login
                                 </button>
                                 <span className={styles.under_button}>Don’t have an account?' <Link to='/sign-up'>Sign Up.</Link ></span>
-
                             </div>
-
                         </Form>
                     )}
                 </Formik>

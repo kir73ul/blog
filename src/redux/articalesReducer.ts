@@ -116,7 +116,6 @@ export const setCurrentArticle = (currentArticle: articlesType): setCurrentArtic
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articaleData.getArticalePage(currentPage, pageSize)
-    debugger
     dispatch(getTotalArticles(response.articlesCount))
     dispatch(setArticles(response.articles))
     dispatch(setFetching(false))
