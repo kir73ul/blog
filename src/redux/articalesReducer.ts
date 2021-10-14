@@ -131,5 +131,16 @@ export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unkn
     const response = await likeAPI.addLike(slug)
     if (response.status === 200) {
         setFavoriteUnfavorite(true)
+    } else if (response.status !== 200) {
+        console.log(response.data.errors)
+    }
+}
+export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    const response = await likeAPI.removeLike(slug)
+    debugger
+    if (response.status === 200) {
+        setFavoriteUnfavorite(false)
+    } else if (response.status !== 200) {
+        console.log(response.data.errors)
     }
 }

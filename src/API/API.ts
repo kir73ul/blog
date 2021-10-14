@@ -6,6 +6,7 @@ export const saveToken = (token: string) => {
     return localStorage.setItem('tokenData', ('Token ' + token));
 }
 export const saveUserData = (userData: string) => {
+
     return localStorage.setItem('userData', (userData));
 }
 

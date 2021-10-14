@@ -25,8 +25,8 @@ export const ArticalList = () => {
             {articles.map(article => {
                 return <ArticlePreview {...article} />
             })}
-            <span className= {styles.pagination}>
-                <Pagination  onChange={(current) => { dispatch(setCurrentPage(current)) }} pageSize={pageSize} size="small" total={totalArticles} />
+            <span className={styles.pagination}>
+                <Pagination onChange={(current) => { dispatch(setCurrentPage(current)) }} pageSize={pageSize} size="small" total={totalArticles} />
             </span>
         </div>
     )

@@ -7,8 +7,9 @@ import { logout } from '../../redux/authReducer';
 import imgUrl from '../../assets/image/userAva.png'
 
 export const Header = () => {
-    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
-    const userName = useSelector((state: AppStateType) => state.auth.users.username)
+    const isAuth = localStorage.length > 0; 
+/*     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+ */    const userName = useSelector((state: AppStateType) => state.auth.users.username)
     const avaImg = useSelector((state: AppStateType) => state.auth.users.image) || imgUrl
     const history = useHistory()
     const dispatch = useDispatch()

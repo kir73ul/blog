@@ -76,6 +76,7 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
                 isFetching: action.isFetching
             }
         case GET_USERS_DATA:
+            debugger
             return {
                 ...state,
                 users: { ...state.users, ...action.usersData }
@@ -122,8 +123,9 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
     const response = await loginAPI.aythtorizeMe(loginData)
     if (response.data.user) {
         debugger
+        const userDataJSON = JSON.stringify(response.data.user)
         saveToken(response.data.user.token)
-        saveUserData(response.data.user)
+        saveUserData(userDataJSON)
         dispatch(setFetching(false))
         dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))
