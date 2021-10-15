@@ -6,10 +6,12 @@ import FavoriteImage from '../../assets/image/path4.png';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/rootReducer';
-import { articlesType, getSingleArticle } from '../../redux/articalesReducer';
+import { articlesType, getSingleArticle, removeArticle } from '../../redux/articalesReducer';
 import { convertDate } from '../Common/helper';
 import { Button } from 'antd';
 import Preloader from '../Common/Preloader';
+import { getArticleData } from '../../redux/newArticleReducer';
+import { useHistory } from 'react-router';
 
 
 export const Artical = () => {
@@ -17,6 +19,12 @@ export const Artical = () => {
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const dispatch = useDispatch()
+    const history = useHistory()
+
+    const redirectToEditArticle = () => {
+        history.push('/new-article')
+    }
+
     useEffect(() => {
         dispatch(getSingleArticle(slug))
     }, [slug])
@@ -49,8 +57,8 @@ export const Artical = () => {
                             <img className={styles.author_image} src={article.author.image || '../../assets/image/Rectangle 1.png'} alt=''></img>
                         </div>
                         {article.author.username === username ? <div className={styles.buttons_block}>
-                            <Button className={styles.delete_btn}>Delete</Button>
-                            <Button onClick={() => { }} className={styles.edit_btn}>Edit</Button>
+                            <Button onClick={() => { dispatch(removeArticle(slug)) }} className={styles.delete_btn}>Delete</Button>
+                            <Button onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle() }} className={styles.edit_btn}>Edit</Button>
                         </div> : null}
                         <p className={styles.articleText}>{article.description}</p>
                     </div>

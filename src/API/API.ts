@@ -58,10 +58,10 @@ export const loginAPI = {
     }
 }
 
-export const articaleData = {
+/* export const articaleData = {
     getArticalePage(currentPage = 0, pageSize = 5) {
 
-        return instanceWithAuth.get(`articles?limit=${pageSize}?offset=${currentPage}`).then(response => (response.data)).catch(error => (error));
+        return instanceWithAuth.get(`articles?limit=${pageSize}?offset=${currentPage - 1}`).then(response => (response.data)).catch(error => (error));
     }
 }
 
@@ -70,7 +70,7 @@ export const singleArticle = {
         return instanceWithAuth.get(`articles/${slug}`).then(response => (response.data.article)).catch(error => (error));
     }
 }
-
+ */
 export const likeAPI = {
     addLike(slug: string) {
         return instanceWithAuth.post(`articles/${slug}/favorite`).then(response => (response)).catch(error => (error));
@@ -80,9 +80,22 @@ export const likeAPI = {
     }
 }
 
-export const createOrEditArticle = {
+export const articleAPI = {
     createArticle(createData: string) {
         return instanceWithAuth.post(`articles`, createData)
             .then(response => (response)).catch(error => (error));
+    },
+    editArticle(editData: string, slug: string) {
+        return instanceWithAuth.put(`articles/${slug}`, editData)
+            .then(response => (response)).catch(error => (error));
+    },
+    getSingleArticleData(slug: string) {
+        return instanceWithAuth.get(`articles/${slug}`).then(response => (response)).catch(error => (error));
+    },
+    getArticles(currentPage = 0, pageSize = 5) {
+        return instanceWithAuth.get(`articles?limit=${pageSize}?offset=${currentPage - 1}`).then(response => (response.data)).catch(error => (error));
+    },
+    deleteArticle(slug: string) {
+        return instanceWithAuth.delete(`articles/${slug}`).then(response => (response)).catch(error => (error));
     }
 }

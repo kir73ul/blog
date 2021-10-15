@@ -53,7 +53,7 @@ const initialState = {
         image: '',
         token: null,
         updatedAt: '',
-        username: ''
+        username: 'albert'
     },
     error: null
 }

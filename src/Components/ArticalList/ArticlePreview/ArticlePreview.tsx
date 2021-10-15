@@ -1,7 +1,7 @@
 import styles from './ArticlePreview.module.scss';
 import LikesImage from '../../../assets/image/Vector.png';
 import FavoriteImage from '../../../assets/image/path4.png';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { articlesType, makeFavorite, makeUnfavorite, setCurrentSlug } from '../../../redux/articalesReducer';
 import { convertDate } from '../../Common/helper';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,6 +1,5 @@
-import { singleArticle, likeAPI } from './../API/API';
+import { articleAPI, likeAPI } from './../API/API';
 import { ThunkAction } from "redux-thunk";
-import { articaleData } from "../API/API";
 import { AppDispatch, AppStateType } from "./rootReducer";
 
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
@@ -10,6 +9,7 @@ const GET_TOTAL_ARTICLES = 'GET_TOTAL_ARTICLES';
 const SET_FAVORITE_UNFAVORITE = 'SET_FAVORITE_UNFAVORITE';
 const SET_CURRENT_SLUG = 'SET_CURRENT_SLUG';
 const SET_CURRENT_ARTICLE = 'SET_CURRENT_ARTICLE';
+const SET_IS_REMOVE_SUCCESS = 'SET_IS_REMOVE_SUCCESS';
 
 
 interface authorType {
@@ -41,16 +41,18 @@ interface articlesReducerType {
     currentArticle: articlesType | null;
     total: number;
     currentSlug: string;
+    isRemoveSuccess: boolean;
 }
 
 const initialState = {
     currentPage: 1,
-    pageSize: 5,
+    pageSize: 1,
     isFetching: false,
     articles: [] as Array<articlesType>,
     currentArticle: null,
     total: 0,
-    currentSlug: ''
+    currentSlug: '',
+    isRemoveSuccess: false
 }
 
 export const articalesReducer = (state: articlesReducerType = initialState, action: newArticalActionType) => {
@@ -91,11 +93,15 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 ...state,
                 currentArticle: { ...state.currentArticle, ...action.currentArticle }
             }
-
+        case SET_IS_REMOVE_SUCCESS:
+            return {
+                ...state,
+                isRemoveSuccess: action.isRemoveSuccess
+            }
         default: return state
     }
 }
-type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType
+type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType | setIsRemoveSuccessType
 interface setCurrentPageType { type: typeof SET_CURRENT_PAGE, currentPage: number };
 export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage });
 interface setFetchingType { type: typeof SET_FETCHING, isFetching: boolean };
@@ -110,27 +116,33 @@ interface setCurrentSlugType { type: typeof SET_CURRENT_SLUG, slug: string };
 export const setCurrentSlug = (slug: string): setCurrentSlugType => ({ type: SET_CURRENT_SLUG, slug });
 interface setCurrentArticleType { type: typeof SET_CURRENT_ARTICLE, currentArticle: articlesType };
 export const setCurrentArticle = (currentArticle: articlesType): setCurrentArticleType => ({ type: SET_CURRENT_ARTICLE, currentArticle });
+interface setIsRemoveSuccessType { type: typeof SET_IS_REMOVE_SUCCESS, isRemoveSuccess: boolean };
+export const setIsRemoveSuccess = (isRemoveSuccess: boolean): setIsRemoveSuccessType => ({ type: SET_IS_REMOVE_SUCCESS, isRemoveSuccess });
 
 
 
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
-    const response = await articaleData.getArticalePage(currentPage, pageSize)
+    const response = await articleAPI.getArticles(currentPage, pageSize)
     dispatch(getTotalArticles(response.articlesCount))
     dispatch(setArticles(response.articles))
     dispatch(setFetching(false))
 }
 export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
-    const response = await singleArticle.getsingleArticleData(slug)
-    dispatch(setCurrentArticle(response))
+    const response = await articleAPI.getSingleArticleData(slug)
     dispatch(setFetching(false))
+    if (response.status === 200) {
+        dispatch(setCurrentArticle(response.data.article))
+    } else if (response.status !== 200) {
+        console.log(response.data.errors);
+    }
 }
 
 export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     const response = await likeAPI.addLike(slug)
     if (response.status === 200) {
-        setFavoriteUnfavorite(true)
+        dispatch(setFavoriteUnfavorite(true))
     } else if (response.status !== 200) {
         console.log(response.data.errors)
     }
@@ -139,7 +151,19 @@ export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, un
     const response = await likeAPI.removeLike(slug)
     debugger
     if (response.status === 200) {
-        setFavoriteUnfavorite(false)
+        dispatch(setFavoriteUnfavorite(false))
+    } else if (response.status !== 200) {
+        console.log(response.data.errors)
+    }
+}
+
+export const removeArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    const response = await articleAPI.deleteArticle(slug)
+    if (response.status === 200) {
+        dispatch(setIsRemoveSuccess(true))
+        setTimeout(() => {
+            dispatch(setIsRemoveSuccess(false))
+        }, 3000)
     } else if (response.status !== 200) {
         console.log(response.data.errors)
     }

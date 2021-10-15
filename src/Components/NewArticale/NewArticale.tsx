@@ -5,23 +5,23 @@ import * as Yup from 'yup';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import { createNewArticle, removeTag, setTags } from '../../redux/newArticleReducer';
+import { createNewArticle, editArticle, removeTag, setTags } from '../../redux/newArticleReducer';
 import { AppStateType } from '../../redux/rootReducer';
 import Preloader from '../Common/Preloader';
-
-const taggsSchema = Yup.array().of(Yup.string().nullable().min(1, `It shouldn't be empty`))
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
     const tags = useSelector((state: AppStateType) => state.newArtical.tags)
     const isFetching = useSelector((state: AppStateType) => state.newArtical.isFetching)
     const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
-    const slug = useSelector((state: AppStateType) => state.newArtical.articleData.slug)
-    const [localTag, SetLocalTag] = useState('')
-    const [localTitle, SetlocalTitle] = useState('')
+    const articleData = useSelector((state: AppStateType) => state.newArtical.articleData)
+    const title = articleData ? articleData.title : ''
+    const description = articleData ? articleData.description : ''
+
+    const [localTag, SetLocalTag] = useState(title)
+    const [localTitle, SetlocalTitle] = useState(description)
     const [localShortDescription, SetlocalShortDescription] = useState('')
     const [localText, SetlocalText] = useState('')
-    let [count, setCount] = useState(-1)
 
     const initialValues = {
         title: localTitle,
@@ -35,10 +35,16 @@ export const NewArticale = () => {
     if (isSuccess) {
         return (
             <p className={styles.articleSuccess}>
-                <p className={styles.success}>&#9989;{`${slug} is succesefully created`}</p>
+                <p className={styles.success}>&#9989;{`Your article is succesefully created`}</p>
             </p>
         )
-
+    }
+    if (isSuccess && articleData) {
+        return (
+            <p className={styles.articleSuccess}>
+                <p className={styles.success}>&#9989;{`Your article is succesefully edited`}</p>
+            </p>
+        )
     }
     return (
         <>
@@ -54,14 +60,15 @@ export const NewArticale = () => {
                         tags: Yup.array().of(Yup.string().nullable().min(1, `It shouldn't be empty`))
                     })}
                     onSubmit={(values) => {
-                        dispatch(createNewArticle((JSON.stringify({
+                        const articleDataJSON = JSON.stringify({
                             article: {
                                 title: values.title,
                                 description: values.shortDescription,
                                 body: values.text,
                                 tagList: values.tags
                             }
-                        }))))
+                        })
+                        articleData ? dispatch(createNewArticle(articleDataJSON)) : dispatch(editArticle(articleDataJSON, articleData.slug))
                     }}
                 >
                     {(formik) => (
@@ -83,11 +90,11 @@ export const NewArticale = () => {
                             </div>
                             <div className={styles.tags_block}>
                                 <span className={styles.textLabel}> Tags </span>
-                                {formik.values.tags.map((tag) => {
+                                {formik.values.tags.map((tag, idx) => {
                                     return (
-                                        <div key={count} className={styles.singleTag_Block} >
+                                        <div key={tag + idx} className={styles.singleTag_Block} >
                                             <Input disabled={true} className={styles.singleTagInput} type="text" name='tag' value={tag} />
-                                            <Button onClick={() => { dispatch(removeTag(count)) }} className={styles.singleTagBtn} type="primary"> Delete</Button>
+                                            <Button onClick={() => { dispatch(removeTag(idx)) }} className={styles.singleTagBtn} type="primary"> Delete</Button>
                                             <ErrorMessage className={styles.error} name='tag' component="div" />
                                         </div>
                                     )
