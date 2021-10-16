@@ -24,3 +24,26 @@ color: rgba(0, 0, 0, 0.75);
     line-height: 28px;
     color: rgba(0, 0, 0, 0.75);
 }
+.success_block{
+    position: absolute;
+    right: 0px;
+    left: calc(100%/2 - 384px/2);
+    top: 140px;
+    width: 384px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid grey ;
+    border-radius: 6px;  
+}
+.success{
+    position: relative;
+    text-align: center;
+    font-size: 16px;
+    width: 384px;
+    top: 30px;
+    color: #52C41A;
+}
+.modal_body {
+    width: 240px;
+    height: 104px;
+}

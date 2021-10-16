@@ -8,20 +8,25 @@ import React, { useEffect, useState } from 'react';
 import { createNewArticle, editArticle, removeTag, setTags } from '../../redux/newArticleReducer';
 import { AppStateType } from '../../redux/rootReducer';
 import Preloader from '../Common/Preloader';
+import { useHistory } from 'react-router';
+
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
-    const tags = useSelector((state: AppStateType) => state.newArtical.tags)
+    const tagsForCreating = useSelector((state: AppStateType) => state.newArtical.tags)
     const isFetching = useSelector((state: AppStateType) => state.newArtical.isFetching)
     const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
     const articleData = useSelector((state: AppStateType) => state.newArtical.articleData)
     const title = articleData ? articleData.title : ''
     const description = articleData ? articleData.description : ''
+    const text = articleData ? articleData.body : ''
+    const tags = articleData ? articleData.tagList : tagsForCreating
+    const history = useHistory()
 
-    const [localTag, SetLocalTag] = useState(title)
-    const [localTitle, SetlocalTitle] = useState(description)
-    const [localShortDescription, SetlocalShortDescription] = useState('')
-    const [localText, SetlocalText] = useState('')
+    const [localTag, SetLocalTag] = useState('')
+    const [localTitle, SetlocalTitle] = useState(title)
+    const [localShortDescription, SetlocalShortDescription] = useState(description)
+    const [localText, SetlocalText] = useState(text)
 
     const initialValues = {
         title: localTitle,
@@ -33,6 +38,9 @@ export const NewArticale = () => {
         return <Preloader />
     }
     if (isSuccess) {
+        setTimeout(() => {
+            history.push('/')
+        }, 3000)
         return (
             <p className={styles.articleSuccess}>
                 <p className={styles.success}>&#9989;{`Your article is succesefully created`}</p>
@@ -49,7 +57,7 @@ export const NewArticale = () => {
     return (
         <>
             <div className={styles.createArticle_block}>
-                <h1 className={styles.title}>Create new article</h1>
+                <h1 className={styles.title}>{articleData ? 'Edit article' : 'Create new article'}</h1>
                 <Formik
                     initialValues={initialValues}
                     enableReinitialize
@@ -60,6 +68,8 @@ export const NewArticale = () => {
                         tags: Yup.array().of(Yup.string().nullable().min(1, `It shouldn't be empty`))
                     })}
                     onSubmit={(values) => {
+                        console.log(initialValues);
+
                         const articleDataJSON = JSON.stringify({
                             article: {
                                 title: values.title,
@@ -68,7 +78,9 @@ export const NewArticale = () => {
                                 tagList: values.tags
                             }
                         })
-                        articleData ? dispatch(createNewArticle(articleDataJSON)) : dispatch(editArticle(articleDataJSON, articleData.slug))
+                        console.log(articleData, articleDataJSON);
+
+                        articleData ? dispatch(editArticle(articleDataJSON, articleData.slug)) : dispatch(createNewArticle(articleDataJSON))
                     }}
                 >
                     {(formik) => (

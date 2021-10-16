@@ -3,14 +3,25 @@ import { Button } from "antd";
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/rootReducer';
-import { logout } from '../../redux/authReducer';
+import { getUserInfo, logout } from '../../redux/authReducer';
 import imgUrl from '../../assets/image/userAva.png'
 import { zeroizeArticle } from '../../redux/newArticleReducer';
+import { useEffect } from 'react';
 
 export const Header = () => {
-    const isAuth = localStorage.length > 0;
-/*     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
- */    const userName = useSelector((state: AppStateType) => state.auth.users.username)
+/*     const isAuth = localStorage.length > 0;
+ */    const userData = useSelector((state: AppStateType) => state.auth.users)
+    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+
+
+
+    useEffect(() => {
+        if (!!localStorage && !isAuth) {
+            dispatch(getUserInfo())
+        }
+    }, [userData])
+
+    const userName = useSelector((state: AppStateType) => state.auth.users.username)
     const avaImg = useSelector((state: AppStateType) => state.auth.users.image) || imgUrl
     const history = useHistory()
     const dispatch = useDispatch()

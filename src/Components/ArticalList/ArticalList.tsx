@@ -23,7 +23,7 @@ export const ArticalList = () => {
     return (
         <div className={styles.body_block}>
             {articles.map(article => {
-                return <ArticlePreview {...article} />
+                return <ArticlePreview key={article.slug} {...article} />
             })}
             <span className={styles.pagination}>
                 <Pagination onChange={(current) => { dispatch(setCurrentPage(current)) }} pageSize={pageSize} size="small" total={totalArticles} />

@@ -1,5 +1,4 @@
-import { saveToken, saveUserData } from './../API/API';
-import { loginAPI } from "../API/API";
+import { saveToken, saveUserData, usersAPI, loginAPI } from './../API/API';
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
 
@@ -53,7 +52,7 @@ const initialState = {
         image: '',
         token: null,
         updatedAt: '',
-        username: 'albert'
+        username: ''
     },
     error: null
 }
@@ -76,7 +75,6 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
                 isFetching: action.isFetching
             }
         case GET_USERS_DATA:
-            debugger
             return {
                 ...state,
                 users: { ...state.users, ...action.usersData }
@@ -88,8 +86,7 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
             }
         case LOG_OUT:
             return {
-                ...state,
-                isAuth: false
+                ...state, ...initialState
             }
         case SET_SUCCESS:
             return {
@@ -115,17 +112,22 @@ const logOut = (): logOutType => ({ type: LOG_OUT });
 interface setSuccsesType { type: typeof SET_SUCCESS, isSuccess: boolean };
 const setSuccses = (isSuccess: boolean): setSuccsesType => ({ type: SET_SUCCESS, isSuccess });
 
-
+export const getUserInfo = (): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
+    const response = await usersAPI.getUsersInformation()
+    if (response.status === 200) {
+        dispatch(setUserAuth())
+        dispatch(setUsersData(response.data.user))
+    } else if (response.status !== 200) {
+        console.log(response.data.errors)
+    }
+}
 
 export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(cleanError())
     dispatch(setFetching(true))
     const response = await loginAPI.aythtorizeMe(loginData)
     if (response.data.user) {
-        debugger
-        const userDataJSON = JSON.stringify(response.data.user)
         saveToken(response.data.user.token)
-        saveUserData(userDataJSON)
         dispatch(setFetching(false))
         dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))
@@ -139,12 +141,12 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
     dispatch(cleanError())
     dispatch(setFetching(true))
     const response = await loginAPI.registrateMe(redisterData)
-    if (response.data.user) {
+    if (response.status === 200) {
         saveToken(response.data.user.token)
         dispatch(setFetching(false))
         dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))
-    } else if (response.data.errors) {
+    } else if (response.status !== 200) {
         dispatch(setFetching(false))
         dispatch(getError(response.data.errors))
     }
@@ -154,7 +156,6 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
     dispatch(cleanError())
     dispatch(setFetching(true))
     const response = await loginAPI.updateUserData(updateDataJSON);
-    debugger
     dispatch(setFetching(false))
     if (response.status === 200) {
         dispatch(setUsersData(response.data.user))
@@ -163,7 +164,7 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
             dispatch(setSuccses(false))
         }, 4000)
     } else if (response.status !== 200) {
-        dispatch(getError(response.data))
+        dispatch(getError(response.data.errors))
     }
 
 }

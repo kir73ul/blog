@@ -150,7 +150,7 @@ export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unkn
 export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     const response = await likeAPI.removeLike(slug)
     debugger
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 204) {
         dispatch(setFavoriteUnfavorite(false))
     } else if (response.status !== 200) {
         console.log(response.data.errors)
@@ -158,8 +158,9 @@ export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, un
 }
 
 export const removeArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    debugger
     const response = await articleAPI.deleteArticle(slug)
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 204) {
         dispatch(setIsRemoveSuccess(true))
         setTimeout(() => {
             dispatch(setIsRemoveSuccess(false))

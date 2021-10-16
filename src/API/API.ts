@@ -57,20 +57,12 @@ export const loginAPI = {
             .then(resp => resp).catch(error => error.response)
     }
 }
-
-/* export const articaleData = {
-    getArticalePage(currentPage = 0, pageSize = 5) {
-
-        return instanceWithAuth.get(`articles?limit=${pageSize}?offset=${currentPage - 1}`).then(response => (response.data)).catch(error => (error));
+export const usersAPI = {
+    getUsersInformation() {
+        return instanceWithAuth.get('user').then(resp => resp).catch(error => error.response)
     }
 }
 
-export const singleArticle = {
-    getsingleArticleData(slug: string) {
-        return instanceWithAuth.get(`articles/${slug}`).then(response => (response.data.article)).catch(error => (error));
-    }
-}
- */
 export const likeAPI = {
     addLike(slug: string) {
         return instanceWithAuth.post(`articles/${slug}/favorite`).then(response => (response)).catch(error => (error));
