@@ -7,7 +7,7 @@ import { convertDate } from '../../Common/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/rootReducer';
 import React, { useEffect } from 'react';
-
+/* 
 interface LikeType {
     isAuth: boolean;
     favorited: boolean;
@@ -33,8 +33,8 @@ const Like: React.FC<LikeType> = ({ isAuth, favorited, slug, favoritesCount }) =
             <div className={styles.likes_count}>{favoritesCount}</div>
         </div>
     )
-}
-const setLike = (isAuth: boolean, favorited: boolean, slug: string, favoritesCount: number) => {
+} */
+/* const setLike = (isAuth: boolean, favorited: boolean, slug: string, favoritesCount: number) => {
     return (
         <Like
             isAuth={isAuth}
@@ -42,39 +42,36 @@ const setLike = (isAuth: boolean, favorited: boolean, slug: string, favoritesCou
             slug={slug}
             favoritesCount={favoritesCount} />
     )
-}
+} */
 export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favorited, favoritesCount, author }) => {
-    const isAuth = localStorage.length > 0;
-
-/*     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
- */    const dispatch = useDispatch()
-    useEffect(() => { setLike(isAuth, favorited, slug, favoritesCount) }, [favorited])
-    /*     const setLikeOrDislike = (slug: string) => {
-            if (isAuth) {
-                if (!favorited) {
-                    dispatch(makeFavorite(slug))
-                }
-                if (favorited) {
-                    dispatch(makeUnfavorite(slug))
-                }
+    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    const dispatch = useDispatch()
+    const setLikeOrDislike = (slug: string) => {
+        if (isAuth) {
+            if (!favorited) {
+                dispatch(makeFavorite(slug))
             }
-            return
-        } */
+            if (favorited) {
+                dispatch(makeUnfavorite(slug))
+            }
+        }
+        return
+    }
     return (
         <div className={styles.wrap_block}>
             <div className={styles.articlePreview_block}>
                 <div className={styles.title}>
                     <Link onClick={() => { dispatch(setCurrentSlug(slug)) }} to={`/articles/:${slug}`} className={styles.link}>{title}</Link>
-                    <Like
+                    {/* <Like
                         isAuth={isAuth}
                         favorited={favorited}
                         slug={slug}
                         favoritesCount={favoritesCount}
-                    />
-                    {/*  <div onClick={() => { setLikeOrDislike(slug) }} className={styles.likes_block}>
+                    /> */}
+                    <div onClick={() => { setLikeOrDislike(slug) }} className={styles.likes_block}>
                         <img src={favorited ? FavoriteImage : LikesImage} alt="" className={styles.icon}></img>
                         <div className={styles.likes_count}>{favoritesCount}</div>
-                    </div> */}
+                    </div>
                 </div>
                 <div className={styles.tag_block}>
                     <div className={styles.tag_wrap}>

@@ -20,7 +20,8 @@ export const NewArticale = () => {
     const title = articleData ? articleData.title : ''
     const description = articleData ? articleData.description : ''
     const text = articleData ? articleData.body : ''
-    const tags = articleData ? articleData.tagList : tagsForCreating
+
+    const tags: string[] = articleData ? articleData.tagList : tagsForCreating
     const history = useHistory()
 
     const [localTag, SetLocalTag] = useState('')
@@ -28,10 +29,10 @@ export const NewArticale = () => {
     const [localShortDescription, SetlocalShortDescription] = useState(description)
     const [localText, SetlocalText] = useState(text)
 
-    const initialValues = {
-        title: localTitle,
-        shortDescription: localShortDescription,
-        text: localText,
+    let initialValues = {
+        title: !!title ? title : localTitle,
+        shortDescription: !!description ? description : localShortDescription,
+        text: !!text ? text : localText,
         tags: [...tags]
     }
     if (isFetching) {
@@ -41,22 +42,17 @@ export const NewArticale = () => {
         setTimeout(() => {
             history.push('/')
         }, 3000)
+        const action = (articleData ? 'edited' : 'created')
         return (
             <p className={styles.articleSuccess}>
-                <p className={styles.success}>&#9989;{`Your article is succesefully created`}</p>
-            </p>
-        )
-    }
-    if (isSuccess && articleData) {
-        return (
-            <p className={styles.articleSuccess}>
-                <p className={styles.success}>&#9989;{`Your article is succesefully edited`}</p>
+                <p className={styles.success}>&#9989;{`Your article is succesefully ${action}`}</p>
             </p>
         )
     }
     return (
         <>
             <div className={styles.createArticle_block}>
+                <p className={styles.RequestError}></p>
                 <h1 className={styles.title}>{articleData ? 'Edit article' : 'Create new article'}</h1>
                 <Formik
                     initialValues={initialValues}
@@ -68,8 +64,6 @@ export const NewArticale = () => {
                         tags: Yup.array().of(Yup.string().nullable().min(1, `It shouldn't be empty`))
                     })}
                     onSubmit={(values) => {
-                        console.log(initialValues);
-
                         const articleDataJSON = JSON.stringify({
                             article: {
                                 title: values.title,
@@ -78,8 +72,6 @@ export const NewArticale = () => {
                                 tagList: values.tags
                             }
                         })
-                        console.log(articleData, articleDataJSON);
-
                         articleData ? dispatch(editArticle(articleDataJSON, articleData.slug)) : dispatch(createNewArticle(articleDataJSON))
                     }}
                 >
@@ -97,7 +89,7 @@ export const NewArticale = () => {
                             </div>
                             <div className={styles.text_block}>
                                 <span className={styles.textLabel}> Text </span>
-                                <Input.TextArea onChange={(event) => SetlocalText(event.target.value)} placeholder='text' className={styles.textInput} name="text" />
+                                <Input.TextArea onChange={(event) => SetlocalText(event.target.value)} placeholder='text' className={(formik.errors.text && styles.borderInput && styles.textInput) || styles.textInput} name="text" />
                                 <ErrorMessage className={styles.error} name="text" component="div" />
                             </div>
                             <div className={styles.tags_block}>

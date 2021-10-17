@@ -1,35 +1,16 @@
-import { userDataType } from './../redux/authReducer';
 import axios from 'axios';
-import { store } from '../redux/rootReducer';
 
 export const saveToken = (token: string) => {
     return localStorage.setItem('tokenData', ('Token ' + token));
 }
-export const saveUserData = (userData: string) => {
 
-    return localStorage.setItem('userData', (userData));
-}
-
-/* const instanceWithoutAuth = axios.create({
-    baseURL: 'https://api.realworld.io/api/',
-    headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-    }
-}) */
 const token = localStorage.getItem('tokenData')
 const instanceWithAuth = axios.create({
     baseURL: 'https://api.realworld.io/api/',
-/*     withCredentials: true,
- */    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://api.realworld.io/api',
-        'Access-Control-Allow-Headers': 'Content-Type,  Access-Control-Allow-Origin',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Methods': 'GET, PUT, DELETE, POST'
-
+    headers: {
+        'Content-Type': 'application/json'
     }
 })
-//; charset=utf-8 ,         'Authorization': token,
 
 instanceWithAuth.interceptors.request.use((config) => {
     config.headers.Authorization = token;

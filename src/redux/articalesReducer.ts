@@ -37,7 +37,7 @@ interface articlesReducerType {
     currentPage: number;
     pageSize: number;
     isFetching: boolean;
-    articles: Array<articlesType>;
+    articleList: articlesType[];
     currentArticle: articlesType | null;
     total: number;
     currentSlug: string;
@@ -48,7 +48,7 @@ const initialState = {
     currentPage: 1,
     pageSize: 1,
     isFetching: false,
-    articles: [] as Array<articlesType>,
+    articleList: [],
     currentArticle: null,
     total: 0,
     currentSlug: '',
@@ -70,7 +70,7 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
         case SET_ARTICLES:
             return {
                 ...state,
-                articles: action.articles
+                articleList: [...action.articleList]
             }
         case GET_TOTAL_ARTICLES:
             return {
@@ -80,8 +80,9 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
         case SET_FAVORITE_UNFAVORITE:
             return {
                 ...state,
-                ...state.articles,
-                favorited: action.favorited
+                articleList: state.articleList.map(article => {
+                    return article.slug === action.slug ? { ...article, ...action.articleData } : article
+                })
             }
         case SET_CURRENT_SLUG:
             return {
@@ -106,12 +107,14 @@ interface setCurrentPageType { type: typeof SET_CURRENT_PAGE, currentPage: numbe
 export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage });
 interface setFetchingType { type: typeof SET_FETCHING, isFetching: boolean };
 export const setFetching = (isFetching: boolean): setFetchingType => ({ type: SET_FETCHING, isFetching });
-interface setArticlesType { type: typeof SET_ARTICLES, articles: Array<articlesType> };
-export const setArticles = (articles: Array<articlesType>): setArticlesType => ({ type: SET_ARTICLES, articles });
+interface setArticlesType { type: typeof SET_ARTICLES, articleList: Array<articlesType> };
+export const setArticles = (articleList: Array<articlesType>): setArticlesType => ({ type: SET_ARTICLES, articleList });
 interface getTotalArticlesType { type: typeof GET_TOTAL_ARTICLES, total: number };
 export const getTotalArticles = (total: number): getTotalArticlesType => ({ type: GET_TOTAL_ARTICLES, total });
-interface setFavoriteUnfavoriteType { type: typeof SET_FAVORITE_UNFAVORITE, favorited: boolean };
-export const setFavoriteUnfavorite = (favorited: boolean): setFavoriteUnfavoriteType => ({ type: SET_FAVORITE_UNFAVORITE, favorited });
+/* interface setFavoriteUnfavoriteType { type: typeof SET_FAVORITE_UNFAVORITE, favorited: boolean };
+export const setFavoriteUnfavorite = (favorited: boolean): setFavoriteUnfavoriteType => ({ type: SET_FAVORITE_UNFAVORITE, favorited }); */
+interface setFavoriteUnfavoriteType { type: typeof SET_FAVORITE_UNFAVORITE, articleData: articlesType, slug: string };
+export const setFavoriteUnfavorite = (articleData: articlesType, slug: string): setFavoriteUnfavoriteType => ({ type: SET_FAVORITE_UNFAVORITE, articleData, slug });
 interface setCurrentSlugType { type: typeof SET_CURRENT_SLUG, slug: string };
 export const setCurrentSlug = (slug: string): setCurrentSlugType => ({ type: SET_CURRENT_SLUG, slug });
 interface setCurrentArticleType { type: typeof SET_CURRENT_ARTICLE, currentArticle: articlesType };
@@ -138,8 +141,7 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
         console.log(response.data.errors);
     }
 }
-
-export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+/* export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     const response = await likeAPI.addLike(slug)
     if (response.status === 200) {
         dispatch(setFavoriteUnfavorite(true))
@@ -149,16 +151,32 @@ export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unkn
 }
 export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     const response = await likeAPI.removeLike(slug)
-    debugger
+
     if (response.status === 200 || response.status === 204) {
         dispatch(setFavoriteUnfavorite(false))
+    } else if (response.status !== 200) {
+        console.log(response.data.errors)
+    }
+} */
+export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    const response = await likeAPI.addLike(slug)
+    if (response.status === 200) {
+        dispatch(setFavoriteUnfavorite(response.data.article, slug))
+    } else if (response.status !== 200) {
+        console.log(response.data.errors)
+    }
+}
+export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    const response = await likeAPI.removeLike(slug)
+    debugger
+    if (response.status === 200 || response.status === 204) {
+        dispatch(setFavoriteUnfavorite(response.data.article, slug))
     } else if (response.status !== 200) {
         console.log(response.data.errors)
     }
 }
 
 export const removeArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
-    debugger
     const response = await articleAPI.deleteArticle(slug)
     if (response.status === 200 || response.status === 204) {
         dispatch(setIsRemoveSuccess(true))

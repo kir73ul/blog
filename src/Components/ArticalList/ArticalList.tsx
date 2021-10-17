@@ -12,7 +12,9 @@ export const ArticalList = () => {
     const currentPage = useSelector((state: AppStateType) => state.articles.currentPage)
     const totalArticles = useSelector((state: AppStateType) => state.articles.total)
     const isFetching = useSelector((state: AppStateType) => state.articles.isFetching)
-    const articles = useSelector((state: AppStateType) => state.articles?.articles)
+    const articleList = useSelector((state: AppStateType) => state.articles?.articleList)
+    console.log(articleList);
+
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getArticles(currentPage, pageSize))
@@ -22,7 +24,7 @@ export const ArticalList = () => {
     }
     return (
         <div className={styles.body_block}>
-            {articles.map(article => {
+            {articleList.map(article => {
                 return <ArticlePreview key={article.slug} {...article} />
             })}
             <span className={styles.pagination}>

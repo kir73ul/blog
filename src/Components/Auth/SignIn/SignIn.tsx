@@ -45,7 +45,11 @@ export const SignIn = () => {
         <>
             <div className={styles.signIn_block}>
                 {(error) ?
-                    <p className={styles.responseError}>{error}</p> : null}
+                    <p className={styles.responseError}>{
+                        Object.entries(error).map((er, ...bodyEr) => {
+                            return `${er}-${bodyEr}` 
+                        })
+                    }</p> : null}
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik
                     initialValues={initialValues}

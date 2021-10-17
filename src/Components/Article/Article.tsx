@@ -26,6 +26,7 @@ export const Artical = () => {
 
     const redirectToEditArticle = () => {
         history.push('/new-article')
+
     }
     const redirectToArticleList = () => {
         setTimeout(() => {

@@ -13,7 +13,7 @@ const ZEROIZE_ARTICLE = 'ZEROIZE_ARTICLE';
 const ZEROIZE_TAGS = 'ZEROIZE_TAGS';
 
 
-interface articleDataType {
+export interface articleDataType {
     slug: string,
     title: string,
     description: string,
@@ -50,17 +50,33 @@ const initialState = {
 export const newArticalReducer = (state: newArticalReducerType = initialState, action: newArticalActionType) => {
     switch (action.type) {
         case SET_TAGS:
-            return {
-                ...state,
-                tags: [...state.tags, action.tag]
-
-            }
+            return state.articleData ?
+                {
+                    ...state,
+                    articleData: {
+                        ...state.articleData,
+                        tagList: [...state.articleData.tagList, action.tag]
+                    },
+                }
+                :
+                {
+                    ...state,
+                    tags: [...state.tags, action.tag]
+                }
         case REMOVE_TAG:
-            return {
-                ...state,
-                tags: [...state.tags.filter((tag, idx) => idx !== action.index)]
-            }
-
+            return state.articleData ?
+                {
+                    ...state,
+                    articleData: {
+                        ...state.articleData,
+                        tagList: [...state.articleData.tagList.filter((tag, idx) => idx !== action.index)]
+                    },
+                }
+                :
+                {
+                    ...state,
+                    tags: [...state.tags.filter((tag, idx) => idx !== action.index)]
+                }
         case SET_NEW_ARTICLE:
             return {
                 ...state,
@@ -115,6 +131,7 @@ export const zeroizeTags = (): zeroizeTagsType => ({ type: ZEROIZE_TAGS });
 export const createNewArticle = (articleData: any): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articleAPI.createArticle(articleData);
+    debugger
     dispatch(setFetching(false))
     if (response.status === 200) {
         dispatch(zeroizeArticle())
@@ -135,19 +152,18 @@ export const getArticleData = (slug: string): ThunkAction<void, AppStateType, un
     if (response.status === 200) {
         dispatch(setNewArticleData(response.data.article))
     } else if (response.status !== 200) {
-        console.log(response.data.errors);
+        dispatch(getError(response.data.errors));
     }
 }
 export const editArticle = (articleData: any, slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articleAPI.editArticle(articleData, slug);
     dispatch(setFetching(false))
-    debugger
     if (response.status === 200) {
-        dispatch(zeroizeArticle())
-        dispatch(zeroizeTags())
         dispatch(setSuccses(true))
         setTimeout(() => {
+            dispatch(zeroizeArticle())
+            dispatch(zeroizeTags())
             dispatch(setSuccses(false))
         }, 4000)
     }

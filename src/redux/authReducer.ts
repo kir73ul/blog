@@ -1,4 +1,4 @@
-import { saveToken, saveUserData, usersAPI, loginAPI } from './../API/API';
+import { saveToken, usersAPI, loginAPI } from './../API/API';
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
 
@@ -113,19 +113,26 @@ interface setSuccsesType { type: typeof SET_SUCCESS, isSuccess: boolean };
 const setSuccses = (isSuccess: boolean): setSuccsesType => ({ type: SET_SUCCESS, isSuccess });
 
 export const getUserInfo = (): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
-    const response = await usersAPI.getUsersInformation()
-    if (response.status === 200) {
-        dispatch(setUserAuth())
-        dispatch(setUsersData(response.data.user))
-    } else if (response.status !== 200) {
-        console.log(response.data.errors)
+    try {
+        const response = await usersAPI.getUsersInformation()
+        if (response.status === 200) {
+            dispatch(setUserAuth())
+            dispatch(setUsersData(response.data.user))
+        } else if (response.status !== 200) {
+            console.log(response.data.errors)
+        }
+    } catch (err) {
+        console.log(err);
+
     }
+
 }
 
 export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(cleanError())
     dispatch(setFetching(true))
     const response = await loginAPI.aythtorizeMe(loginData)
+    debugger
     if (response.data.user) {
         saveToken(response.data.user.token)
         dispatch(setFetching(false))
