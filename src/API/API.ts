@@ -1,10 +1,15 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+export const cookies = new Cookies();
 
 export const saveToken = (token: string) => {
-    return localStorage.setItem('tokenData', ('Token ' + token));
+    console.log(token);
+
+    return cookies.set('tokenData', ('Token ' + token));
 }
 
-const token = localStorage.getItem('tokenData')
+const token = cookies.get('tokenData')
 const instanceWithAuth = axios.create({
     baseURL: 'https://api.realworld.io/api/',
     headers: {
@@ -49,7 +54,7 @@ export const likeAPI = {
         return instanceWithAuth.post(`articles/${slug}/favorite`).then(response => (response)).catch(error => (error));
     },
     removeLike(slug: string) {
-        return instanceWithAuth.delete(`articles/:${slug}/favorite`).then(response => (response)).catch(error => (error));
+        return instanceWithAuth.delete(`articles/${slug}/favorite`).then(response => (response)).catch(error => (error));
     }
 }
 

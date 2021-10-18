@@ -56,7 +56,6 @@ export const EditProfile = () => {
                                 image: values.avatarImage
                             }
                         }
-                        debugger
                         if (!_.isEqual(userData.user, initialValuesData)) {
                             dispatch(updateUserInfo(userData))
                         } else if (_.isEqual(userData.user, initialValuesData)) {

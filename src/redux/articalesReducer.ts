@@ -46,7 +46,7 @@ interface articlesReducerType {
 
 const initialState = {
     currentPage: 1,
-    pageSize: 1,
+    pageSize: 5,
     isFetching: false,
     articleList: [],
     currentArticle: null,
@@ -68,9 +68,12 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 isFetching: action.isFetching
             }
         case SET_ARTICLES:
+            const upLimit = state.currentPage * state.pageSize
+            const downLimit = upLimit - state.pageSize
+
             return {
                 ...state,
-                articleList: [...action.articleList]
+                articleList: [...(action.articleList).filter((article, idx) => idx >= downLimit && idx < upLimit)]
             }
         case GET_TOTAL_ARTICLES:
             return {
@@ -111,8 +114,6 @@ interface setArticlesType { type: typeof SET_ARTICLES, articleList: Array<articl
 export const setArticles = (articleList: Array<articlesType>): setArticlesType => ({ type: SET_ARTICLES, articleList });
 interface getTotalArticlesType { type: typeof GET_TOTAL_ARTICLES, total: number };
 export const getTotalArticles = (total: number): getTotalArticlesType => ({ type: GET_TOTAL_ARTICLES, total });
-/* interface setFavoriteUnfavoriteType { type: typeof SET_FAVORITE_UNFAVORITE, favorited: boolean };
-export const setFavoriteUnfavorite = (favorited: boolean): setFavoriteUnfavoriteType => ({ type: SET_FAVORITE_UNFAVORITE, favorited }); */
 interface setFavoriteUnfavoriteType { type: typeof SET_FAVORITE_UNFAVORITE, articleData: articlesType, slug: string };
 export const setFavoriteUnfavorite = (articleData: articlesType, slug: string): setFavoriteUnfavoriteType => ({ type: SET_FAVORITE_UNFAVORITE, articleData, slug });
 interface setCurrentSlugType { type: typeof SET_CURRENT_SLUG, slug: string };
@@ -141,23 +142,6 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
         console.log(response.data.errors);
     }
 }
-/* export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
-    const response = await likeAPI.addLike(slug)
-    if (response.status === 200) {
-        dispatch(setFavoriteUnfavorite(true))
-    } else if (response.status !== 200) {
-        console.log(response.data.errors)
-    }
-}
-export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
-    const response = await likeAPI.removeLike(slug)
-
-    if (response.status === 200 || response.status === 204) {
-        dispatch(setFavoriteUnfavorite(false))
-    } else if (response.status !== 200) {
-        console.log(response.data.errors)
-    }
-} */
 export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     const response = await likeAPI.addLike(slug)
     if (response.status === 200) {
@@ -167,12 +151,16 @@ export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unkn
     }
 }
 export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
-    const response = await likeAPI.removeLike(slug)
-    debugger
-    if (response.status === 200 || response.status === 204) {
-        dispatch(setFavoriteUnfavorite(response.data.article, slug))
-    } else if (response.status !== 200) {
-        console.log(response.data.errors)
+    try {
+        const response = await likeAPI.removeLike(slug)
+        if (response.status === 200 || response.status === 204) {
+            dispatch(setFavoriteUnfavorite(response.data.article, slug))
+        } else if (!!response?.data?.errors) {
+            console.log(response.data.errors)
+        }
+    }
+    catch (error) {
+        throw error
     }
 }
 

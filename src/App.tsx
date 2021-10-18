@@ -9,14 +9,20 @@ import { SignUp } from './Components/Auth/SignUp/SignUp';
 import { NewArticale } from './Components/NewArticale/NewArticale';
 import { useSelector } from 'react-redux';
 import { AppStateType } from './redux/rootReducer';
+import { ErrorBoundary } from './Components/ErroProcessing/ErrorBoundary';
 
 const App = () => {
-  const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug) 
+  const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
   return (
     <div className="App">
       <Header />
-      <Route path={`/articles/:${currentSlug}`} component={Artical} />
-      <Route exact path={'/' || '/articles'} component={ArticalList} />
+      <ErrorBoundary>
+        <Route path={`/articles/:${currentSlug}`} component={Artical} />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <Route exact path={'/' || '/articles'} component={ArticalList} />
+      </ErrorBoundary>
+
       <Route path='/sign-in' component={SignIn} />
       <Route path='/sign-up' component={SignUp} />
       <Route path='/profile' component={EditProfile} />

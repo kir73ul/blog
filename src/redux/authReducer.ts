@@ -1,4 +1,4 @@
-import { saveToken, usersAPI, loginAPI } from './../API/API';
+import { saveToken, usersAPI, loginAPI, cookies } from './../API/API';
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
 
@@ -132,7 +132,6 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
     dispatch(cleanError())
     dispatch(setFetching(true))
     const response = await loginAPI.aythtorizeMe(loginData)
-    debugger
     if (response.data.user) {
         saveToken(response.data.user.token)
         dispatch(setFetching(false))
@@ -165,6 +164,7 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
     const response = await loginAPI.updateUserData(updateDataJSON);
     dispatch(setFetching(false))
     if (response.status === 200) {
+        saveToken(response.data.user.token)
         dispatch(setUsersData(response.data.user))
         dispatch(setSuccses(true))
         setTimeout(() => {
@@ -176,6 +176,6 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
 
 }
 export const logout = (): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
-    localStorage.clear()
+    cookies.remove('tokenData')
     dispatch(logOut())
 }

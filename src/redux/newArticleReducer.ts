@@ -131,7 +131,6 @@ export const zeroizeTags = (): zeroizeTagsType => ({ type: ZEROIZE_TAGS });
 export const createNewArticle = (articleData: any): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articleAPI.createArticle(articleData);
-    debugger
     dispatch(setFetching(false))
     if (response.status === 200) {
         dispatch(zeroizeArticle())

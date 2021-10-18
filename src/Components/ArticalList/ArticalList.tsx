@@ -2,6 +2,7 @@ import { Pagination } from 'antd';
 import { ArticlePreview } from './ArticlePreview/ArticlePreview';
 import styles from './ArticalList.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import 'antd/dist/antd.css';
 import { getArticles, setCurrentPage } from '../../redux/articalesReducer';
 import { AppStateType } from '../../redux/rootReducer';
 import Preloader from '../Common/Preloader';

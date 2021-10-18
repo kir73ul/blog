@@ -7,6 +7,7 @@ import { getUserInfo, logout } from '../../redux/authReducer';
 import imgUrl from '../../assets/image/userAva.png'
 import { zeroizeArticle } from '../../redux/newArticleReducer';
 import { useEffect } from 'react';
+import { cookies } from '../../API/API';
 
 export const Header = () => {
 /*     const isAuth = localStorage.length > 0;
@@ -16,7 +17,7 @@ export const Header = () => {
 
 
     useEffect(() => {
-        if (!!localStorage && !isAuth) {
+        if (!!cookies.get('tokenData') && !isAuth) {
             dispatch(getUserInfo())
         }
     }, [userData])

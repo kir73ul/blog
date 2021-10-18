@@ -1,51 +1,20 @@
 import styles from './ArticlePreview.module.scss';
 import LikesImage from '../../../assets/image/Vector.png';
 import FavoriteImage from '../../../assets/image/path4.png';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { articlesType, makeFavorite, makeUnfavorite, setCurrentSlug } from '../../../redux/articalesReducer';
 import { convertDate } from '../../Common/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/rootReducer';
 import React, { useEffect } from 'react';
-/* 
-interface LikeType {
-    isAuth: boolean;
-    favorited: boolean;
-    slug: string;
-    favoritesCount: number;
-}
-const Like: React.FC<LikeType> = ({ isAuth, favorited, slug, favoritesCount }) => {
-    const dispatch = useDispatch()
-    const setLikeOrDislike = (slug: string) => {
-        if (isAuth) {
-            if (!favorited) {
-                dispatch(makeFavorite(slug))
-            }
-            if (favorited) {
-                dispatch(makeUnfavorite(slug))
-            }
-        }
-        return
-    }
-    return (
-        <div onClick={() => { setLikeOrDislike(slug) }} className={styles.likes_block}>
-            <img src={favorited ? FavoriteImage : LikesImage} alt="" className={styles.icon}></img>
-            <div className={styles.likes_count}>{favoritesCount}</div>
-        </div>
-    )
-} */
-/* const setLike = (isAuth: boolean, favorited: boolean, slug: string, favoritesCount: number) => {
-    return (
-        <Like
-            isAuth={isAuth}
-            favorited={favorited}
-            slug={slug}
-            favoritesCount={favoritesCount} />
-    )
-} */
+
 export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favorited, favoritesCount, author }) => {
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const dispatch = useDispatch()
+    const history = useHistory()
+    const redirectToSignIn = () => {
+        history.push('/sign-in')
+    }
     const setLikeOrDislike = (slug: string) => {
         if (isAuth) {
             if (!favorited) {
@@ -62,13 +31,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
             <div className={styles.articlePreview_block}>
                 <div className={styles.title}>
                     <Link onClick={() => { dispatch(setCurrentSlug(slug)) }} to={`/articles/:${slug}`} className={styles.link}>{title}</Link>
-                    {/* <Like
-                        isAuth={isAuth}
-                        favorited={favorited}
-                        slug={slug}
-                        favoritesCount={favoritesCount}
-                    /> */}
-                    <div onClick={() => { setLikeOrDislike(slug) }} className={styles.likes_block}>
+                    <div onClick={() => { isAuth ? setLikeOrDislike(slug) : redirectToSignIn() }} className={styles.likes_block}>
                         <img src={favorited ? FavoriteImage : LikesImage} alt="" className={styles.icon}></img>
                         <div className={styles.likes_count}>{favoritesCount}</div>
                     </div>
