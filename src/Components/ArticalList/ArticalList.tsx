@@ -29,7 +29,7 @@ export const ArticalList = () => {
                 return <ArticlePreview key={article.slug} {...article} />
             })}
             <span className={styles.pagination}>
-                <Pagination onChange={(current) => { dispatch(setCurrentPage(current)) }} pageSize={pageSize} size="small" total={totalArticles} />
+                <Pagination onChange={(current) => { dispatch(setCurrentPage(current)) }} pageSize={pageSize} size="small" total={totalArticles} current={currentPage} />
             </span>
         </div>
     )

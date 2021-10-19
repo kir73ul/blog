@@ -10,14 +10,14 @@ import { useEffect } from 'react';
 import { cookies } from '../../API/API';
 
 export const Header = () => {
-/*     const isAuth = localStorage.length > 0;
- */    const userData = useSelector((state: AppStateType) => state.auth.users)
+    const userData = useSelector((state: AppStateType) => state.auth.users)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
 
 
 
     useEffect(() => {
-        if (!!cookies.get('tokenData') && !isAuth) {
+        const isCooky = !!cookies.get('tokenData')
+        if (isCooky && !isAuth) {
             dispatch(getUserInfo())
         }
     }, [userData])

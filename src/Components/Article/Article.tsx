@@ -32,9 +32,7 @@ export const Artical = () => {
         setTimeout(() => {
             history.push('/')
         }, 3000)
-
     }
-
     useEffect(() => {
         dispatch(getSingleArticle(slug))
     }, [slug])
@@ -76,11 +74,34 @@ export const Artical = () => {
                         </div>
 
                         {article.author.username === username ? <div className={styles.buttons_block}>
-                            <Button onClick={() => { setIsModalVisible(true)/* dispatch(removeArticle(slug)) */ }} className={styles.delete_btn}>Delete</Button>
-                            <Modal title="Are you sure to delete this article?" visible={isModalVisible} width='240' /* bodyStyle='modal_body' */ /* onOk={dispatch(removeArticle(slug))} onCancel={setIsModalVisible(false)} */>
+                            <button onClick={() => { setIsModalVisible(true) }} className={styles.delete_btn}>Delete
+                                <Modal title={
+                                    <div>
+                                        <span className={styles.sign}>&#33;</span>
+                                        <span>Are you sure to delete this article?</span>
+                                    </div>}
+                                    visible={isModalVisible}
+                                    width='240px'
+                                    onOk={() => { dispatch(removeArticle(slug)) }}
+                                    onCancel={() => { setIsModalVisible(false) }}
+                                    okText='Yes'
+                                    cancelText='No'
+                                    closable={false}
+                                    mask={false}
+                                    maskClosable={true}
+                                    bodyStyle={{
 
-                            </Modal>
-                            <Button onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle() }} className={styles.edit_btn}>Edit</Button>
+                                    }}
+                                    style={{
+                                        position: 'relative',
+                                        top: 197,
+                                        left: 0,
+                                    }}
+                                    wrapClassName={styles.modal_body}>
+                                </Modal>
+                            </button>
+
+                            <button onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle() }} className={styles.edit_btn}>Edit</button>
                         </div> : null}
                         <p className={styles.articleText}>{article.description}</p>
                     </div>
