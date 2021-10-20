@@ -1,6 +1,7 @@
 import { saveToken, usersAPI, loginAPI, cookies, removeToken } from './../API/API';
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
+import { debounce } from 'lodash';
 
 const AUTH_USER = 'AUTH_USER';
 const GET_ERROR = 'GET_ERROR';
@@ -12,6 +13,9 @@ const SET_SUCCESS = 'SET_SUCCESS';
 
 export interface errorsType {
     [key: string]: string[];
+}
+interface allErrorsType {
+    [key: string]: errorsType | string
 }
 interface usersType {
     bio: string;
@@ -37,7 +41,8 @@ interface authReducerType {
     isAuth: boolean;
     isSuccess: boolean;
     users: usersType;
-    error: errorsType | null;
+    allErrors: allErrorsType | null;
+
 }
 
 const initialState = {
@@ -54,7 +59,7 @@ const initialState = {
         updatedAt: '',
         username: ''
     },
-    error: null
+    allErrors: null
 }
 
 export const authReducer = (state: authReducerType = initialState, action: AuthActionType) => {
@@ -65,10 +70,12 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
                 isAuth: true
             }
         case GET_ERROR:
+            debugger
             return {
                 ...state,
-                error: action.error
+                allErrors: { [action.whichError]: action.error }
             }
+
         case SET_IS_FETCHING:
             return {
                 ...state,
@@ -82,7 +89,7 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
         case CLEAN_ERROR:
             return {
                 ...state,
-                error: null
+                allErrors: null
             }
         case LOG_OUT:
             return {
@@ -105,8 +112,8 @@ interface setIsFetchingType { type: typeof SET_IS_FETCHING, isFetching: boolean 
 const setFetching = (isFetching: boolean): setIsFetchingType => ({ type: SET_IS_FETCHING, isFetching });
 interface cleanErrorType { type: typeof CLEAN_ERROR };
 export const cleanError = (): cleanErrorType => ({ type: CLEAN_ERROR });
-interface getErrorType { type: typeof GET_ERROR, error: errorsType };
-export const getError = (error: errorsType): getErrorType => ({ type: GET_ERROR, error });
+interface getErrorType { type: typeof GET_ERROR, error: errorsType, whichError: string };
+export const getError = (error: errorsType, whichError: string): getErrorType => ({ type: GET_ERROR, error, whichError });
 interface logOutType { type: typeof LOG_OUT };
 const logOut = (): logOutType => ({ type: LOG_OUT });
 interface setSuccsesType { type: typeof SET_SUCCESS, isSuccess: boolean };
@@ -139,7 +146,7 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
         dispatch(setUsersData(response.data.user))
     } else if (response.data.errors) {
         dispatch(setFetching(false))
-        dispatch(getError(response.data.errors))
+        dispatch(getError(response.data.errors, 'signIn'))
     }
 }
 
@@ -154,25 +161,33 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
         dispatch(setUsersData(response.data.user))
     } else if (response.status !== 200) {
         dispatch(setFetching(false))
-        dispatch(getError(response.data.errors))
+        dispatch(getError(response.data.errors, 'signUp'))
     }
 }
 export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
-    const updateDataJSON = JSON.stringify(updateData)
-    dispatch(cleanError())
-    dispatch(setFetching(true))
-    const response = await loginAPI.updateUserData(updateDataJSON);
-    dispatch(setFetching(false))
-    if (response.status === 200) {
-        saveToken(response.data.user.token)
-        debugger
-        dispatch(setUsersData(response.data.user))
-        dispatch(setSuccses(true))
-        setTimeout(() => {
-            dispatch(setSuccses(false))
-        }, 4000)
-    } else if (response.status !== 200) {
-        dispatch(getError(response.data.errors))
+    try {
+        const updateDataJSON = JSON.stringify(updateData)
+        dispatch(cleanError())
+        dispatch(setFetching(true))
+        const response = await loginAPI.updateUserData(updateDataJSON);
+        dispatch(setFetching(false))
+        if (response.status === 200) {
+            saveToken(response.data.user.token)
+            dispatch(setUsersData(response.data.user))
+            dispatch(setSuccses(true))
+            setTimeout(() => {
+                dispatch(setSuccses(false))
+            }, 4000)
+        } else if (response.status !== 200) {
+            response.data.errors ? dispatch(getError(response.data.errors, 'updateError'))
+                :
+                dispatch(getError({ [response.status]: response.data }, 'updateError'))
+        }
+    }
+    catch (err: any) {
+        console.log(err);
+
+        dispatch(getError({ [err.name]: err.message }, 'updateError'))
     }
 
 }

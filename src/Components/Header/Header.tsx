@@ -48,8 +48,8 @@ export const Header = () => {
             {isAuth ?
                 <div className={styles.withAuth_block}>
                     <Button onClick={() => { redirectToCreateArticle(); dispatch(zeroizeArticle()) }} className={styles.createArticleBtn}>Create article</Button>
-                    <div className={styles.userName}>{userName}</div>
-                    <img src={avaImg} onClick={() => redirectToEditProfile()} className={styles.userAva} alt=''></img>
+                    <div onClick={() => { redirectToEditProfile() }} className={styles.userName}>{userName}</div>
+                    <img onClick={() => { redirectToEditProfile() }} src={avaImg} className={styles.userAva} alt=''></img>
                     <Button onClick={() => dispatch(logout())} className={styles.logOutBtn}>Log out</Button>
                 </div>
                 :

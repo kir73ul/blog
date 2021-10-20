@@ -6,7 +6,7 @@ import { articlesType, makeFavorite, makeUnfavorite, setCurrentSlug } from '../.
 import { convertDate } from '../../Common/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/rootReducer';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favorited, favoritesCount, author }) => {
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)

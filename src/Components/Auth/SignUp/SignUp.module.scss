@@ -26,12 +26,15 @@ span
     border-radius: 6px;
 }
 .responseError {
-    position: absolute;
+    width: 311px;
+    height: auto;
+    position: relative;
     color: red;
     text-align: center;
     align-items: center;
     justify-items: center;
-    top: 15px;
+    padding-bottom:10px;
+    margin: 5px;
 }
 .success {
 

@@ -21,7 +21,7 @@ export const SignIn = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
-    const error = useSelector((state: AppStateType) => state.auth.error)
+    const error = useSelector((state: AppStateType) => state.auth.allErrors?.signIn)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
 
@@ -46,9 +46,7 @@ export const SignIn = () => {
             <div className={styles.signIn_block}>
                 {(error) ?
                     <p className={styles.responseError}>{
-                        Object.entries(error).map((er, ...bodyEr) => {
-                            return `${er}-${bodyEr}` 
-                        })
+                        Object.entries(error).map(([er, bodyEr]) => <p>{`${er}  ${bodyEr}`}</p>)
                     }</p> : null}
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik

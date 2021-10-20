@@ -15,7 +15,7 @@ export const SignUp = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const [isSuccess, setIsSuccess] = useState(false)
-    const error = useSelector((state: AppStateType) => state.auth.error)
+    const error = useSelector((state: AppStateType) => state.auth.allErrors?.signUp)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     if (isAuth) {
@@ -29,7 +29,9 @@ export const SignUp = () => {
             <div className={styles.signUp_block}>
                 {isSuccess ? <span className={styles.success}>&#9989; Your account succesefully created</span> : null}
                 {(error) ?
-                    <p className={styles.responseError}>{error}</p> : null}
+                    <p className={styles.responseError}>{
+                        Object.entries(error).map(([er, bodyEr]) => <p>{`${er}  ${bodyEr}`}</p>)
+                    }</p> : null}
                 <h1 className={styles.title}>Create new account</h1>
                 <Formik
                     initialValues={{ userName: '', email: '', password: '', repeatPassword: '', agriment: false }}
@@ -40,8 +42,7 @@ export const SignUp = () => {
                         repeatPassword: Yup.string().oneOf([Yup.ref('password'), `Passwords don't match`]).min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
                         agriment: Yup.boolean().oneOf([true], 'You should agree condition')
                     })}
-                    //@ts-ignore
-                    onSubmit={(values) => { dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } }))); setIsSuccess(true) }}
+                    onSubmit={(values) => { dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } }))); error ? setIsSuccess(true) : setIsSuccess(false) }}
                 >
                     {(formik) => (
                         <Form >

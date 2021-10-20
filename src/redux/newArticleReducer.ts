@@ -36,7 +36,7 @@ interface newArticalReducerType {
     articleData: articleDataType | null;
     isFetching: boolean;
     isSuccess: boolean;
-    error: errorsType | null;
+    errorArtical: errorsType | null;
 }
 
 const initialState = {
@@ -44,7 +44,7 @@ const initialState = {
     articleData: null,
     isSuccess: false,
     isFetching: false,
-    error: null
+    errorArtical: null
 }
 
 export const newArticalReducer = (state: newArticalReducerType = initialState, action: newArticalActionType) => {
@@ -90,7 +90,7 @@ export const newArticalReducer = (state: newArticalReducerType = initialState, a
         case GET_ERROR:
             return {
                 ...state,
-                error: action.error
+                errorArtical: action.error
             }
         case SET_SUCCESS:
             return {

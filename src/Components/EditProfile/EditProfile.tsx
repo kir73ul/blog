@@ -18,7 +18,7 @@ export const EditProfile = () => {
     let userAvatarImage = useSelector((state: AppStateType) => state.auth.users.image)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const isSuccess = useSelector((state: AppStateType) => state.auth.isSuccess)
-    const error = useSelector((state: AppStateType) => state.auth.error)
+    const error = useSelector((state: AppStateType) => state.auth.allErrors?.updateError)
 
     const initialValuesData = {
         userName: username,
@@ -37,10 +37,11 @@ export const EditProfile = () => {
                 {isSuccess ? <span className={styles.success}>&#9989; {`${username}, your data was updated`}</span> : null}
                 {isSomethingChanged ? <span className={styles.error}>{`${username}, you should change at least one parameter`}</span> : null}
                 {(error) ?
-                    <p className={styles.responseError}>{error} </p> : null}
+                    <p className={styles.responseError}>{Object.entries(error).map(([er, bodyEr]) => <p>{`${er}  ${bodyEr}`}</p>)} </p> : null}
                 <h1 className={styles.title}>Edit Profile</h1>
                 <Formik
                     initialValues={initialValuesData}
+                    enableReinitialize
                     validationSchema={Yup.object({
                         userName: Yup.string().required('Required'),
                         email: Yup.string().email('Invalid email address').required('Required'),
