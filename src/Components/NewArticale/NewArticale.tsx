@@ -9,6 +9,7 @@ import { createNewArticle, editArticle, removeTag, setTags } from '../../redux/n
 import { AppStateType } from '../../redux/rootReducer';
 import Preloader from '../Common/Preloader';
 import { useHistory } from 'react-router';
+import { ErrorBlock } from '../ErroProcessing/ErrorBlock';
 
 
 export const NewArticale = () => {
@@ -17,6 +18,7 @@ export const NewArticale = () => {
     const isFetching = useSelector((state: AppStateType) => state.newArtical.isFetching)
     const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
     const articleData = useSelector((state: AppStateType) => state.newArtical.articleData)
+    const errorArticle = useSelector((state: AppStateType) => state.newArtical.errorArtical)
     const title = articleData ? articleData.title : ''
     const description = articleData ? articleData.description : ''
     const text = articleData ? articleData.body : ''
@@ -52,7 +54,7 @@ export const NewArticale = () => {
     return (
         <>
             <div className={styles.createArticle_block}>
-                <p className={styles.RequestError}></p>
+                <ErrorBlock error={errorArticle} />
                 <h1 className={styles.title}>{articleData ? 'Edit article' : 'Create new article'}</h1>
                 <Formik
                     initialValues={initialValues}

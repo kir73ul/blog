@@ -9,6 +9,7 @@ import { AppStateType } from '../../../redux/rootReducer';
 import { useHistory } from 'react-router-dom';
 import Preloader from '../../Common/Preloader';
 import { useState } from 'react';
+import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 
 
 export const SignUp = () => {
@@ -28,10 +29,11 @@ export const SignUp = () => {
         <>
             <div className={styles.signUp_block}>
                 {isSuccess ? <span className={styles.success}>&#9989; Your account succesefully created</span> : null}
-                {(error) ?
+                <ErrorBlock error={error}/>
+                {/* (error) ?
                     <p className={styles.responseError}>{
                         Object.entries(error).map(([er, bodyEr]) => <p>{`${er}  ${bodyEr}`}</p>)
-                    }</p> : null}
+                    }</p> : null */}
                 <h1 className={styles.title}>Create new account</h1>
                 <Formik
                     initialValues={{ userName: '', email: '', password: '', repeatPassword: '', agriment: false }}

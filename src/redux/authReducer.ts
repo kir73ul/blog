@@ -70,7 +70,6 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
                 isAuth: true
             }
         case GET_ERROR:
-            debugger
             return {
                 ...state,
                 allErrors: { [action.whichError]: action.error }
@@ -186,7 +185,6 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
     }
     catch (err: any) {
         console.log(err);
-
         dispatch(getError({ [err.name]: err.message }, 'updateError'))
     }
 

@@ -8,7 +8,7 @@ const REMOVE_TAG = 'REMOVE_TAG';
 const SET_IS_FETCHING = 'SET_FETCHING';
 const SET_NEW_ARTICLE = 'SET_NEW_ARTICLE';
 const SET_SUCCESS = 'SET_SUCCESS';
-const GET_ERROR = 'GET_ERROR';
+const GET_ARTICLE_ERROR = 'GET_ARTICLE_ERROR';
 const ZEROIZE_ARTICLE = 'ZEROIZE_ARTICLE';
 const ZEROIZE_TAGS = 'ZEROIZE_TAGS';
 
@@ -87,7 +87,7 @@ export const newArticalReducer = (state: newArticalReducerType = initialState, a
                 ...state,
                 isFetching: action.isFetching
             }
-        case GET_ERROR:
+        case GET_ARTICLE_ERROR:
             return {
                 ...state,
                 errorArtical: action.error
@@ -119,8 +119,8 @@ interface setNewArticleDataType { type: typeof SET_NEW_ARTICLE, articleData: any
 export const setNewArticleData = (articleData: any): setNewArticleDataType => ({ type: SET_NEW_ARTICLE, articleData });
 interface setIsFetchingType { type: typeof SET_IS_FETCHING, isFetching: boolean };
 const setFetching = (isFetching: boolean): setIsFetchingType => ({ type: SET_IS_FETCHING, isFetching });
-interface getErrorType { type: typeof GET_ERROR, error: errorsType };
-export const getError = (error: errorsType): getErrorType => ({ type: GET_ERROR, error });
+interface getErrorType { type: typeof GET_ARTICLE_ERROR, error: errorsType };
+export const getError = (error: errorsType): getErrorType => ({ type: GET_ARTICLE_ERROR, error });
 interface setSuccsesType { type: typeof SET_SUCCESS, isSuccess: boolean };
 const setSuccses = (isSuccess: boolean): setSuccsesType => ({ type: SET_SUCCESS, isSuccess });
 interface zeroizeArticleType { type: typeof ZEROIZE_ARTICLE };
@@ -139,9 +139,10 @@ export const createNewArticle = (articleData: any): ThunkAction<void, AppStateTy
         setTimeout(() => {
             dispatch(setSuccses(false))
         }, 4000)
+
     }
-    else if (response.data.error) {
-        dispatch(getError(response.data.errors))
+    else if (response.status !== 200) {
+        response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
     }
 }
 export const getArticleData = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {

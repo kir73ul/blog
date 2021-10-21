@@ -9,14 +9,14 @@ export const convertDate = (inboxDate: string) => {
 interface objType {
     [key: string]: string
 }
-export const compareObjValues = (obj1: objType, obj2: objType) => {
-    const result: objType = {}
+export const getDifferenceValue = (obj1: objType, obj2: objType) => {
+    const result: any = {
+        user: {}
+    }
     for (let keyObj1 in obj1) {
         if (obj1[keyObj1] !== obj2[keyObj1]) {
-            result[keyObj1] = obj1[keyObj1]
-            debugger
+            result.user[keyObj1] = obj1[keyObj1]
         }
     }
-
     return result
 }
