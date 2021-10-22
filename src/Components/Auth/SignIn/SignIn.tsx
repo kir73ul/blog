@@ -1,4 +1,4 @@
-import { Formik, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage, Field } from 'formik';
 import { Form, Input } from 'formik-antd';
 import * as Yup from 'yup';
 import styles from './SignIn.module.scss';
@@ -62,12 +62,12 @@ export const SignIn = () => {
                             <div className={styles.form_block}>
                                 <div className={styles.email_block}>
                                     <span className={styles.emailLabel}> Email address </span>
-                                    <Input placeholder='Email address' className={styles.emailInput} type="email" name="email" />
+                                    <Input placeholder='Email address' className={formik.errors.email && formik.touched.email ? styles.errorInput : styles.emailInput} type="email" name="email" />
                                     <ErrorMessage className={styles.error} name="email" component="div" />
                                 </div>
                                 <div className={styles.password_block}>
                                     <span className={styles.passwordlabel}> Password </span>
-                                    <Input placeholder='Password' className={styles.passwordInput} type="password" name="password" />
+                                    <Input placeholder='Password' className={formik.errors.password && formik.touched.password ? styles.errorInput : styles.passwordInput} type="password" name="password" />
                                     <ErrorMessage className={styles.error} name="password" component="div" />
                                 </div>
                             </div>

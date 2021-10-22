@@ -36,7 +36,7 @@ export const EditProfile = () => {
         <>
             <div className={styles.editProfile_block}>
                 {isSuccess ? <span className={styles.success}>&#9989; {`${username}, your data was updated`}</span> : null}
-                {isSomethingChanged ? <span className={styles.error}>{`${username}, you should change at least one parameter`}</span> : null}
+                {isSomethingChanged ? <span className={styles.responseError}>{`${username}, you should change at least one parameter`}</span> : null}
                 <ErrorBlock error={error} />
                 <h1 className={styles.title}>Edit Profile</h1>
                 <Formik
@@ -70,24 +70,40 @@ export const EditProfile = () => {
                     {(formik) => (
                         <Form >
                             <div className={styles.form_block}>
-                                <div className={styles.userName_block}>
-                                    <div className={styles.userNameLabel}>Username</div><br />
-                                    <Input placeholder='Username' className={styles.userNameInput} type="string" name="username" />
+                                <div className={styles.input_block}>
+                                    <div className={styles.label_elem}>Username</div><br />
+                                    <Input
+                                        placeholder='Username'
+                                        className={(formik.errors.username && formik.touched.username) ? styles.errorInput : styles.input_elem}
+                                        type="string"
+                                        name="username" />
                                     <ErrorMessage className={styles.error} name="username" component="p" />
                                 </div>
-                                <div className={styles.email_block}>
-                                    <span className={styles.emailLabel}>Email address</span>
-                                    <Input placeholder='Email address' className={formik.errors.email ? styles.inputError && styles.emailInput : styles.emailInput} type="email" name="email" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}>Email address</span>
+                                    <Input
+                                        placeholder='Email address'
+                                        className={(formik.errors.email && formik.touched.email) ? styles.errorInput : styles.input_elem}
+                                        type="email"
+                                        name="email" />
                                     <ErrorMessage className={styles.error} name="email" component="div" />
                                 </div>
-                                <div className={styles.password_block}>
-                                    <span className={styles.passwordlabel}> New password </span>
-                                    <Input placeholder='New password' className={styles.passwordInput} type="password" name="password" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}> New password </span>
+                                    <Input
+                                        placeholder='New password'
+                                        className={(formik.errors.password && formik.touched.password) ? styles.errorInput : styles.input_elem}
+                                        type="password"
+                                        name="password" />
                                     <ErrorMessage className={styles.error} name="password" component="div" />
                                 </div>
-                                <div className={styles.avatarImage_block}>
-                                    <span className={styles.avatarImagelabel}>Avatar image (url)</span>
-                                    <Input placeholder='Avatar image' className={styles.avatarImageInput} type="text" name="image" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}>Avatar image (url)</span>
+                                    <Input
+                                        placeholder='Avatar image'
+                                        className={(formik.errors.image && formik.touched.image) ? styles.errorInput : styles.input_elem}
+                                        type="text"
+                                        name="image" />
                                     <ErrorMessage className={styles.error} name="image" component="div" />
                                 </div>
                             </div>

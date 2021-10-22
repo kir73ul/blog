@@ -29,11 +29,7 @@ export const SignUp = () => {
         <>
             <div className={styles.signUp_block}>
                 {isSuccess ? <span className={styles.success}>&#9989; Your account succesefully created</span> : null}
-                <ErrorBlock error={error}/>
-                {/* (error) ?
-                    <p className={styles.responseError}>{
-                        Object.entries(error).map(([er, bodyEr]) => <p>{`${er}  ${bodyEr}`}</p>)
-                    }</p> : null */}
+                <ErrorBlock error={error} />
                 <h1 className={styles.title}>Create new account</h1>
                 <Formik
                     initialValues={{ userName: '', email: '', password: '', repeatPassword: '', agriment: false }}
@@ -49,34 +45,61 @@ export const SignUp = () => {
                     {(formik) => (
                         <Form >
                             <div className={styles.form_block}>
-                                <div className={styles.userName_block}>
-                                    <span className={styles.userNameLabel}>Username</span>
-                                    <Input placeholder='Username' className={styles.userNameInput} type="string" name="userName" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}>Username</span>
+                                    <Input
+                                        placeholder='Username'
+                                        className={(formik.errors.userName && formik.touched.userName) ? styles.errorInput : styles.input_elem}
+                                        type="string"
+                                        name="userName" />
                                     {formik.errors.userName ? <ErrorMessage className={styles.error} name="userName" component="p" /> : null}
                                 </div>
-                                <div className={styles.email_block}>
-                                    <span className={styles.emailLabel}>Email address</span>
-                                    <Input placeholder='Email address' className={styles.emailInput} type="email" name="email" />
-                                    <ErrorMessage className={styles.error} name="email" component="div" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}>Email address</span>
+                                    <Input
+                                        placeholder='Email address'
+                                        className={(formik.errors.email && formik.touched.email) ? styles.errorInput : styles.input_elem}
+                                        type="email"
+                                        name="email" />
+                                    <ErrorMessage
+                                        className={styles.error}
+                                        name="email"
+                                        component="div" />
                                 </div>
-                                <div className={styles.password_block}>
-                                    <span className={styles.passwordlabel}> Password </span>
-                                    <Input placeholder='Password' className={styles.passwordInput} type="password" name="password" />
-                                    <ErrorMessage className={styles.error} name="password" component="div" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}> Password </span>
+                                    <Input
+                                        placeholder='Password'
+                                        className={(formik.errors.password && formik.touched.password) ? styles.errorInput : styles.input_elem}
+                                        type="password" name="password" />
+                                    <ErrorMessage
+                                        className={styles.error}
+                                        name="password"
+                                        component="div" />
                                 </div>
-                                <div className={styles.repeatPassword_block}>
-                                    <span className={styles.repeatPasswordlabel}>Repeat Password </span>
-                                    <Input placeholder='Password' className={styles.repeatPasswordInput} type="password" name="repeatPassword" />
-                                    <ErrorMessage className={styles.error} name="repeatPassword" component="div" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}>Repeat Password </span>
+                                    <Input
+                                        placeholder='Password'
+                                        className={(formik.errors.repeatPassword && formik.touched.repeatPassword) ? styles.errorInput : styles.input_elem}
+                                        type="password"
+                                        name="repeatPassword" />
+                                    <ErrorMessage
+                                        className={styles.error}
+                                        name="repeatPassword"
+                                        component="div" />
                                 </div>
                             </div>
-
+                            <p className={styles.line}></p>
                             <div className={styles.checkbox_block}>
-                                <p className={styles.line}></p>
-                                <span className={styles.checkboxlabel}>Copy
+                                <span className={formik.errors.agriment ? styles.checkboxlabelError : styles.checkboxlabel}>Copy
                                     I agree to the processing of my personal information </span>
-                                <Checkbox className={styles.checkbox} name="agriment" />
-                                <ErrorMessage className={styles.checkboxError} name="agriment" component="div" />
+                                <Checkbox
+                                    className={styles.checkbox}
+                                    name="agriment" />
+                                <ErrorMessage
+                                    className={styles.checkboxError}
+                                    name="agriment" component="div" />
                             </div>
                             <div className={styles.button_block}>
                                 <button className={styles.button} type="submit">

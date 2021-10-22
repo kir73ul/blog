@@ -87,11 +87,19 @@ padding: 2px 5px 3px 6px;
 }
 .likes_block {
     position: relative;
-    /* pointer-events: none;
-    color:rgba(87, 85, 85, 0.15); */
     width: 34px;
     height: 22px;
 margin-left: 13px;
+}
+.likes_block_unactive {
+    position: relative;
+    width: 34px;
+    height: 22px;
+margin-left: 13px;
+    pointer-events: none;
+}
+.icon_unactive {
+    color:rgba(87, 85, 85, 0.15);  
 }
 .icon {
     position: absolute;

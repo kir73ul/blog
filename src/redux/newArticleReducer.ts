@@ -141,6 +141,7 @@ export const createNewArticle = (articleData: any): ThunkAction<void, AppStateTy
         }, 4000)
 
     }
+    
     else if (response.status !== 200) {
         response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
     }
@@ -159,6 +160,7 @@ export const editArticle = (articleData: any, slug: string): ThunkAction<void, A
     dispatch(setFetching(true))
     const response = await articleAPI.editArticle(articleData, slug);
     dispatch(setFetching(false))
+    debugger
     if (response.status === 200) {
         dispatch(setSuccses(true))
         setTimeout(() => {

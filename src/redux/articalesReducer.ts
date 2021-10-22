@@ -10,6 +10,7 @@ const SET_FAVORITE_UNFAVORITE = 'SET_FAVORITE_UNFAVORITE';
 const SET_CURRENT_SLUG = 'SET_CURRENT_SLUG';
 const SET_CURRENT_ARTICLE = 'SET_CURRENT_ARTICLE';
 const SET_IS_REMOVE_SUCCESS = 'SET_IS_REMOVE_SUCCESS';
+const SET_IS_LIKE_PUSHED = 'SET_IS_LIKE_PUSHED';
 
 
 interface authorType {
@@ -42,6 +43,7 @@ interface articlesReducerType {
     total: number;
     currentSlug: string;
     isRemoveSuccess: boolean;
+    isLikePushed: boolean;
 }
 
 const initialState = {
@@ -52,7 +54,8 @@ const initialState = {
     currentArticle: null,
     total: 0,
     currentSlug: '',
-    isRemoveSuccess: false
+    isRemoveSuccess: false,
+    isLikePushed: false
 }
 
 export const articalesReducer = (state: articlesReducerType = initialState, action: newArticalActionType) => {
@@ -102,10 +105,15 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 ...state,
                 isRemoveSuccess: action.isRemoveSuccess
             }
+        case SET_IS_LIKE_PUSHED:
+            return {
+                ...state,
+                isLikePushed: action.isLikePushed
+            }
         default: return state
     }
 }
-type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType | setIsRemoveSuccessType
+type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType | setIsRemoveSuccessType | setLikePushedType
 interface setCurrentPageType { type: typeof SET_CURRENT_PAGE, currentPage: number };
 export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage });
 interface setFetchingType { type: typeof SET_FETCHING, isFetching: boolean };
@@ -122,6 +130,8 @@ interface setCurrentArticleType { type: typeof SET_CURRENT_ARTICLE, currentArtic
 export const setCurrentArticle = (currentArticle: articlesType): setCurrentArticleType => ({ type: SET_CURRENT_ARTICLE, currentArticle });
 interface setIsRemoveSuccessType { type: typeof SET_IS_REMOVE_SUCCESS, isRemoveSuccess: boolean };
 export const setIsRemoveSuccess = (isRemoveSuccess: boolean): setIsRemoveSuccessType => ({ type: SET_IS_REMOVE_SUCCESS, isRemoveSuccess });
+interface setLikePushedType { type: typeof SET_IS_LIKE_PUSHED, isLikePushed: boolean };
+export const setLikePushed = (isLikePushed: boolean): setLikePushedType => ({ type: SET_IS_LIKE_PUSHED, isLikePushed });
 
 
 
@@ -143,7 +153,9 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
     }
 }
 export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    dispatch(setLikePushed(true))
     const response = await likeAPI.addLike(slug)
+    dispatch(setLikePushed(false))
     if (response.status === 200) {
         dispatch(setFavoriteUnfavorite(response.data.article, slug))
     } else if (response.status !== 200) {
@@ -152,7 +164,9 @@ export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unkn
 }
 export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     try {
+        dispatch(setLikePushed(true))
         const response = await likeAPI.removeLike(slug)
+        dispatch(setLikePushed(false))
         if (response.status === 200 || response.status === 204) {
             dispatch(setFavoriteUnfavorite(response.data.article, slug))
         } else if (!!response?.data?.errors) {

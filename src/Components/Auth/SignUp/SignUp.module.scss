@@ -37,7 +37,6 @@ span
     margin: 5px;
 }
 .success {
-
     position: absolute;
     color: #52C41A;
     font-size: 14px;
@@ -47,7 +46,6 @@ span
     right: 0;
     top: 15px;
 }
-
 .title {
     position: static;
     width: 311px;
@@ -59,23 +57,11 @@ span
     font-weight: 500;
     font-size: 20px;
     line-height: 28px;
-    /* identical to box height, or 140% */
-    
     text-align: center;
-    
-    /* Grey / grey-9 */
-    
     color: #262626;
-    
-    
-    /* Inside Auto Layout */
-    
     flex: none;
- /*    order: 0; */
     align-self: center;
 }
-
-
 .form_block {
     display: flex;
     flex-direction: column;
@@ -89,8 +75,7 @@ span
     flex-grow: 0;
     margin: 21px 0px;
 }
-
-.userName_block {
+.input_block {
     display: flex;
 flex-direction: row;
 align-items: center;
@@ -98,317 +83,58 @@ padding: 0px;
 position: relative;
 width: 320px;
 min-height: 64px;
+height: auto;
 left: 0px;
 top: 0px;
-
-
-/* Inside Auto Layout */
-
 flex: none;
-/* order: 0; */
 flex-grow: 0;
-margin: 12px 0px;
-
+margin-bottom: 12px;
 }
-.userNameLabel {
+.label_elem{
     position: absolute;
     height: 22px;
     left: 0px;
     right: 0px;
     top: 0px;
-    
-    /* Regular / 14px | 22px */
-    
     font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 22px;
-    /* identical to box height, or 157% */
-    
     display: flex;
     align-items: center;
-    
-    /* Grey / grey-9 */
-    
     color: #262626;
-    
-    
-    /* Inside Auto Layout */
-    
     flex: none;
- /*    order: 0; */
     flex-grow: 0;
     margin: 2px 0px;
-
-
 }
-.userNameInput {
-
-
+.input_elem {
     position: absolute;
     height: 40px;
     width: 320px;
     top: 24px;
-    /* Grey / grey-1 */
-    
     background: #FFFFFF;
-    /* Grey / grey-5 */
-    
     border: 1px solid #D9D9D9;
     box-sizing: border-box;
     border-radius: 4px;
-}
-.email_block {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    
-    position: relative;
-    width: 320px;
-    min-height: 64px;
-    left: 0px;
-/*     top: 76px;
- */    margin-bottom: 12px;
-    
-    /* Inside Auto Layout */
-    
-    flex: none;
-    /* order: 1; */
-    flex-grow: 0;
-    margin: 12px 0px;
-}
-.emailLabel{
-    position: absolute;
-    height: 22px;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    
-    /* Regular / 14px | 22px */
-    
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 22px;
-    /* identical to box height, or 157% */
-    
-    display: flex;
-    align-items: center;
-    
-    /* Grey / grey-9 */
-    
-    color: #262626;
-    
-    
-    /* Inside Auto Layout */
-    
-    flex: none;
-   /*  order: 0; */
-    flex-grow: 0;
-    margin: 2px 0px;
-}
-
-.emailInput {
-    position: absolute;
-    height: 40px;
-width: 320px;
-    top: 24px;
-
-    
-    
-    /* Inside Auto Layout */
-    
-    flex: none;
- /*    order: 1; */
-    flex-grow: 0;
-    background: #FFFFFF;
-    /* Grey / grey-5 */
-    
-    border: 1px solid #D9D9D9;
-    box-sizing: border-box;
-    border-radius: 4px;
-
-}
-.password_block{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    
-    position: relative;
-    width: 320px;
-    min-height: 64px;
-    left: 0px;
-  /*   top: 152px; */
-    
-    
-    /* Inside Auto Layout */
-    
-    flex: none;
-   /*  order: 2; */
-    flex-grow: 0;
-    margin: 12px 0px;
-    
-}
-.passwordlabel {
-    position: absolute;
-    height: 22px;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    
-    /* Regular / 14px | 22px */
-    
-    font-family: Roboto, serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 22px;
-    /* identical to box height, or 157% */
-    
-    display: flex;
-    align-items: center;
-    
-    /* Grey / grey-9 */
-    
-    color: #262626;
-    
-    
-    /* Inside Auto Layout */
-    
-    flex: none;
-    /* order: 0; */
-    flex-grow: 0;
-    margin: 2px 0px;
-
-}
-.passwordInput {
-    position: absolute;
-    top: 24px;
-    width: 320px;
-    height: 40px;
-    background: #FFFFFF;
-    /* Grey / grey-5 */
-    
-   /*  border: 1px solid #D9D9D9;
-    box-sizing: border-box; */
-    background: #FFFFFF;
-    /* Grey / grey-5 */
-    
-    border: 1px solid #D9D9D9;
-    box-sizing: border-box;
-    border-radius: 4px;
-}
-.repeatPassword_block{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    
-    position: relative;
-    width: 320px;
-    min-height: 64px;
-    left: 0px;
-/* top: 228px; */
-
-
-/* Inside Auto Layout */
-
-flex: none;
-/* order: 0; */
-flex-grow: 0;
-margin: 12px 0px;
-
-}
-.repeatPasswordlabel{
-    position: absolute;
-height: 22px;
-left: 0px;
-right: 0px;
-top: 0px;
-
-/* Regular / 14px | 22px */
-
-font-family: Roboto, serif;
-font-style: normal;
-font-weight: normal;
-font-size: 14px;
-line-height: 22px;
-/* identical to box height, or 157% */
-
-display: flex;
-align-items: center;
-
-/* Grey / grey-9 */
-
-color: #262626;
-
-
-/* Inside Auto Layout */
-
-flex: none;
-/* order: 0; */
-flex-grow: 0;
-margin: 2px 0px;
-}
-.repeatPasswordInput{
-    position: absolute;
-width: 320px;
-height: 40px;
-top: 24px;
-
-/* Regular / 16 px | 24 px */
-
-font-family: Roboto, serif;
-font-style: normal;
-font-weight: normal;
-line-height: 24px;
-/* identical to box height, or 150% */
-
-display: flex;
-align-items: center;
-
-/* Grey / grey-6 */
-
-
-background: #FFFFFF;
-/* Grey / grey-5 */
-
-border: 1px solid #D9D9D9;
-box-sizing: border-box;
-border-radius: 4px;
 }
 .line{
     position: relative;
 width: 320px;
 height: 0px;
-/* left: 32px; */
-/* top: 410px; */
 border: 1px solid #E8E8E8;
+margin-top: 9px;
 margin-bottom: 8px;
-
 }
 .checkbox_block{
     display: flex;
     flex-direction: column;
-
     position: relative;
     width: 320px;
     height: 44px;
-    /* left: 32px; */
-    /* top: 410px; */
-    
-    
-    /* Inside Auto Layout */
-    
-    flex: none;
-/*     order: 2;
- */    align-self: flex-start;
+    align-self: flex-start;
     flex-grow: 0;
-    margin: 40px 0px;
+    margin-top: 8px;
 }
 .checkboxlabel{
     position: absolute;
@@ -421,42 +147,44 @@ line-height: 22px;
 left: 24px;
 color: #595959;
 flex: none;
-/* order: 1;
- */flex-grow: 0;
+flex-grow: 0;
 margin: 0px 8px;
 }
-.checkbox {
-    
+.checkboxlabelError{
+    position: absolute;
+height: 44px;
+font-family: Roboto serif;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 22px;
+left: 24px;
+color: red;
+flex: none;
+flex-grow: 0;
+margin: 0px 8px;
+}
+.checkbox {   
 position: relative;
 width: 16px;
 height: 16px;
-/* left: 0px; */
-
-
-/* Grey / grey-1 */
-
 background: #FFFFFF;
-/* Grey / grey-1 */
-
 border: 0.3px solid #FFFFFF;
 }
+
 .button_block {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0px;
-    
     position: relative;
     width: 319px;
     height: 68px;
-   /*  left: 32px;
-    top: 483px;
-     */
     flex: none;
-/*     order: 2;
- */    align-self: flex-start;
+    align-self: flex-start;
     flex-grow: 0;
-    margin: 21px 0px;
+    margin-top: 21px;
+    margin-bottom: 8px;
 }
 .button {
     display: flex;
@@ -474,25 +202,14 @@ line-height: 24px;
     color: white;
     background: #1890FF;
     border-radius: 4px;
-    font-family: Roboto;
-font-style: normal;
-font-weight: normal;
-font-size: 16px;
-line-height: 24px;
-    /* Inside Auto Layout */
-    
-    flex: none;
-/*     order: 0;
- */    flex-grow: 0;
-    margin: 10px 0px;
+    /* margin: 10px 0px; */
+    border: none;
 }
 
 .under_button {
     position: relative;
     width: 319px;
     height: 20px;
-   /*  left: 0px;
-    top: 48px; */
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -514,13 +231,27 @@ line-height: 24px;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
-/*     line-height: 22px;
- */    color: #F5222D;
+  color: #F5222D;
     background: #FFFFFF;
     flex: none;
-/* order: 2;
- */flex-grow: 0;
+    flex-grow: 0;
     margin: 2px 0px;
+}
+.errorInput{
+    position: absolute;
+width: 320px;
+height: 40px;
+top: 24px;
+font-family: Roboto, serif;
+font-style: normal;
+font-weight: normal;
+line-height: 24px;
+display: flex;
+align-items: center;
+background: #FFFFFF;
+border: 1px solid red !important;
+box-sizing: border-box;
+border-radius: 4px;
 }
 .checkboxError {
     position: relative;
@@ -535,13 +266,7 @@ line-height: 24px;
     line-height: 22px;
     color: #F5222D;
     background: #FFFFFF;
-    /* @highlight-color */
-    
-
-/* Inside Auto Layout */
-
 flex: none;
-/* order: 2;
- */flex-grow: 0;
+flex-grow: 0;
 margin: 2px 0px;
 }

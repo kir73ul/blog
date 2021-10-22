@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 
 export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favorited, favoritesCount, author }) => {
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    const isLikePushed = useSelector((state: AppStateType) => state.articles.isLikePushed)
     const dispatch = useDispatch()
     const history = useHistory()
     const redirectToSignIn = () => {
@@ -31,7 +32,8 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
             <div className={styles.articlePreview_block}>
                 <div className={styles.title}>
                     <Link onClick={() => { dispatch(setCurrentSlug(slug)) }} to={`/articles/:${slug}`} className={styles.link}>{title}</Link>
-                    <div onClick={() => { isAuth ? setLikeOrDislike(slug) : redirectToSignIn() }} className={styles.likes_block}>
+                    <div onClick={() => { isAuth ? setLikeOrDislike(slug) : redirectToSignIn() }}
+                        className={isLikePushed ? styles.likes_block_unactive : styles.likes_block}>
                         <img src={favorited ? FavoriteImage : LikesImage} alt="" className={styles.icon}></img>
                         <div className={styles.likes_count}>{favoritesCount}</div>
                     </div>
