@@ -24,8 +24,8 @@ export const Artical = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const redirectToEditArticle = () => {
-        history.push('/new-article')
+    const redirectToEditArticle = (slug: string) => {
+        history.push(`/new-article/${slug}/edit`)
 
     }
     const redirectToArticleList = () => {
@@ -101,7 +101,7 @@ export const Artical = () => {
                                 </Modal>
                             </button>
 
-                            <button onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle() }} className={styles.edit_btn}>Edit</button>
+                            <button onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle(slug) }} className={styles.edit_btn}>Edit</button>
                         </div> : null}
                         <p className={styles.articleText}>{article.description}</p>
                     </div>

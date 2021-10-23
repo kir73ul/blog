@@ -18,6 +18,7 @@ export const Header = () => {
     useEffect(() => {
         const isCooky = !!cookies.get('tokenData')
         if (isCooky && !isAuth) {
+
             dispatch(getUserInfo())
         }
     }, [userData])

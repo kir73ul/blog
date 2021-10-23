@@ -120,8 +120,13 @@ const setSuccses = (isSuccess: boolean): setSuccsesType => ({ type: SET_SUCCESS,
 
 export const getUserInfo = (): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     try {
-        const response = await usersAPI.getUsersInformation()
+/*         dispatch(setFetching(true))
+ */        const response = await usersAPI.getUsersInformation()
+        /*         dispatch(setFetching(false))
+         */
         if (response.status === 200) {
+            console.log(response);
+            
             dispatch(setUserAuth())
             dispatch(setUsersData(response.data.user))
         } else if (response.status !== 200) {
@@ -138,11 +143,11 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
     dispatch(cleanError())
     dispatch(setFetching(true))
     const response = await loginAPI.aythtorizeMe(loginData)
+    dispatch(setFetching(false))
     if (response.data.user) {
-        saveToken(response.data.user.token)
-        dispatch(setFetching(false))
-        dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))
+        dispatch(setUserAuth())
+        saveToken(getState().auth.users.token)
     } else if (response.data.errors) {
         dispatch(setFetching(false))
         dispatch(getError(response.data.errors, 'signIn'))
@@ -154,10 +159,10 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
     dispatch(setFetching(true))
     const response = await loginAPI.registrateMe(redisterData)
     if (response.status === 200) {
-        saveToken(response.data.user.token)
         dispatch(setFetching(false))
         dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))
+        saveToken(getState().auth.users.token)
     } else if (response.status !== 200) {
         dispatch(setFetching(false))
         dispatch(getError(response.data.errors, 'signUp'))
@@ -171,9 +176,10 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
         const response = await loginAPI.updateUserData(updateDataJSON);
         dispatch(setFetching(false))
         if (response.status === 200) {
-            saveToken(response.data.user.token)
+            getUserInfo()
             dispatch(setUsersData(response.data.user))
             dispatch(setSuccses(true))
+            saveToken(getState().auth.users.token)
             setTimeout(() => {
                 dispatch(setSuccses(false))
             }, 4000)

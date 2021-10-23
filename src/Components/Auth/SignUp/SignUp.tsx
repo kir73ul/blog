@@ -34,7 +34,7 @@ export const SignUp = () => {
                 <Formik
                     initialValues={{ userName: '', email: '', password: '', repeatPassword: '', agriment: false }}
                     validationSchema={Yup.object({
-                        userName: Yup.string().required('Required'),
+                        userName: Yup.string().required('Required').min(3, 'The username should be longer than 3').max(20, `The pasword shouldn't be longer than 20`),
                         email: Yup.string().email('Invalid email address').required('Required'),
                         password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
                         repeatPassword: Yup.string().oneOf([Yup.ref('password'), `Passwords don't match`]).min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
@@ -109,7 +109,6 @@ export const SignUp = () => {
                                     <p className={styles.under_button}>Already have an account?' <Link to='/sign-in'>Sign in.</Link ></p>
                                 </div>
                             </div>
-
                         </Form>
                     )}
                 </Formik>

@@ -24,6 +24,9 @@ const App = () => {
       <ErrorBoundary>
         <Route exact path={'/' || '/articles'} component={ArticalList} />
       </ErrorBoundary>
+      <ErrorBoundary>
+        <Route exact path={'/edit'} component={NewArticale} />
+      </ErrorBoundary>
 
       <Route path='/sign-in' component={SignIn} />
       <Route path='/sign-up' component={SignUp} />

@@ -14,9 +14,6 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
     const dispatch = useDispatch()
     const history = useHistory()
     const location = useLocation()
-    console.log(slug === location.pathname);
-    console.log(location);
-    console.log(slug);
 
     const redirectToSignIn = () => {
         history.push('/sign-in', {})
@@ -37,7 +34,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
         <div className={styles.wrap_block}>
             <div className={styles.articlePreview_block}>
                 <div className={styles.title}>
-                    <Link onClick={() => { dispatch(setCurrentSlug(slug)) }} to={`/articles/:${slug}`} className={styles.link}>{title}</Link>
+                    <Link onClick={() => { dispatch(setCurrentSlug(slug)) }} to={`/articles/:${slug}`} className={styles.link}>{title.length > 30 ? title.slice(0, 30) + '...' : title}</Link>
                     <div onClick={() => { isAuth ? setLikeOrDislike(slug) : redirectToSignIn() }}
                         className={isLikePushed ? styles.likes_block_unactive : styles.likes_block}>
                         <img src={favorited ? FavoriteImage : LikesImage} alt="" className={styles.icon}></img>
@@ -46,8 +43,11 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                 </div>
                 <div className={styles.tag_block}>
                     <div className={styles.tag_wrap}>
-                        {tagList.map((tag, idx) => {
-                            return <span key={tag} className={idx === 0 ? styles.tag && styles.firstTag : styles.tag} >{tag}</span>
+                        {tagList.filter((tag, idx) => idx < 6).map((tag, idx) => {
+                            return <span
+                                key={tag}
+                                className={idx === 0 ? styles.tag && styles.firstTag : styles.tag} >
+                                {tag.length > 10 ? tag.slice(0, 10) + '...' : tag}</span>
                         })}
                     </div>
                 </div>
@@ -57,7 +57,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                     <div className={styles.dateOfPublik}>{convertDate(createdAt)}</div>
                     <img className={styles.author_image} src={author.image || '../../../assets/image/Rectangle 1.png'} alt=''></img>
                 </div>
-                <p className={styles.articleText}>{description}</p>
+                <p className={styles.articleText}>{description.length > 30 ? description.slice(0, 30) + '...' : description}</p>
             </div>
             {`/articles/:${slug}` === location.pathname ? <div>%%%%%%%%%%%%%%%%%%%%%%%%%%</div> : null}
         </div>

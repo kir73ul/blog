@@ -1,3 +1,14 @@
+body,
+h1,
+p, 
+div,
+button,
+input,
+span
+ {
+  margin: 0;
+}
+
 .wrapper_block {
     width:1440px;
     position: absolute;
@@ -11,7 +22,10 @@
     border: 1px solid #52C41A;
     color:#52C41A;
     text-align: center; 
-
+    border-radius: 4px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 .title {
     position: absolute;
@@ -24,12 +38,17 @@
     font-weight: normal;
     font-size: 18px;
     line-height: 28px;
-    display: flex;
+    padding: 14px 5px 5px 5px;
+    text-align: center;
+    justify-content: center;
     align-items: center;
+    margin-top: 0 auto;
     color: rgba(0, 0, 0, 0.85);
 }
-.btn {
-
+.SignInBtn:hover{
+    border: 1px solid #1890ff !important;
+    border-radius: 4px;
+    color:#1890ff ;
 }
 .SignInBtn {
     position: absolute;
@@ -42,47 +61,32 @@
     font-weight: normal;
     font-size: 18px;
     line-height: 28px;
-    display: flex;
     align-items: center;
+    justify-content: center;
     color: rgba(0, 0, 0, 0.85); 
     background-color: #FFFFFF; 
+    border: none;
     outline: none;
     text-align: center;
+    padding-left: 5px;
 }
 .SignUpBtn {
     position: relative;
     width: 109px;
     height: 51px;
     float: right;
-margin-right: 22px;
-   /*  left: 1309px; */
+    margin-right: 22px;
     top: 16px;
     font-family: Inter;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
     line-height: 28px; 
-    display: flex;
     text-align: center;
-   /*  align-items: center;
-    justify-items: center; */
     color: #52C41A;
     border-radius: 5px;
     border: 1px solid #52C41A;
     background-color: #FFFFFF; 
-}
-.block_SignUnBtn {
-    position: absolute;
-    width: 109px;
-    height: 51px;
-    left: 1309px;
-    top: 16px;
-    
-    /* @success-color */
-    
-    border: 1px solid #52C41A;
-    box-sizing: border-box;
-    border-radius: 5px;
 }
 .withAuth_block{
     position: relative;
@@ -128,8 +132,7 @@ top: 19px;
 margin-right: 27px;
 float: left;
 border-radius: 50%;
-/* background: url('../../assets/image/userAva.png');
- */}
+}
 .logOutBtn {
     position: relative;
     width: 109px;

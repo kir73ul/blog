@@ -10,10 +10,13 @@ import styles from '../Forms.module.scss';
 import _ from 'lodash';
 import { getDifferenceValue } from '../../Common/helper';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
+import { useHistory } from 'react-router';
 
 export const EditProfile = () => {
     const [isSomethingChanged, setisSomethingChanged] = useState(false)
     const dispatch = useDispatch()
+    const history = useHistory()
+    let isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     let username = useSelector((state: AppStateType) => state.auth.users.username)
     let userEmail = useSelector((state: AppStateType) => state.auth.users.email)
     let userAvatarImage = useSelector((state: AppStateType) => state.auth.users.image)
@@ -31,6 +34,9 @@ export const EditProfile = () => {
 
     if (isFetching) {
         return <Preloader />
+    }
+    if (isAuth) {
+        history.push('/sign-in')
     }
     return (
         <>

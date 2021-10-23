@@ -11,21 +11,23 @@ import { AppStateType } from '../../../redux/rootReducer';
 import Preloader from '../../Common/Preloader';
 import { useState } from 'react';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
+import { values } from 'lodash';
 
 
 export const SignIn = () => {
-    const initialValues: UsersLType = {
-        email: '',
-        password: ''
-    }
+
     const dispatch = useDispatch()
     const history = useHistory()
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const error = useSelector((state: AppStateType) => state.auth.allErrors?.signIn)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
-
-
+    const [localEmail, setLocalEmail] = useState('')
+    const [localPassword, setLocalPassword] = useState('')
+    const initialValues: UsersLType = {
+        email: localEmail,
+        password: localPassword
+    }
     if (isAuth) {
         setTimeout(() => {
             history.push('/')
@@ -59,13 +61,29 @@ export const SignIn = () => {
                             <div className={styles.form_block}>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}> Email address </span>
-                                    <Input placeholder='Email address' className={formik.errors.email && formik.touched.email ? styles.errorInput : styles.input_elem} type="email" name="email" />
-                                    <ErrorMessage className={styles.error} name="email" component="div" />
+                                    <Input
+                                        onChange={(event) => setLocalEmail((event.target.value))}
+                                        placeholder='Email address'
+                                        className={formik.errors.email && formik.touched.email ? styles.errorInput : styles.input_elem}
+                                        type="email"
+                                        name="email" />
+                                    <ErrorMessage
+                                        className={styles.error}
+                                        name="email"
+                                        component="div" />
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}> Password </span>
-                                    <Input placeholder='Password' className={formik.errors.password && formik.touched.password ? styles.errorInput : styles.input_elem} type="password" name="password" />
-                                    <ErrorMessage className={styles.error} name="password" component="div" />
+                                    <Input
+                                        onChange={(event) => setLocalPassword(event.target.value)}
+                                        placeholder='Password'
+                                        className={formik.errors.password && formik.touched.password ? styles.errorInput : styles.input_elem}
+                                        type="password"
+                                        name="password" />
+                                    <ErrorMessage
+                                        className={styles.error}
+                                        name="password"
+                                        component="div" />
                                 </div>
                                 <div className={styles.button_block}>
                                     <button className={styles.button} type="submit">

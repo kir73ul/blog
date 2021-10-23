@@ -3,15 +3,13 @@ import Cookies from 'universal-cookie';
 
 export const cookies = new Cookies();
 
-export const saveToken = (token: string) => {
-    console.log(token);
+export const saveToken = (token: string | null) => {
     const cookyToken = cookies.set('tokenData', ('Token ' + token), { expires: new Date(2021, 10, 1), path: '/' });
     return cookyToken
 }
 export const removeToken = () => {
     return cookies.remove('tokenData')
 }
-const token = cookies.get('tokenData')
 const instanceWithAuth = axios.create({
     baseURL: 'https://api.realworld.io/api/',
     headers: {
@@ -20,7 +18,7 @@ const instanceWithAuth = axios.create({
 })
 
 instanceWithAuth.interceptors.request.use((config) => {
-    config.headers.Authorization = token;
+    config.headers.Authorization = cookies.get('tokenData');
     return config
 })
 export interface UsersLType {

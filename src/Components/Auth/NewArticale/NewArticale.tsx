@@ -11,7 +11,6 @@ import Preloader from '../../Common/Preloader';
 import { useHistory } from 'react-router';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 
-
 export const NewArticale = () => {
     const dispatch = useDispatch()
     const tagsForCreating = useSelector((state: AppStateType) => state.newArtical.tags)
@@ -19,6 +18,7 @@ export const NewArticale = () => {
     const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
     const articleData = useSelector((state: AppStateType) => state.newArtical.articleData)
     const errorArticle = useSelector((state: AppStateType) => state.newArtical.errorArtical)
+    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const title = articleData ? articleData.title : ''
     const description = articleData ? articleData.description : ''
     const text = articleData ? articleData.body : ''
@@ -39,6 +39,9 @@ export const NewArticale = () => {
     }
     if (isFetching) {
         return <Preloader />
+    }
+    if (!isAuth) {
+        history.push('/sign-in')
     }
     if (isSuccess) {
         setTimeout(() => {
@@ -63,7 +66,7 @@ export const NewArticale = () => {
                         title: Yup.string().required('Required'),
                         shortDescription: Yup.string().required('Required'),
                         text: Yup.string().required('Required'),
-                        tags: Yup.array().of(Yup.string().nullable().min(1, `It shouldn't be empty`))
+                        tags: Yup.array().of(Yup.string().min(1, `It shouldn't be empty`))
                     })}
                     onSubmit={(values) => {
                         const articleDataJSON = JSON.stringify({
@@ -114,7 +117,7 @@ export const NewArticale = () => {
                                 <span className={styles.textLabel}> Tags </span>
                                 {formik.values.tags.map((tag, idx) => {
                                     return (
-                                        <div key={tag + idx} className={styles.singleTag_Block} >
+                                        <div key={tag} className={styles.singleTag_Block} >
                                             <Input
                                                 disabled={true}
                                                 className={styles.singleTagInput}
@@ -136,7 +139,7 @@ export const NewArticale = () => {
                                     <Input
                                         onChange={(event) => SetLocalTag(event.target.value)}
                                         placeholder='Tag'
-                                        className={styles.singleTagInput}
+                                        className={(formik.errors.tags && formik.touched.tags) ? styles.errorInput : styles.singleTagInput}
                                         type="text"
                                         name='tag'
                                         value={localTag} />
