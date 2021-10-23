@@ -1,7 +1,7 @@
 import { Formik, ErrorMessage, Field } from 'formik';
 import { Form, Input } from 'formik-antd';
 import * as Yup from 'yup';
-import styles from './SignIn.module.scss';
+import styles from '../Forms.module.scss';
 import { Link } from 'react-router-dom';
 import { getMeAuth } from '../../../redux/authReducer';
 import { UsersLType } from '../../../API/API';
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/rootReducer';
 import Preloader from '../../Common/Preloader';
 import { useState } from 'react';
-
+import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 
 
 export const SignIn = () => {
@@ -33,8 +33,8 @@ export const SignIn = () => {
     }
     if (isAuth) {
         return (
-            <p className={styles.success_block}>
-                <p className={styles.success}>&#9989;{`${username} you're succesefully login`}</p>
+            <p className={styles.success_block_SignIn}>
+                <p className={styles.success_signIn}>&#9989;{`${username} you're succesefully login`}</p>
             </p>
         )
     }
@@ -43,11 +43,8 @@ export const SignIn = () => {
     }
     return (
         <>
-            <div className={styles.signIn_block}>
-                {(error) ?
-                    <p className={styles.responseError}>{
-                        Object.entries(error).map(([er, bodyEr]) => <p>{`${er}  ${bodyEr}`}</p>)
-                    }</p> : null}
+            <div className={styles.all_forms_block}>
+                <ErrorBlock error={error} />
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik
                     initialValues={initialValues}
@@ -60,23 +57,24 @@ export const SignIn = () => {
                     {(formik) => (
                         <Form >
                             <div className={styles.form_block}>
-                                <div className={styles.email_block}>
-                                    <span className={styles.emailLabel}> Email address </span>
-                                    <Input placeholder='Email address' className={formik.errors.email && formik.touched.email ? styles.errorInput : styles.emailInput} type="email" name="email" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}> Email address </span>
+                                    <Input placeholder='Email address' className={formik.errors.email && formik.touched.email ? styles.errorInput : styles.input_elem} type="email" name="email" />
                                     <ErrorMessage className={styles.error} name="email" component="div" />
                                 </div>
-                                <div className={styles.password_block}>
-                                    <span className={styles.passwordlabel}> Password </span>
-                                    <Input placeholder='Password' className={formik.errors.password && formik.touched.password ? styles.errorInput : styles.passwordInput} type="password" name="password" />
+                                <div className={styles.input_block}>
+                                    <span className={styles.label_elem}> Password </span>
+                                    <Input placeholder='Password' className={formik.errors.password && formik.touched.password ? styles.errorInput : styles.input_elem} type="password" name="password" />
                                     <ErrorMessage className={styles.error} name="password" component="div" />
                                 </div>
+                                <div className={styles.button_block}>
+                                    <button className={styles.button} type="submit">
+                                        Login
+                                    </button>
+                                    <p className={styles.under_button}>Don’t have an account?' <Link to='/sign-up'>Sign Up.</Link ></p>
+                                </div>
                             </div>
-                            <div className={styles.button_block}>
-                                <button className={styles.button} type="submit">
-                                    Login
-                                </button>
-                                <span className={styles.under_button}>Don’t have an account?' <Link to='/sign-up'>Sign Up.</Link ></span>
-                            </div>
+
                         </Form>
                     )}
                 </Formik>

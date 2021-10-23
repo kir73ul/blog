@@ -1,7 +1,7 @@
 import styles from './ArticlePreview.module.scss';
 import LikesImage from '../../../assets/image/Vector.png';
 import FavoriteImage from '../../../assets/image/path4.png';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { articlesType, makeFavorite, makeUnfavorite, setCurrentSlug } from '../../../redux/articalesReducer';
 import { convertDate } from '../../Common/helper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,10 +13,16 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
     const isLikePushed = useSelector((state: AppStateType) => state.articles.isLikePushed)
     const dispatch = useDispatch()
     const history = useHistory()
+    const location = useLocation()
+    console.log(slug === location.pathname);
+    console.log(location);
+    console.log(slug);
+
     const redirectToSignIn = () => {
-        history.push('/sign-in')
+        history.push('/sign-in', {})
     }
     const setLikeOrDislike = (slug: string) => {
+
         if (isAuth) {
             if (!favorited) {
                 dispatch(makeFavorite(slug))
@@ -51,9 +57,9 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                     <div className={styles.dateOfPublik}>{convertDate(createdAt)}</div>
                     <img className={styles.author_image} src={author.image || '../../../assets/image/Rectangle 1.png'} alt=''></img>
                 </div>
-
                 <p className={styles.articleText}>{description}</p>
             </div>
+            {`/articles/:${slug}` === location.pathname ? <div>%%%%%%%%%%%%%%%%%%%%%%%%%%</div> : null}
         </div>
     )
 }

@@ -3,13 +3,13 @@ import { Form, Input } from 'formik-antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { updateUserInfo } from '../../redux/authReducer';
-import { AppStateType } from '../../redux/rootReducer';
-import Preloader from '../Common/Preloader';
-import styles from './EditProfile.module.scss';
+import { updateUserInfo } from '../../../redux/authReducer';
+import { AppStateType } from '../../../redux/rootReducer';
+import Preloader from '../../Common/Preloader';
+import styles from '../Forms.module.scss';
 import _ from 'lodash';
-import { getDifferenceValue } from '../Common/helper';
-import { ErrorBlock } from '../ErroProcessing/ErrorBlock';
+import { getDifferenceValue } from '../../Common/helper';
+import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 
 export const EditProfile = () => {
     const [isSomethingChanged, setisSomethingChanged] = useState(false)
@@ -34,7 +34,7 @@ export const EditProfile = () => {
     }
     return (
         <>
-            <div className={styles.editProfile_block}>
+            <div className={styles.all_forms_block}>
                 {isSuccess ? <span className={styles.success}>&#9989; {`${username}, your data was updated`}</span> : null}
                 {isSomethingChanged ? <span className={styles.responseError}>{`${username}, you should change at least one parameter`}</span> : null}
                 <ErrorBlock error={error} />
@@ -61,7 +61,6 @@ export const EditProfile = () => {
                             dispatch(updateUserInfo(getDifferenceValue(userData.user, initialValuesData)))
                         } else if (_.isEqual(userData.user, initialValuesData)) {
                             console.log(userData.user, initialValuesData);
-
                             setisSomethingChanged(true)
                             setTimeout(() => { setisSomethingChanged(false) }, 3000)
                         }
@@ -71,7 +70,7 @@ export const EditProfile = () => {
                         <Form >
                             <div className={styles.form_block}>
                                 <div className={styles.input_block}>
-                                    <div className={styles.label_elem}>Username</div><br />
+                                    <span className={styles.label_elem}>Username</span><br />
                                     <Input
                                         placeholder='Username'
                                         className={(formik.errors.username && formik.touched.username) ? styles.errorInput : styles.input_elem}
@@ -106,10 +105,13 @@ export const EditProfile = () => {
                                         name="image" />
                                     <ErrorMessage className={styles.error} name="image" component="div" />
                                 </div>
+                                <div className={styles.button_block}>
+                                    <button className={styles.button} type="submit">
+                                        Save
+                                    </button>
+                                </div>
                             </div>
-                            <button className={styles.button_block} type="submit">
-                                Save
-                            </button>
+
                         </Form>
                     )}
                 </Formik>

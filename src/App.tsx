@@ -4,20 +4,22 @@ import { ArticalList } from './Components/ArticalList/ArticalList';
 import { Header } from './Components/Header/Header';
 import { Route, Switch, useParams } from 'react-router-dom';
 import { SignIn } from './Components/Auth/SignIn/SignIn';
-import { EditProfile } from './Components/EditProfile/EditProfile';
+import { EditProfile } from './Components/Auth/EditProfile/EditProfile';
 import { SignUp } from './Components/Auth/SignUp/SignUp';
-import { NewArticale } from './Components/NewArticale/NewArticale';
+import { NewArticale } from './Components/Auth/NewArticale/NewArticale';
 import { useSelector } from 'react-redux';
 import { AppStateType } from './redux/rootReducer';
 import { ErrorBoundary } from './Components/ErroProcessing/ErrorBoundary';
+import { ArticlePreview } from './Components/ArticalList/ArticlePreview/ArticlePreview';
 
 const App = () => {
   const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
+  const currentArticle = useSelector((state: AppStateType) => state.articles.currentArticle)
   return (
     <div className="App">
       <Header />
       <ErrorBoundary>
-        <Route path={`/articles/:${currentSlug}`} component={Artical} />
+        <Route path={`/articles/:${currentSlug}`} component={Artical}/*  render={() => <ArticlePreview {...currentArticle} /> || null} */ />
       </ErrorBoundary>
       <ErrorBoundary>
         <Route exact path={'/' || '/articles'} component={ArticalList} />

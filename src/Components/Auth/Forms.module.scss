@@ -9,15 +9,14 @@ span
   margin: 0;
 }
 
-.signUp_block {
+.all_forms_block {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 48px 32px;
     position: absolute;
     width: 384px;
-/*     min-height: 599px;
- */    height: auto;
+    height: auto;
     left: 523px;
     top: 139px;
     background: #FFFFFF;
@@ -27,6 +26,7 @@ span
     border-radius: 6px;
     border-radius: 6px;
 }
+
 .responseError {
     width: 311px;
     height: auto;
@@ -41,8 +41,7 @@ span
 .success_block_SignIn {
     position: relative;
     margin: 0 auto;
-/*     left: calc(100%/2 - 384px/2);
- */    top: 150px;
+    top: 150px;
     width: 384px;
     height: 100px;
     background-color: white;
@@ -175,7 +174,7 @@ margin-right:8px;
 .button_block {
     position: relative;
     width: 319px;
-    height: 68px;
+    height: auto;
     align-items: center;
     justify-content: center;
     margin-top: 9px;
@@ -195,6 +194,7 @@ margin-right:8px;
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;
+    margin-top: 9px;
 }
 .under_button {
     position: relative;

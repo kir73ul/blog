@@ -1,7 +1,7 @@
 import { Formik, ErrorMessage } from 'formik';
 import { Form, Input, Checkbox } from 'formik-antd';
 import * as Yup from 'yup';
-import styles from './SignUp.module.scss';
+import styles from '../Forms.module.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRegistration } from '../../../redux/authReducer';
@@ -27,8 +27,8 @@ export const SignUp = () => {
     }
     return (
         <>
-            <div className={styles.signUp_block}>
-                {isSuccess ? <span className={styles.success}>&#9989; Your account succesefully created</span> : null}
+            <div className={styles.all_forms_block}>
+                {isSuccess ? <p className={styles.success}>&#9989; Your account succesefully created</p> : null}
                 <ErrorBlock error={error} />
                 <h1 className={styles.title}>Create new account</h1>
                 <Formik
@@ -38,7 +38,7 @@ export const SignUp = () => {
                         email: Yup.string().email('Invalid email address').required('Required'),
                         password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
                         repeatPassword: Yup.string().oneOf([Yup.ref('password'), `Passwords don't match`]).min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
-                        agriment: Yup.boolean().oneOf([true], 'You should agree condition')
+                        agriment: Yup.boolean().oneOf([true], 'You should agree the condition')
                     })}
                     onSubmit={(values) => { dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } }))); error ? setIsSuccess(true) : setIsSuccess(false) }}
                 >
@@ -89,24 +89,27 @@ export const SignUp = () => {
                                         name="repeatPassword"
                                         component="div" />
                                 </div>
+                                <p className={styles.line}></p>
+                                <div className={styles.checkbox_block}>
+                                    <div className={formik.errors.agriment && formik.touched.agriment ? styles.checkbox_wrapper_error : styles.checkbox_wrapper}>
+                                        <Checkbox
+                                            className={styles.checkbox}
+                                            name="agriment" />
+                                        <p className={styles.checkboxlabel}> I agree to the processing of my personal information </p>
+                                    </div>
+                                    <ErrorMessage
+                                        className={styles.error}
+                                        name="agriment"
+                                        component="div" />
+                                </div>
+                                <div className={styles.button_block}>
+                                    <button className={styles.button} type="submit">
+                                        Create
+                                    </button>
+                                    <p className={styles.under_button}>Already have an account?' <Link to='/sign-in'>Sign in.</Link ></p>
+                                </div>
                             </div>
-                            <p className={styles.line}></p>
-                            <div className={styles.checkbox_block}>
-                                <span className={formik.errors.agriment ? styles.checkboxlabelError : styles.checkboxlabel}>Copy
-                                    I agree to the processing of my personal information </span>
-                                <Checkbox
-                                    className={styles.checkbox}
-                                    name="agriment" />
-                                <ErrorMessage
-                                    className={styles.checkboxError}
-                                    name="agriment" component="div" />
-                            </div>
-                            <div className={styles.button_block}>
-                                <button className={styles.button} type="submit">
-                                    Create
-                                </button>
-                                <span className={styles.under_button}>Already have an account?' <Link to='/sign-in'>Sign in.</Link ></span>
-                            </div>
+
                         </Form>
                     )}
                 </Formik>

@@ -5,11 +5,11 @@ import * as Yup from 'yup';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import { createNewArticle, editArticle, removeTag, setTags } from '../../redux/newArticleReducer';
-import { AppStateType } from '../../redux/rootReducer';
-import Preloader from '../Common/Preloader';
+import { createNewArticle, editArticle, removeTag, setTags } from '../../../redux/newArticleReducer';
+import { AppStateType } from '../../../redux/rootReducer';
+import Preloader from '../../Common/Preloader';
 import { useHistory } from 'react-router';
-import { ErrorBlock } from '../ErroProcessing/ErrorBlock';
+import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 
 
 export const NewArticale = () => {
@@ -79,31 +79,31 @@ export const NewArticale = () => {
                 >
                     {(formik) => (
                         <Form >
-                            <div className={styles.title_block}>
-                                <span className={styles.titleLabel}>Title</span>
+                            <div className={styles.input_block}>
+                                <span className={styles.label_elem}>Title</span>
                                 <Input
                                     onChange={(event) => SetlocalTitle(event.target.value)}
                                     placeholder='Title'
-                                    className={(formik.errors.title && formik.touched.title) ? styles.errorInput : styles.titleInput}
+                                    className={(formik.errors.title && formik.touched.title) ? styles.errorInput : styles.input_elem}
                                     type="input"
                                     name="title" />
                                 <ErrorMessage className={styles.error} name="title" component="div" />
                             </div>
-                            <div className={styles.shortDescription_block}>
-                                <span className={styles.shortDescriptionlabel}> Short description </span>
+                            <div className={styles.input_block}>
+                                <span className={styles.label_elem}> Short description </span>
                                 <Input
                                     onChange={(event) => SetlocalShortDescription(event.target.value)} placeholder='Short description'
-                                    className={(formik.errors.shortDescription && formik.touched.shortDescription) ? styles.errorInput : styles.shortDescriptionInput}
+                                    className={(formik.errors.shortDescription && formik.touched.shortDescription) ? styles.errorInput : styles.input_elem}
                                     type="input"
                                     name="shortDescription" />
                                 <ErrorMessage className={styles.error} name="shortDescription" component="div" />
                             </div>
                             <div className={styles.text_block}>
-                                <span className={styles.textLabel}> Text </span>
+                                <span className={styles.label_elem}> Text </span>
                                 <Input.TextArea
                                     onChange={(event) => SetlocalText(event.target.value)}
                                     placeholder='text'
-                                    className={(formik.errors.text && styles.borderInput && styles.textInput) || styles.textInput}
+                                    className={(formik.errors.text && formik.touched.text) ? styles.error_textInput : styles.textInput}
                                     name="text" />
                                 <ErrorMessage
                                     className={styles.error}
@@ -135,7 +135,7 @@ export const NewArticale = () => {
                                 <div className={styles.singleTag_Block}>
                                     <Input
                                         onChange={(event) => SetLocalTag(event.target.value)}
-                                        placeholder='Tag' 
+                                        placeholder='Tag'
                                         className={styles.singleTagInput}
                                         type="text"
                                         name='tag'
