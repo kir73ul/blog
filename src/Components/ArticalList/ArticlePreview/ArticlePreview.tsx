@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 
 export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favorited, favoritesCount, author }) => {
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    const onlyCreatedSlug = useSelector((state: AppStateType) => state.newArtical.onlyCreatedSlug)
     const isLikePushed = useSelector((state: AppStateType) => state.articles.isLikePushed)
     const dispatch = useDispatch()
     const history = useHistory()
@@ -32,7 +33,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
     }
     return (
         <div className={styles.wrap_block}>
-            <div className={styles.articlePreview_block}>
+            <div className={slug === onlyCreatedSlug ? styles.wrap_block_border : styles.articlePreview_block}>
                 <div className={styles.title}>
                     <Link onClick={() => { dispatch(setCurrentSlug(slug)) }} to={`/articles/:${slug}`} className={styles.link}>{title.length > 30 ? title.slice(0, 30) + '...' : title}</Link>
                     <div onClick={() => { isAuth ? setLikeOrDislike(slug) : redirectToSignIn() }}

@@ -1,5 +1,17 @@
+body,
+h1,
+p, 
+div,
+button,
+input,
+span
+ {
+  margin: 0;
+}
 .body_block {
-
+position: relative;
+width: 1440px;
+height: 977px;
 }
 .pagination {
     display: flex;

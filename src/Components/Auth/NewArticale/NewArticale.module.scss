@@ -110,7 +110,8 @@ margin-bottom: 12px;
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 40px;
+    min-height: 40px;
+    height: auto;
     left: 0px;
     margin: 5px 0px;
 }
@@ -182,9 +183,6 @@ text-align: center;
     margin-top: 2px;
     min-height: 24px;
     resize: none;
-    font-size: 20px;
-    text-align: center;
-
 }
 .error_textInput {
     color: #F5222D;
@@ -197,6 +195,8 @@ text-align: center;
     border-radius: 4px;
     border: 1px solid red !important;
     resize: none;
+    font-size: 20px;
+    text-align: center;
 }
 .errorInput{
     color: #F5222D;

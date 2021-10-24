@@ -8,17 +8,16 @@ import imgUrl from '../../assets/image/userAva.png'
 import { zeroizeArticle } from '../../redux/newArticleReducer';
 import { useEffect } from 'react';
 import { cookies } from '../../API/API';
+import { getArticles } from '../../redux/articalesReducer';
 
 export const Header = () => {
     const userData = useSelector((state: AppStateType) => state.auth.users)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
-
+    const isCooky = !!cookies.get('tokenData')
 
 
     useEffect(() => {
-        const isCooky = !!cookies.get('tokenData')
         if (isCooky && !isAuth) {
-
             dispatch(getUserInfo())
         }
     }, [userData])
@@ -41,6 +40,7 @@ export const Header = () => {
         history.push('/new-article')
     }
     const redirectToMainPage = () => {
+        dispatch(getArticles(1, 5))
         history.push('/')
     }
     return (
@@ -60,6 +60,5 @@ export const Header = () => {
                 </div>
             }
         </div>
-
     )
 }

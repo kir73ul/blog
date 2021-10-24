@@ -1,7 +1,6 @@
-import { saveToken, usersAPI, loginAPI, cookies, removeToken } from './../API/API';
+import { saveToken, usersAPI, loginAPI, removeToken } from './../API/API';
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
-import { debounce } from 'lodash';
 
 const AUTH_USER = 'AUTH_USER';
 const GET_ERROR = 'GET_ERROR';
@@ -154,7 +153,6 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
         }, 5000)
     }
 }
-
 export const getRegistration = (redisterData: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(cleanError())
     dispatch(setFetching(true))

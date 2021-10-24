@@ -65,7 +65,7 @@ export const SignUp = () => {
                                     <Input
                                         onChange={(event) => setlocalEmail(event.target.value)}
                                         placeholder='Email address'
-                                        className={(formik.errors.email && formik.touched.email) ? styles.errorInput : styles.input_elem}
+                                        className={((formik.errors.email && formik.touched.email)) ? styles.errorInput : styles.input_elem}
                                         type="email"
                                         name="email" />
                                     <ErrorMessage

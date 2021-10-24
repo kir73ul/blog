@@ -12,6 +12,7 @@ const SET_SUCCESS = 'SET_SUCCESS';
 const GET_ARTICLE_ERROR = 'GET_ARTICLE_ERROR';
 const ZEROIZE_ARTICLE = 'ZEROIZE_ARTICLE';
 const ZEROIZE_TAGS = 'ZEROIZE_TAGS';
+const SET_ONLY_CREATED = 'SET_ONLY_CREATED';
 
 
 export interface articleDataType {
@@ -38,6 +39,7 @@ interface newArticalReducerType {
     isFetching: boolean;
     isSuccess: boolean;
     errorArtical: errorsType | null;
+    onlyCreatedSlug: string | null;
 }
 
 const initialState = {
@@ -45,7 +47,8 @@ const initialState = {
     articleData: null,
     isSuccess: false,
     isFetching: false,
-    errorArtical: null
+    errorArtical: null,
+    onlyCreatedSlug: null
 }
 
 export const newArticalReducer = (state: newArticalReducerType = initialState, action: newArticalActionType) => {
@@ -108,10 +111,15 @@ export const newArticalReducer = (state: newArticalReducerType = initialState, a
                 ...state,
                 tags: []
             }
+        case SET_ONLY_CREATED:
+            return {
+                ...state,
+                onlyCreatedSlug: action.onlyCreatedSlug
+            }
         default: return state
     }
 }
-type newArticalActionType = setTagsType | removeTagType | setNewArticleDataType | setIsFetchingType | getErrorType | setSuccsesType | zeroizeArticleType | zeroizeTagsType
+type newArticalActionType = setTagsType | removeTagType | setNewArticleDataType | setIsFetchingType | getErrorType | setSuccsesType | zeroizeArticleType | zeroizeTagsType | setOnlyCreatedType
 interface setTagsType { type: typeof SET_TAGS, tag: string };
 export const setTags = (tag: string): setTagsType => ({ type: SET_TAGS, tag });
 interface removeTagType { type: typeof REMOVE_TAG, index: number };
@@ -128,6 +136,8 @@ interface zeroizeArticleType { type: typeof ZEROIZE_ARTICLE };
 export const zeroizeArticle = (): zeroizeArticleType => ({ type: ZEROIZE_ARTICLE });
 interface zeroizeTagsType { type: typeof ZEROIZE_TAGS };
 export const zeroizeTags = (): zeroizeTagsType => ({ type: ZEROIZE_TAGS });
+interface setOnlyCreatedType { type: typeof SET_ONLY_CREATED, onlyCreatedSlug: string | null };
+export const setOnlyCreated = (onlyCreatedSlug: string | null): setOnlyCreatedType => ({ type: SET_ONLY_CREATED, onlyCreatedSlug });
 
 export const createNewArticle = (articleData: any): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
@@ -139,10 +149,13 @@ export const createNewArticle = (articleData: any): ThunkAction<void, AppStateTy
         dispatch(zeroizeArticle())
         dispatch(zeroizeTags())
         dispatch(setSuccses(true))
+        dispatch(setOnlyCreated(response.data.article.slug))
         setTimeout(() => {
             dispatch(setSuccses(false))
         }, 4000)
-
+        setTimeout(() => {
+            dispatch(setOnlyCreated(null))
+        }, 10000)
     }
 
     else if (response.status !== 200) {
@@ -165,8 +178,8 @@ export const editArticle = (articleData: any, slug: string): ThunkAction<void, A
     dispatch(setFetching(false))
     if (response.status === 200) {
         dispatch(setCurrentSlug(response.data.article.slug))
-        dispatch(setCurrentArticle(response.data.article))
-        dispatch(setSuccses(true))
+/*         dispatch(setCurrentArticle(response.data.article))
+ */        dispatch(setSuccses(true))
         setTimeout(() => {
             dispatch(zeroizeArticle())
             dispatch(zeroizeTags())

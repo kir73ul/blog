@@ -70,8 +70,8 @@ export const articleAPI = {
     getSingleArticleData(slug: string) {
         return instanceWithAuth.get(`articles/${slug}`).then(response => (response)).catch(error => (error));
     },
-    getArticles(currentPage = 0, pageSize = 5) {
-        return instanceWithAuth.get(`articles?limit=${pageSize}?offset=${currentPage - 1}`).then(response => (response.data)).catch(error => (error));
+    getArticles(currentPage = 1, pageSize = 5) {
+        return instanceWithAuth.get(`articles?limit=${pageSize}&offset=${currentPage * pageSize - pageSize}`).then(response => (response.data)).catch(error => (error));
     },
     deleteArticle(slug: string) {
         return instanceWithAuth.delete(`articles/${slug}`).then(response => (response)).catch(error => (error));

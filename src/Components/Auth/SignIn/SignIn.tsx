@@ -1,4 +1,4 @@
-import { Formik, ErrorMessage, Field } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import { Form, Input } from 'formik-antd';
 import * as Yup from 'yup';
 import styles from '../Forms.module.scss';
@@ -11,7 +11,6 @@ import { AppStateType } from '../../../redux/rootReducer';
 import Preloader from '../../Common/Preloader';
 import { useState } from 'react';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
-import { values } from 'lodash';
 
 
 export const SignIn = () => {

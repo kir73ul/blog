@@ -2,7 +2,7 @@ import './App.scss';
 import { Artical } from './Components/Article/Article';
 import { ArticalList } from './Components/ArticalList/ArticalList';
 import { Header } from './Components/Header/Header';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { SignIn } from './Components/Auth/SignIn/SignIn';
 import { EditProfile } from './Components/Auth/EditProfile/EditProfile';
 import { SignUp } from './Components/Auth/SignUp/SignUp';

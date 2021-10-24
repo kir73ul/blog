@@ -11,6 +11,7 @@ const SET_CURRENT_SLUG = 'SET_CURRENT_SLUG';
 const SET_CURRENT_ARTICLE = 'SET_CURRENT_ARTICLE';
 const SET_IS_REMOVE_SUCCESS = 'SET_IS_REMOVE_SUCCESS';
 const SET_IS_LIKE_PUSHED = 'SET_IS_LIKE_PUSHED';
+const SET_MODAL_OPEN = 'SET_MODAL_OPEN';
 
 
 interface authorType {
@@ -43,6 +44,7 @@ interface articlesReducerType {
     total: number;
     currentSlug: string;
     isRemoveSuccess: boolean;
+    isModalOpened: boolean;
     isLikePushed: boolean;
 }
 
@@ -55,6 +57,7 @@ const initialState = {
     total: 0,
     currentSlug: '',
     isRemoveSuccess: false,
+    isModalOpened: false,
     isLikePushed: false
 }
 
@@ -71,12 +74,16 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 isFetching: action.isFetching
             }
         case SET_ARTICLES:
-            const upLimit = state.currentPage * state.pageSize
-            const downLimit = upLimit - state.pageSize
-
+            /*             const upLimit = state.currentPage * state.pageSize
+                        const downLimit = upLimit - state.pageSize
+            
+                        return {
+                            ...state,
+                            articleList: [...(action.articleList).filter((article, idx) => idx >= downLimit && idx < upLimit)]
+                        } */
             return {
                 ...state,
-                articleList: [...(action.articleList).filter((article, idx) => idx >= downLimit && idx < upLimit)]
+                articleList: action.articleList
             }
         case GET_TOTAL_ARTICLES:
             return {
@@ -105,6 +112,11 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 ...state,
                 isRemoveSuccess: action.isRemoveSuccess
             }
+        case SET_MODAL_OPEN:
+            return {
+                ...state,
+                isModalOpened: action.isModalOpened
+            }
         case SET_IS_LIKE_PUSHED:
             return {
                 ...state,
@@ -113,7 +125,7 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
         default: return state
     }
 }
-type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType | setIsRemoveSuccessType | setLikePushedType
+type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType | setIsRemoveSuccessType | setLikePushedType | setIsModalOpenedType
 interface setCurrentPageType { type: typeof SET_CURRENT_PAGE, currentPage: number };
 export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage });
 interface setFetchingType { type: typeof SET_FETCHING, isFetching: boolean };
@@ -132,6 +144,8 @@ interface setIsRemoveSuccessType { type: typeof SET_IS_REMOVE_SUCCESS, isRemoveS
 export const setIsRemoveSuccess = (isRemoveSuccess: boolean): setIsRemoveSuccessType => ({ type: SET_IS_REMOVE_SUCCESS, isRemoveSuccess });
 interface setLikePushedType { type: typeof SET_IS_LIKE_PUSHED, isLikePushed: boolean };
 export const setLikePushed = (isLikePushed: boolean): setLikePushedType => ({ type: SET_IS_LIKE_PUSHED, isLikePushed });
+interface setIsModalOpenedType { type: typeof SET_MODAL_OPEN, isModalOpened: boolean };
+export const setIsModalOpened = (isModalOpened: boolean): setIsModalOpenedType => ({ type: SET_MODAL_OPEN, isModalOpened });
 
 
 

@@ -6,34 +6,29 @@ import FavoriteImage from '../../assets/image/path4.png';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/rootReducer';
-import { articlesType, getSingleArticle, removeArticle } from '../../redux/articalesReducer';
+import { articlesType, getSingleArticle, removeArticle, setIsModalOpened } from '../../redux/articalesReducer';
 import { convertDate } from '../Common/helper';
 import { Button, Modal } from 'antd';
 import Preloader from '../Common/Preloader';
 import { getArticleData } from '../../redux/newArticleReducer';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 
 
 
 export const Artical = () => {
-    let [isModalVisible, setisModalVisible] = useState(false)
-    const slug = useSelector((state: AppStateType) => state.articles.currentSlug)
+
+    let slug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const isRemoveSuccess = useSelector((state: AppStateType) => state.articles.isRemoveSuccess)
+    const isModalOpened = useSelector((state: AppStateType) => state.articles.isModalOpened)
     const dispatch = useDispatch()
     const history = useHistory()
-    console.log(slug);
+    const location = useLocation()
+
 
     const redirectToEditArticle = (slug: string) => {
         history.push(`/articles/${slug}/edit`)
-    }
-    const openModal = () => {
-        setisModalVisible(true)
-    }
-    const closeModal = () => {
-        setisModalVisible(!isModalVisible)
-        console.log(isModalVisible);
     }
     const redirectToArticleList = () => {
         setTimeout(() => {
@@ -41,7 +36,9 @@ export const Artical = () => {
         }, 3000)
     }
     useEffect(() => {
-
+        dispatch(getSingleArticle(slug))
+    }, [])
+    useEffect(() => {
         dispatch(getSingleArticle(slug))
     }, [slug])
 
@@ -85,28 +82,27 @@ export const Artical = () => {
                         </div>
 
                         {article.author.username === username ? <div className={styles.buttons_block}>
-                            <button onClick={() => { openModal() }} className={styles.delete_btn}>Delete
+                            <button onClick={() => { dispatch(setIsModalOpened(true)) }} className={styles.delete_btn}>Delete
                                 <Modal title={
                                     <div>
                                         <span className={styles.sign}>&#33;</span>
                                         <span>Are you sure to delete this article?</span>
                                     </div>}
-                                    visible={isModalVisible}
+                                    visible={isModalOpened}
                                     width='240px'
-                                    onOk={() => { dispatch(removeArticle(slug)) }}
-                                    onCancel={closeModal}
+                                    onOk={() => { dispatch(removeArticle(slug)); dispatch(setIsModalOpened(false)) }}
+                                    onCancel={(e) => { e.stopPropagation(); dispatch(setIsModalOpened(false)) }}
                                     okText='Yes'
                                     cancelText='No'
                                     closable={false}
                                     mask={false}
-                                    maskClosable={true}
                                     bodyStyle={{
-
+                                        display: 'none',
                                     }}
                                     style={{
-                                        position: 'absolute',
-                                        top: 158,
-                                        right:0,
+                                        position: 'relative',
+                                        top: 150,
+                                        right: 96,
 
 
                                     }}
