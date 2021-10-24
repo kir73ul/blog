@@ -16,17 +16,24 @@ import { useHistory } from 'react-router';
 
 
 export const Artical = () => {
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    let [isModalVisible, setisModalVisible] = useState(false)
     const slug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const isRemoveSuccess = useSelector((state: AppStateType) => state.articles.isRemoveSuccess)
     const dispatch = useDispatch()
     const history = useHistory()
+    console.log(slug);
 
     const redirectToEditArticle = (slug: string) => {
-        history.push(`/new-article/${slug}/edit`)
-
+        history.push(`/articles/${slug}/edit`)
+    }
+    const openModal = () => {
+        setisModalVisible(true)
+    }
+    const closeModal = () => {
+        setisModalVisible(!isModalVisible)
+        console.log(isModalVisible);
     }
     const redirectToArticleList = () => {
         setTimeout(() => {
@@ -34,9 +41,12 @@ export const Artical = () => {
         }, 3000)
     }
     useEffect(() => {
+
         dispatch(getSingleArticle(slug))
     }, [slug])
+
     const article = useSelector((state: AppStateType) => state.articles.currentArticle)
+
     if (isRemoveSuccess) {
         redirectToArticleList()
         return (
@@ -53,6 +63,7 @@ export const Artical = () => {
             <>
                 <div className={styles.wrap_article_block}>
                     <div className={styles.single_article_block}>
+                        {/* <ArticlePreview {...article} /> */}
                         <div className={styles.title}>
                             <div className={styles.link}>{article.title}</div>
                             <div onClick={() => { }} className={styles.likes_block}>
@@ -74,7 +85,7 @@ export const Artical = () => {
                         </div>
 
                         {article.author.username === username ? <div className={styles.buttons_block}>
-                            <button onClick={() => { setIsModalVisible(true) }} className={styles.delete_btn}>Delete
+                            <button onClick={() => { openModal() }} className={styles.delete_btn}>Delete
                                 <Modal title={
                                     <div>
                                         <span className={styles.sign}>&#33;</span>
@@ -83,7 +94,7 @@ export const Artical = () => {
                                     visible={isModalVisible}
                                     width='240px'
                                     onOk={() => { dispatch(removeArticle(slug)) }}
-                                    onCancel={() => { setIsModalVisible(false) }}
+                                    onCancel={closeModal}
                                     okText='Yes'
                                     cancelText='No'
                                     closable={false}
@@ -93,14 +104,15 @@ export const Artical = () => {
 
                                     }}
                                     style={{
-                                        position: 'relative',
-                                        top: 197,
-                                        left: 0,
+                                        position: 'absolute',
+                                        top: 158,
+                                        right:0,
+
+
                                     }}
                                     wrapClassName={styles.modal_body}>
                                 </Modal>
                             </button>
-
                             <button onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle(slug) }} className={styles.edit_btn}>Edit</button>
                         </div> : null}
                         <p className={styles.articleText}>{article.description}</p>

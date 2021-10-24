@@ -15,23 +15,24 @@ import { ArticlePreview } from './Components/ArticalList/ArticlePreview/ArticleP
 const App = () => {
   const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
   const currentArticle = useSelector((state: AppStateType) => state.articles.currentArticle)
+  console.log(currentSlug );
+
   return (
     <div className="App">
       <Header />
       <ErrorBoundary>
-        <Route path={`/articles/:${currentSlug}`} component={Artical}/*  render={() => <ArticlePreview {...currentArticle} /> || null} */ />
+        <Route exact path={`/articles/:${currentSlug}`} component={Artical}/*  render={() => <ArticlePreview {...currentArticle} /> || null} */ />
       </ErrorBoundary>
       <ErrorBoundary>
         <Route exact path={'/' || '/articles'} component={ArticalList} />
       </ErrorBoundary>
-      <ErrorBoundary>
-        <Route exact path={'/edit'} component={NewArticale} />
-      </ErrorBoundary>
-
       <Route path='/sign-in' component={SignIn} />
       <Route path='/sign-up' component={SignUp} />
       <Route path='/profile' component={EditProfile} />
       <Route path='/new-article' component={NewArticale} />
+      <ErrorBoundary>
+        <Route exact path={`/articles/${currentSlug}/edit`} component={NewArticale} />
+      </ErrorBoundary>
     </div>
   );
 }

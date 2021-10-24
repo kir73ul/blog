@@ -32,11 +32,17 @@ export const NewArticale = () => {
     const [localText, SetlocalText] = useState(text)
 
     let initialValues = {
-        title: !!title ? title : localTitle,
-        shortDescription: !!description ? description : localShortDescription,
-        text: !!text ? text : localText,
+        title: localTitle ? localTitle : title,
+        shortDescription: localShortDescription ? localShortDescription : description,
+        text: localText ? localText : text,
         tags: [...tags]
     }
+    /*  useEffect(() => {
+         const slug = articleData.slug ? articleData.slug : null
+         setTimeout(() => {
+             articleData ? history.push(`/article/:${slug}`) : history.push('/')
+         }, 3000)
+     }, [isSuccess]) */
     if (isFetching) {
         return <Preloader />
     }
@@ -45,8 +51,9 @@ export const NewArticale = () => {
     }
     if (isSuccess) {
         setTimeout(() => {
-            history.push('/')
+            articleData ? history.push(`/article/:${articleData.slug}`) : history.push('/')
         }, 3000)
+
         const action = (articleData ? 'edited' : 'created')
         return (
             <p className={styles.articleSuccess}>

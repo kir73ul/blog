@@ -14,7 +14,6 @@ export const ArticalList = () => {
     const totalArticles = useSelector((state: AppStateType) => state.articles.total)
     const isFetching = useSelector((state: AppStateType) => state.articles.isFetching)
     const articleList = useSelector((state: AppStateType) => state.articles?.articleList)
-    console.log(articleList);
 
     const dispatch = useDispatch()
     useEffect(() => {

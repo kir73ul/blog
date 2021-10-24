@@ -2,6 +2,7 @@ import { ThunkAction } from "redux-thunk";
 import { articleAPI } from "../API/API";
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { errorsType } from './authReducer';
+import { setCurrentArticle, setCurrentSlug } from "./articalesReducer";
 
 const SET_TAGS = 'SET_TAGS';
 const REMOVE_TAG = 'REMOVE_TAG';
@@ -133,6 +134,8 @@ export const createNewArticle = (articleData: any): ThunkAction<void, AppStateTy
     const response = await articleAPI.createArticle(articleData);
     dispatch(setFetching(false))
     if (response.status === 200) {
+        dispatch(setCurrentSlug(response.data.article.slug))
+        dispatch(setCurrentArticle(response.data.article))
         dispatch(zeroizeArticle())
         dispatch(zeroizeTags())
         dispatch(setSuccses(true))
@@ -141,7 +144,7 @@ export const createNewArticle = (articleData: any): ThunkAction<void, AppStateTy
         }, 4000)
 
     }
-    
+
     else if (response.status !== 200) {
         response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
     }
@@ -160,8 +163,9 @@ export const editArticle = (articleData: any, slug: string): ThunkAction<void, A
     dispatch(setFetching(true))
     const response = await articleAPI.editArticle(articleData, slug);
     dispatch(setFetching(false))
-    debugger
     if (response.status === 200) {
+        dispatch(setCurrentSlug(response.data.article.slug))
+        dispatch(setCurrentArticle(response.data.article))
         dispatch(setSuccses(true))
         setTimeout(() => {
             dispatch(zeroizeArticle())

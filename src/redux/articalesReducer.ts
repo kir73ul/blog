@@ -147,6 +147,7 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
     const response = await articleAPI.getSingleArticleData(slug)
     dispatch(setFetching(false))
     if (response.status === 200) {
+        dispatch(setCurrentSlug(response.data.article.slug))
         dispatch(setCurrentArticle(response.data.article))
     } else if (response.status !== 200) {
         console.log(response.data.errors);

@@ -35,7 +35,7 @@ export const EditProfile = () => {
     if (isFetching) {
         return <Preloader />
     }
-    if (isAuth) {
+    if (!isAuth) {
         history.push('/sign-in')
     }
     return (

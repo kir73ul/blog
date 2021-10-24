@@ -125,8 +125,6 @@ export const getUserInfo = (): ThunkAction<void, AppStateType, unknown, AuthActi
         /*         dispatch(setFetching(false))
          */
         if (response.status === 200) {
-            console.log(response);
-            
             dispatch(setUserAuth())
             dispatch(setUsersData(response.data.user))
         } else if (response.status !== 200) {
@@ -151,6 +149,9 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
     } else if (response.data.errors) {
         dispatch(setFetching(false))
         dispatch(getError(response.data.errors, 'signIn'))
+        setTimeout(() => {
+            dispatch(cleanError())
+        }, 5000)
     }
 }
 
@@ -166,6 +167,9 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
     } else if (response.status !== 200) {
         dispatch(setFetching(false))
         dispatch(getError(response.data.errors, 'signUp'))
+        setTimeout(() => {
+            dispatch(cleanError())
+        }, 5000)
     }
 }
 export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
@@ -187,6 +191,9 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
             response.data.errors ? dispatch(getError(response.data.errors, 'updateError'))
                 :
                 dispatch(getError({ [response.status]: response.data }, 'updateError'))
+            setTimeout(() => {
+                dispatch(cleanError())
+            }, 5000)
         }
     }
     catch (err: any) {
