@@ -199,15 +199,25 @@ color: rgba(0, 0, 0, 0.75);
 .text_block_wrap {
     position: relative;
     width: 880px;
-    height: 685px;
-    left: 16px;
-    top: 153px;
+    max-height: 685px;   
     font-family: Inter, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 28px;
     color: rgba(0, 0, 0, 0.75);
+    
+    }
+    .text_block {
+        position: relative;
+        font-family: Inter, serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 28px;
+        color: rgba(0, 0, 0, 0.75);
+        overflow-y:auto;
+        word-wrap: break-word; 
     }
 
     .wrap_article_block {

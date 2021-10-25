@@ -25,6 +25,7 @@ export const Artical = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const location = useLocation()
+    console.log(history);
 
 
     const redirectToEditArticle = (slug: string) => {
@@ -109,12 +110,16 @@ export const Artical = () => {
                                     wrapClassName={styles.modal_body}>
                                 </Modal>
                             </button>
-                            <button onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle(slug) }} className={styles.edit_btn}>Edit</button>
+                            <button
+                                onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle(slug) }} className={styles.edit_btn}>Edit
+                            </button>
                         </div> : null}
                         <p className={styles.articleText}>{article.description}</p>
                     </div>
                     <div className={styles.text_block_wrap}>
-                        <ReactMarkdown children={article.body} />
+                        <ReactMarkdown
+                            className={styles.text_block}
+                            children={article.body} />
                     </div>
                 </div>
             </>

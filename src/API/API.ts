@@ -7,6 +7,7 @@ export const saveToken = (token: string | null) => {
     const cookyToken = cookies.set('tokenData', ('Token ' + token), { expires: new Date(2021, 10, 1), path: '/' });
     return cookyToken
 }
+export const cooky = cookies.get('tokenData')
 export const removeToken = () => {
     return cookies.remove('tokenData')
 }

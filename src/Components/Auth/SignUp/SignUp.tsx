@@ -39,10 +39,10 @@ export const SignUp = () => {
                 <Formik
                     initialValues={{ userName: localUserName, email: localEmail, password: localPassword, repeatPassword: localRepeatPassword, agriment: false }}
                     validationSchema={Yup.object({
-                        userName: Yup.string().required('Required').min(3, 'The username should be longer than 3').max(20, `The pasword shouldn't be longer than 20`),
-                        email: Yup.string().email('Invalid email address').required('Required'),
-                        password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
-                        repeatPassword: Yup.string().oneOf([Yup.ref('password'), `Passwords don't match`]).min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required'),
+                        userName: Yup.string().required('Username should be filled').min(3, 'The username should be longer than 3').max(20, `The pasword shouldn't be longer than 20`),
+                        email: Yup.string().email('Invalid email address').required('Email should be filled'),
+                        password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Password should be filled'),
+                        repeatPassword: Yup.string().oneOf([Yup.ref('password'), `Passwords don't match`]).min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Password should be filled'),
                         agriment: Yup.boolean().oneOf([true], 'You should agree the condition')
                     })}
                     onSubmit={(values) => { dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } }))); error ? setIsSuccess(false) : setIsSuccess(true) }}

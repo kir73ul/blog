@@ -1,7 +1,7 @@
 .text_block_wrap {
 position: absolute;
 width: 880px;
-height: 685px;
+max-height: 685px;
 left: 16px;
 top: 153px;
 font-family: Inter, serif;
@@ -10,21 +10,17 @@ font-weight: normal;
 font-size: 20px;
 line-height: 28px;
 color: rgba(0, 0, 0, 0.75);
-overflow-wrap: break-word;
-word-wrap: break-word; 
+
 }
 .text_block {
-    position: absolute;
-    width: 880px;
-    height: 685px;
-    left: 16px;
-    top: 153px; 
     font-family: Inter, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 28px;
     color: rgba(0, 0, 0, 0.75);
+    overflow-y:scroll;
+word-wrap: break-word; 
 }
 .success_block{
     position: absolute;

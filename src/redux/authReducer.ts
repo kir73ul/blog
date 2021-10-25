@@ -118,22 +118,13 @@ interface setSuccsesType { type: typeof SET_SUCCESS, isSuccess: boolean };
 const setSuccses = (isSuccess: boolean): setSuccsesType => ({ type: SET_SUCCESS, isSuccess });
 
 export const getUserInfo = (): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
-    try {
-/*         dispatch(setFetching(true))
- */        const response = await usersAPI.getUsersInformation()
-        /*         dispatch(setFetching(false))
-         */
-        if (response.status === 200) {
-            dispatch(setUserAuth())
-            dispatch(setUsersData(response.data.user))
-        } else if (response.status !== 200) {
-            console.log(response.data.errors)
-        }
-    } catch (err) {
-        console.log(err);
-
+    const response = await usersAPI.getUsersInformation()
+    if (response.status === 200) {
+        dispatch(setUserAuth())
+        dispatch(setUsersData(response.data.user))
+    } else if (response.status !== 200) {
+        throw new Error(response.data.errors)
     }
-
 }
 
 export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
@@ -157,8 +148,8 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
     dispatch(cleanError())
     dispatch(setFetching(true))
     const response = await loginAPI.registrateMe(redisterData)
+    dispatch(setFetching(false))
     if (response.status === 200) {
-        dispatch(setFetching(false))
         dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))
         saveToken(getState().auth.users.token)

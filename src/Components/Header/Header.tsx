@@ -13,10 +13,10 @@ import { getArticles } from '../../redux/articalesReducer';
 export const Header = () => {
     const userData = useSelector((state: AppStateType) => state.auth.users)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
-    const isCooky = !!cookies.get('tokenData')
 
 
     useEffect(() => {
+        const isCooky = !!cookies.get('tokenData')
         if (isCooky && !isAuth) {
             dispatch(getUserInfo())
         }

@@ -50,8 +50,8 @@ export const SignIn = () => {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={Yup.object({
-                        email: Yup.string().email('Invalid email address').required('Required'),
-                        password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Required')
+                        email: Yup.string().email('Invalid email address').required('Email should be filled'),
+                        password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Password should be filled')
                     })}
                     onSubmit={(values) => { dispatch(getMeAuth(JSON.stringify({ user: { email: values.email, password: values.password } }))); }}
                 >

@@ -28,9 +28,9 @@ export const EditProfile = () => {
         email: userEmail,
         username: username,
         password: '',
-        image: userAvatarImage
+        image: userAvatarImage || ''
     }
-/*     const regMatch = '' || /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/; */
+    /*     const regMatch = '' || /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/; */
 
     if (isFetching) {
         return <Preloader />
@@ -49,10 +49,10 @@ export const EditProfile = () => {
                     initialValues={initialValuesData}
                     enableReinitialize
                     validationSchema={Yup.object({
-                        username: Yup.string().required('Required'),
-                        email: Yup.string().email('Invalid email address').required('Required'),
+                        username: Yup.string().required('Username should be filled'),
+                        email: Yup.string().email('Invalid email address').required('Email should be filled'),
                         password: Yup.string().nullable().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`),
-                        image: Yup.string().url(/* matches(regMatch ||  */ "Website should be a valid URL")
+                        image: Yup.string().nullable().url(/* matches(regMatch ||  */ "Website should be a valid URL")
                     })}
                     onSubmit={(values) => {
                         const userData = {
