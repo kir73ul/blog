@@ -1,4 +1,4 @@
-import styles from './NewArticale.module.scss';
+import styles from './../NewArticale.module.scss';
 import { Formik, ErrorMessage } from 'formik';
 import { Form, Input } from 'formik-antd';
 import * as Yup from 'yup';

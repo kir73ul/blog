@@ -1,0 +1,166 @@
+body,
+h1,
+p,
+div,
+button,
+input,
+span {
+  margin: 0;
+}
+
+.wrapper_block {
+  width: 1440px;
+  position: absolute;
+  height: 80px;
+  left: 0%;
+  right: 0%;
+  top: 0px;
+  background: #FFFFFF;
+}
+
+.title {
+  font-family: Inter serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  position: absolute;
+  width: 147px;
+  height: 56px;
+  left: 22px;
+  top: 9px;
+  padding: 14px 5px 5px 5px;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 0 auto;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.title:hover {
+  border: 1px solid #52C41A;
+  color: #52C41A;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.SignInBtn:hover {
+  border: 1px solid #1890ff !important;
+  border-radius: 4px;
+  color: #1890ff;
+}
+
+.SignInBtn {
+  font-family: Inter serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  position: absolute;
+  width: 84px;
+  height: 35px;
+  left: 1206px;
+  top: 22px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: rgba(0, 0, 0, 0.85);
+  background-color: #FFFFFF;
+  border: none;
+  outline: none;
+  text-align: center;
+  padding-left: 5px;
+}
+
+.SignUpBtn {
+  font-family: Inter serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  position: relative;
+  width: 109px;
+  height: 51px;
+  float: right;
+  margin-right: 22px;
+  top: 16px;
+  text-align: center;
+  color: #52C41A;
+  border-radius: 5px;
+  border: 1px solid #52C41A;
+  background-color: #FFFFFF;
+}
+
+.withAuth_block {
+  position: relative;
+  float: right;
+  min-width: 400px;
+  height: 80px;
+  margin-right: 22px;
+}
+
+.createArticleBtn {
+  position: relative;
+  width: 112.23px;
+  height: 31.1px;
+  top: 25px;
+  float: left;
+  margin-right: 27px;
+  color: #52C41A;
+  border: 1px solid #52C41A;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.userName {
+  font-family: Inter serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  position: relative;
+  height: 28px;
+  min-width: 10px;
+  top: 28px;
+  float: left;
+  margin-right: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.userAva {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  top: 19px;
+  margin-right: 27px;
+  float: left;
+  border-radius: 50%;
+}
+
+.logOutBtn {
+  position: relative;
+  width: 109px;
+  height: 51px;
+  top: 16px;
+  float: left;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 5px;
+}

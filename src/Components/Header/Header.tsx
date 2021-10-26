@@ -1,4 +1,4 @@
-import styles from './Header.module.scss';
+import styles from './Header.module.css';
 import { Button } from "antd";
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';

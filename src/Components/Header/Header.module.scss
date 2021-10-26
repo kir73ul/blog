@@ -9,41 +9,50 @@ span
   margin: 0;
 }
 
+@mixin font ($fontW : normal, $fontS : 18px, $lineH: 28px) {
+    font-family: Inter ;
+    font-style: normal;
+    font-weight: $fontW;
+    font-size: $fontS;
+    line-height: $lineH;
+}
+@mixin positionAndSize ($posit: relative, $width, $heigth, $top, $left: null ){
+    position: $posit;
+    width: $width;
+    height: $heigth;
+    top: $top; 
+    left: $left;
+}
 .wrapper_block {
-    width:1440px;
+    @include positionAndSize (absolute, 1440px,80px, 0px );
+/*     width:1440px ;
     position: absolute;
     height: 80px;
-    left: 0%;
+    left: 0%; */
     right: 0%;
-    top: 0px;
+  /*   top: 0px; */
     background: #FFFFFF;
 }
-.title:hover {
-    border: 1px solid #52C41A;
-    color:#52C41A;
-    text-align: center; 
-    border-radius: 4px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
 .title {
-    position: absolute;
+    @include font ();
+    @include positionAndSize (absolute, 147px,56px, 9px, 22px );
+  /*   position: absolute;
     width: 147px;
     height: 56px;
     left: 22px;
-    top: 9px;   
-    font-family: Inter;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 28px;
+    top: 9px; */   
     padding: 14px 5px 5px 5px;
     text-align: center;
     justify-content: center;
     align-items: center;
     margin-top: 0 auto;
     color: rgba(0, 0, 0, 0.85);
+    &:hover {
+        border: 1px solid #52C41A;
+        color:#52C41A;
+        text-align: center; 
+        border-radius: 4px;
+    }
 }
 .SignInBtn:hover{
     border: 1px solid #1890ff !important;
@@ -51,16 +60,12 @@ span
     color:#1890ff ;
 }
 .SignInBtn {
+    @include font ();
     position: absolute;
     width: 84px;
     height: 35px;
     left: 1206px;
     top: 22px;
-    font-family: Inter;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 28px;
     align-items: center;
     justify-content: center;
     color: rgba(0, 0, 0, 0.85); 
@@ -71,17 +76,13 @@ span
     padding-left: 5px;
 }
 .SignUpBtn {
+    @include font ();
     position: relative;
     width: 109px;
     height: 51px;
     float: right;
     margin-right: 22px;
     top: 16px;
-    font-family: Inter;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 28px; 
     text-align: center;
     color: #52C41A;
     border-radius: 5px;
@@ -109,15 +110,11 @@ border-radius: 5px;
 background-color: white;
 }
 .userName {
+    @include font ();
     position: relative;
 height: 28px;
 min-width: 10px;
 top: 28px;
-font-family: Inter serif;
-font-style: normal;
-font-weight: normal;
-font-size: 18px;
-line-height: 28px;
 float: left;
 margin-right: 12px;
 display: flex;

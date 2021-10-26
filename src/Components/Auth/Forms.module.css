@@ -1,0 +1,288 @@
+body,
+h1,
+p,
+div,
+button,
+input,
+span {
+  margin: 0;
+}
+
+.all_forms_block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 48px 32px;
+  position: absolute;
+  width: 384px;
+  height: auto;
+  left: 523px;
+  top: 139px;
+  background: #FFFFFF;
+  border: 1px solid #D9D9D9;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198), 0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035), 0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.6088px 2.93329px rgba(0, 0, 0, 0.0196802);
+          box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198), 0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035), 0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.6088px 2.93329px rgba(0, 0, 0, 0.0196802);
+  border-radius: 6px;
+  border-radius: 6px;
+}
+
+.responseError {
+  width: 311px;
+  height: auto;
+  position: relative;
+  color: red;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+  padding-bottom: 10px;
+  margin: 5px;
+}
+
+.success_block_SignIn {
+  position: relative;
+  margin: 0 auto;
+  top: 150px;
+  width: 384px;
+  height: 100px;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 6px;
+  justify-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.success_signIn {
+  position: relative;
+  text-align: center;
+  font-size: 16px;
+  width: 384px;
+  top: 30px;
+  color: #52C41A;
+}
+
+.success {
+  position: relative;
+  color: #52C41A;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+
+.title {
+  position: static;
+  width: 311px;
+  height: 28px;
+  left: 36.5px;
+  top: 48px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  color: #262626;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.form_block {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0px;
+  position: relative;
+  width: 320px;
+  /*     min-height: 292px;
+ */
+  height: auto;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  margin-top: 21px;
+}
+
+.input_block {
+  font-family: Roboto, serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 0px;
+  position: relative;
+  width: 320px;
+  min-height: 64px;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.label_elem {
+  position: relative;
+  height: 22px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #262626;
+  margin-bottom: 2px;
+}
+
+.input_elem {
+  position: relative;
+  height: 40px;
+  width: 320px;
+  background: #FFFFFF;
+  border: 1px solid #D9D9D9;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.line {
+  position: relative;
+  width: 320px;
+  height: 0px;
+  border: 1px solid #E8E8E8;
+  margin-top: 9px;
+  margin-bottom: 8px;
+}
+
+.checkbox_block {
+  position: relative;
+  font-family: Roboto, serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 22px;
+  font-size: 14px;
+  width: 320px;
+  min-height: 44px;
+  height: auto;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  margin-bottom: 12px;
+}
+
+.checkbox_wrapper {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.checkbox_wrapper_error {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  border: 0.3px solid red;
+}
+
+.checkboxlabel {
+  position: relative;
+  height: 44px;
+  color: #595959;
+  line-height: 22px;
+}
+
+.checkbox {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 0.3px solid #FFFFFF;
+  margin-top: 3px;
+  margin-right: 8px;
+}
+
+.button_block {
+  position: relative;
+  width: 319px;
+  height: auto;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 9px;
+}
+
+.button {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 8px 16px;
+  position: relative;
+  width: 319px;
+  height: 40px;
+  color: white;
+  background: #1890FF;
+  border-radius: 4px;
+  border: none;
+  font-family: Roboto serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 9px;
+}
+
+.under_button {
+  position: relative;
+  width: 319px;
+  height: 20px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  margin-left: 0;
+  margin-right: 0;
+  color: #8C8C8C;
+  margin-top: 8px;
+}
+
+.error {
+  position: relative;
+  color: #F5222D;
+  margin-top: 2px;
+  min-height: 24px;
+}
+
+.errorInput {
+  color: #F5222D;
+  margin: 2px 0px;
+  position: relative;
+  height: 40px;
+  width: 320px;
+  background: #FFFFFF;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid red !important;
+}

@@ -1,0 +1,29 @@
+body,
+h1,
+p,
+div,
+button,
+input,
+span {
+  margin: 0;
+}
+
+/* .body_block {
+position: relative;
+width: 1440px;
+height: 977px;
+} */
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: row !important;
+          flex-direction: row !important;
+  position: absolute;
+  width: 250px;
+  height: 24px;
+  bottom: 17px;
+  left: 612px;
+}
