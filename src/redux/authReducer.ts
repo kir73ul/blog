@@ -150,9 +150,13 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
     const response = await loginAPI.registrateMe(redisterData)
     dispatch(setFetching(false))
     if (response.status === 200) {
+        dispatch(setSuccses(true))
         dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))
         saveToken(getState().auth.users.token)
+        setTimeout(() => {
+            dispatch(setSuccses(false))
+        }, 4000)
     } else if (response.status !== 200) {
         dispatch(setFetching(false))
         dispatch(getError(response.data.errors, 'signUp'))

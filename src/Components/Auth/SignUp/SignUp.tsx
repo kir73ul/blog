@@ -15,17 +15,16 @@ import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 export const SignUp = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const [isSuccess, setIsSuccess] = useState(false)
     const error = useSelector((state: AppStateType) => state.auth.allErrors?.signUp)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
+    const isSuccess = useSelector((state: AppStateType) => state.auth.isSuccess)
     const [localUserName, setLocalUserName] = useState('')
     const [localEmail, setlocalEmail] = useState('')
     const [localPassword, setlocalPassword] = useState('')
     const [localRepeatPassword, setlocalRepeatPassword] = useState('')
-
     if (isAuth) {
-        setTimeout(() => { history.push('/'); setIsSuccess(false) }, 2500)
+        setTimeout(() => { history.push('/') }, 2500)
     }
     if (isFetching) {
         return <Preloader />
@@ -45,7 +44,7 @@ export const SignUp = () => {
                         repeatPassword: Yup.string().oneOf([Yup.ref('password'), `Passwords don't match`]).min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Password should be filled'),
                         agriment: Yup.boolean().oneOf([true], 'You should agree the condition')
                     })}
-                    onSubmit={(values) => { dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } }))); error ? setIsSuccess(false) : setIsSuccess(true) }}
+                    onSubmit={(values) => { dispatch(getRegistration(JSON.stringify({ user: { username: values.userName, email: values.email, password: values.password } }))) }}
                 >
                     {(formik) => (
                         <Form >

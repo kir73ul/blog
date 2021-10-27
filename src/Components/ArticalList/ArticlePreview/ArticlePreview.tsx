@@ -15,12 +15,12 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
     const dispatch = useDispatch()
     const history = useHistory()
     const location = useLocation()
+    const isSingleArticlePage = (`/articles/:${slug}` === location.pathname)
 
     const redirectToSignIn = () => {
         history.push('/sign-in', {})
     }
     const setLikeOrDislike = (slug: string) => {
-
         if (isAuth) {
             if (!favorited) {
                 dispatch(makeFavorite(slug))
@@ -32,7 +32,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
         return
     }
     return (
-        <div className={styles.wrap_block}>
+        <div className={isSingleArticlePage ? '' : styles.wrap_block}>
             <div className={slug === onlyCreatedSlug ? styles.wrap_block_border : styles.articlePreview_block}>
                 <div className={styles.title}>
                     <Link onClick={() => { dispatch(setCurrentSlug(slug)) }} to={`/articles/:${slug}`} className={styles.link}>{title.length > 30 ? title.slice(0, 30) + '...' : title}</Link>
@@ -60,7 +60,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                 </div>
                 <p className={styles.articleText}>{description.length > 30 ? description.slice(0, 30) + '...' : description}</p>
             </div>
-            {`/articles/:${slug}` === location.pathname ? <div>%%%%%%%%%%%%%%%%%%%%%%%%%%</div> : null}
-        </div>
+{/*             {isSingleArticlePage ? <div>%%%%%%%%%%%%%%%%%%%%%%%%%%</div> : null}
+ */}        </div>
     )
 }

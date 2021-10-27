@@ -18,6 +18,8 @@ import { useHistory, useLocation } from 'react-router';
 export const Artical = () => {
 
     let slug = useSelector((state: AppStateType) => state.articles.currentSlug)
+    const article = useSelector((state: AppStateType) => state.articles.currentArticle)
+
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const isRemoveSuccess = useSelector((state: AppStateType) => state.articles.isRemoveSuccess)
@@ -43,7 +45,6 @@ export const Artical = () => {
         dispatch(getSingleArticle(slug))
     }, [slug])
 
-    const article = useSelector((state: AppStateType) => state.articles.currentArticle)
 
     if (isRemoveSuccess) {
         redirectToArticleList()
@@ -60,9 +61,9 @@ export const Artical = () => {
         return (
             <>
                 <div className={styles.wrap_article_block}>
-                    <div className={styles.single_article_block}>
-                        {/* <ArticlePreview {...article} /> */}
-                        <div className={styles.title}>
+                    {/*                     <div className={styles.single_article_block}>
+ */}                        <ArticlePreview {...article} />
+                    {/*                         <div className={styles.title}>
                             <div className={styles.link}>{article.title}</div>
                             <div onClick={() => { }} className={styles.likes_block}>
                                 <img src={article.favorited ? FavoriteImage : LikesImage} alt="" className={styles.icon}></img>
@@ -80,48 +81,50 @@ export const Artical = () => {
                             <div className={styles.author_name}>{article.author.username}</div>
                             <div className={styles.dateOfPublik}>{convertDate(article.createdAt)}</div>
                             <img className={styles.author_image} src={article.author.image || '../../assets/image/Rectangle 1.png'} alt=''></img>
-                        </div>
+                        </div> */}
 
-                        {article.author.username === username ? <div className={styles.buttons_block}>
-                            <button onClick={() => { dispatch(setIsModalOpened(true)) }} className={styles.delete_btn}>Delete
-                                <Modal title={
-                                    <div>
-                                        <span className={styles.sign}>&#33;</span>
-                                        <span>Are you sure to delete this article?</span>
-                                    </div>}
-                                    visible={isModalOpened}
-                                    width='240px'
-                                    onOk={() => { dispatch(removeArticle(slug)); dispatch(setIsModalOpened(false)) }}
-                                    onCancel={(e) => { e.stopPropagation(); dispatch(setIsModalOpened(false)) }}
-                                    okText='Yes'
-                                    cancelText='No'
-                                    closable={false}
-                                    mask={false}
-                                    bodyStyle={{
-                                        display: 'none',
-                                    }}
-                                    style={{
-                                        position: 'relative',
-                                        top: 150,
-                                        right: 96,
+                    {article.author.username === username ? <div className={styles.buttons_block}>
+                        <button onClick={() => { dispatch(setIsModalOpened(true)) }} className={styles.delete_btn}>Delete
+                            <Modal title={
+                                <div>
+                                    <span className={styles.sign}>&#33;</span>
+                                    <span>Are you sure to delete this article?</span>
+                                </div>}
+                                visible={isModalOpened}
+                                width='240px'
+                                onOk={() => { dispatch(removeArticle(slug)); dispatch(setIsModalOpened(false)) }}
+                                onCancel={(e) => { e.stopPropagation(); dispatch(setIsModalOpened(false)) }}
+                                okText='Yes'
+                                cancelText='No'
+                                closable={false}
+                                mask={false}
+                                bodyStyle={{
+                                    display: 'none',
+                                }}
+                                style={{
+                                    position: 'relative',
+                                    top: 150,
+                                    right: 96,
+                                }}
+                                wrapClassName={styles.modal_body}>
+                            </Modal>
+                        </button>
+                        <button
+                            onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle(slug) }} className={styles.edit_btn}>Edit
+                        </button>
+                    </div> : null}
+                    {/*                         <p className={styles.articleText}>{article.description}</p>
 
 
-                                    }}
-                                    wrapClassName={styles.modal_body}>
-                                </Modal>
-                            </button>
-                            <button
-                                onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle(slug) }} className={styles.edit_btn}>Edit
-                            </button>
-                        </div> : null}
-                        <p className={styles.articleText}>{article.description}</p>
-                    </div>
+ */}
                     <div className={styles.text_block_wrap}>
                         <ReactMarkdown
                             className={styles.text_block}
                             children={article.body} />
                     </div>
                 </div>
+
+                {/* </div> */}
             </>
         )
     }
