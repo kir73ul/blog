@@ -13,7 +13,7 @@
   position: relative;
   width: 941px;
   height: 140px;
-  left: -3px;
+  /* left: -3px; */
   top: 0px;
   background: #FFFFFF;
   border-radius: 5px;
@@ -24,7 +24,8 @@
   position: relative;
   width: 941px;
   height: 140px;
-  left: -3px;
+  /* left: -3px;
+ */
   top: 0px;
   background: #FFFFFF;
   border-radius: 5px;
@@ -100,7 +101,7 @@ top: 47px;
   width: auto;
   height: 20px;
   left: 0px;
-  top: 6px;
+  top: 4px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -164,19 +165,14 @@ top: 47px;
   position: relative;
   width: auto;
   height: 28px;
-  right: 72px;
+  right: 58px;
   top: 15px;
   font-family: Inter, serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 28px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  float: right;
   color: rgba(0, 0, 0, 0.85);
 }
 
@@ -184,8 +180,8 @@ top: 47px;
   position: relative;
   width: auto;
   height: 22px;
-  right: 72px;
-  top: 13px;
+  /* right: 58px; */
+  top: 41px;
   font-family: Inter, serif;
   font-style: normal;
   font-weight: normal;
@@ -194,9 +190,7 @@ top: 47px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  float: right;
   color: rgba(0, 0, 0, 0.5);
 }
 
@@ -204,7 +198,7 @@ top: 47px;
   position: absolute;
   width: 46px;
   height: 46px;
-  right: 14px;
+  right: 0px;
   top: 15px;
   border-radius: 50%;
   /* background: url('../../../assets/image/Rectangle 1.png'); */
@@ -214,8 +208,8 @@ top: 47px;
   position: absolute;
   width: 682px;
   height: 45px;
-  left: 16px;
-  top: 71px;
+  left: 19px;
+  top: 85px;
   font-family: Inter, serif;
   font-style: normal;
   font-weight: normal;
@@ -250,7 +244,7 @@ top: 47px;
 
 .wrap_article_block {
   position: relative;
-  width: 938px;
+  width: 941px;
   height: 807px;
   left: calc(50% - 938px/2);
   top: 106px;
@@ -335,9 +329,9 @@ top: 47px;
 .text_block_wrap {
   position: absolute;
   width: 880px;
-  height: 685px;
+  height: 630px;
   left: 16px;
-  top: 153px;
+  top: 155px;
   font-family: Inter, serif;
   font-style: normal;
   font-weight: normal;
@@ -351,9 +345,9 @@ top: 47px;
 .text_block {
   position: absolute;
   width: 880px;
-  height: 685px;
+  height: 630px;
   left: 16px;
-  top: 153px;
+  /* top: 153px;  */
   font-family: Inter, serif;
   font-style: normal;
   font-weight: normal;

@@ -74,13 +74,6 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 isFetching: action.isFetching
             }
         case SET_ARTICLES:
-            /*             const upLimit = state.currentPage * state.pageSize
-                        const downLimit = upLimit - state.pageSize
-            
-                        return {
-                            ...state,
-                            articleList: [...(action.articleList).filter((article, idx) => idx >= downLimit && idx < upLimit)]
-                        } */
             return {
                 ...state,
                 articleList: action.articleList
@@ -160,6 +153,7 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
     dispatch(setFetching(true))
     const response = await articleAPI.getSingleArticleData(slug)
     dispatch(setFetching(false))
+    
     if (response.status === 200) {
         dispatch(setCurrentSlug(response.data.article.slug))
         dispatch(setCurrentArticle(response.data.article))

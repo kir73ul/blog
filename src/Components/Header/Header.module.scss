@@ -8,14 +8,15 @@ span
  {
   margin: 0;
 }
-
-@mixin font ($fontW : normal, $fontS : 18px, $lineH: 28px) {
-    font-family: Inter ;
-    font-style: normal;
-    font-weight: $fontW;
-    font-size: $fontS;
-    line-height: $lineH;
+$fontFam : Inter serif;
+@mixin headersFont ($fontFamily: $fontFam, $fontW : normal, $fontS : 18px, $lineH: 28px) {
+        font-family: $fontFamily;
+        font-style: normal;
+        font-weight: $fontW;
+        font-size: $fontS;
+        line-height: $lineH;
 }
+
 @mixin positionAndSize ($posit: relative, $width, $heigth, $top, $left: null ){
     position: $posit;
     width: $width;
@@ -54,11 +55,6 @@ span
         border-radius: 4px;
     }
 }
-.SignInBtn:hover{
-    border: 1px solid #1890ff !important;
-    border-radius: 4px;
-    color:#1890ff ;
-}
 .SignInBtn {
     @include font ();
     position: absolute;
@@ -74,6 +70,11 @@ span
     outline: none;
     text-align: center;
     padding-left: 5px;
+    &:hover{
+        border: 1px solid #1890ff !important;
+        border-radius: 4px;
+        color:#1890ff ;
+    }
 }
 .SignUpBtn {
     @include font ();

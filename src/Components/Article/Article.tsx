@@ -12,6 +12,7 @@ import { Button, Modal } from 'antd';
 import Preloader from '../Common/Preloader';
 import { getArticleData } from '../../redux/newArticleReducer';
 import { useHistory, useLocation } from 'react-router';
+import { indexOf } from 'lodash';
 
 
 
@@ -19,15 +20,16 @@ export const Artical = () => {
 
     let slug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const article = useSelector((state: AppStateType) => state.articles.currentArticle)
-
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const isRemoveSuccess = useSelector((state: AppStateType) => state.articles.isRemoveSuccess)
     const isModalOpened = useSelector((state: AppStateType) => state.articles.isModalOpened)
     const dispatch = useDispatch()
     const history = useHistory()
-    const location = useLocation()
-    console.log(history);
+    const path = history.location.pathname
+    const slugAterReset = path.slice((path.indexOf(':') + 1))
+    console.log(slugAterReset);
+
 
 
     const redirectToEditArticle = (slug: string) => {
@@ -39,13 +41,12 @@ export const Artical = () => {
         }, 3000)
     }
     useEffect(() => {
-        dispatch(getSingleArticle(slug))
+        debugger
+        dispatch(getSingleArticle(slugAterReset))
     }, [])
-    useEffect(() => {
-        dispatch(getSingleArticle(slug))
-    }, [slug])
-
-
+    /*     useEffect(() => {
+            dispatch(getSingleArticle(slug))
+        }, [slug]) */
     if (isRemoveSuccess) {
         redirectToArticleList()
         return (
@@ -61,28 +62,7 @@ export const Artical = () => {
         return (
             <>
                 <div className={styles.wrap_article_block}>
-                    {/*                     <div className={styles.single_article_block}>
- */}                        <ArticlePreview {...article} />
-                    {/*                         <div className={styles.title}>
-                            <div className={styles.link}>{article.title}</div>
-                            <div onClick={() => { }} className={styles.likes_block}>
-                                <img src={article.favorited ? FavoriteImage : LikesImage} alt="" className={styles.icon}></img>
-                                <div className={styles.likes_count}>{article.favoritesCount}</div>
-                            </div>
-                        </div>
-                        <div className={styles.tag_block}>
-                            <div className={styles.tag_wrap}>
-                                {article.tagList.map((tag, idx) => {
-                                    return <span key={tag} className={idx === 0 ? styles.tag && styles.firstTag : styles.tag} >{tag}</span>
-                                })}
-                            </div>
-                        </div>
-                        <div className={styles.author_block}>
-                            <div className={styles.author_name}>{article.author.username}</div>
-                            <div className={styles.dateOfPublik}>{convertDate(article.createdAt)}</div>
-                            <img className={styles.author_image} src={article.author.image || '../../assets/image/Rectangle 1.png'} alt=''></img>
-                        </div> */}
-
+                    <ArticlePreview {...article} />
                     {article.author.username === username ? <div className={styles.buttons_block}>
                         <button onClick={() => { dispatch(setIsModalOpened(true)) }} className={styles.delete_btn}>Delete
                             <Modal title={
@@ -113,18 +93,12 @@ export const Artical = () => {
                             onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle(slug) }} className={styles.edit_btn}>Edit
                         </button>
                     </div> : null}
-                    {/*                         <p className={styles.articleText}>{article.description}</p>
-
-
- */}
                     <div className={styles.text_block_wrap}>
                         <ReactMarkdown
                             className={styles.text_block}
                             children={article.body} />
                     </div>
                 </div>
-
-                {/* </div> */}
             </>
         )
     }

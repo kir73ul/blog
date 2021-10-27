@@ -58,9 +58,8 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                     <div className={styles.dateOfPublik}>{convertDate(createdAt)}</div>
                     <img className={styles.author_image} src={author.image || '../../../assets/image/Rectangle 1.png'} alt=''></img>
                 </div>
-                <p className={styles.articleText}>{description.length > 30 ? description.slice(0, 30) + '...' : description}</p>
+                <p className={styles.articleText}>{description.length > 200 ? description.slice(0, 200) + '...' : description}</p>
             </div>
-{/*             {isSingleArticlePage ? <div>%%%%%%%%%%%%%%%%%%%%%%%%%%</div> : null}
- */}        </div>
+        </div>
     )
 }

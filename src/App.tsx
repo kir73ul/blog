@@ -23,6 +23,9 @@ const App = () => {
         <Header />
       </ErrorBoundary>
       <ErrorBoundary>
+        <Route exact path={`/articles/${currentSlug}/edit`} component={NewArticale} />
+      </ErrorBoundary>
+      <ErrorBoundary>
         <Route exact path={`/articles/:${currentSlug}`} component={Artical}/*  render={() => <ArticlePreview {...currentArticle} /> || null} */ />
       </ErrorBoundary>
       <ErrorBoundary>
@@ -40,9 +43,7 @@ const App = () => {
       <ErrorBoundary>
         <Route path='/new-article' component={NewArticale} />
       </ErrorBoundary>
-      <ErrorBoundary>
-        <Route exact path={`/articles/${currentSlug}/edit`} component={NewArticale} />
-      </ErrorBoundary>
+
     </div>
   );
 }

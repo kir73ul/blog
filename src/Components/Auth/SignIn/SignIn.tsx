@@ -53,7 +53,14 @@ export const SignIn = () => {
                         email: Yup.string().email('Invalid email address').required('Email should be filled'),
                         password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Password should be filled')
                     })}
-                    onSubmit={(values) => { dispatch(getMeAuth(JSON.stringify({ user: { email: values.email, password: values.password } }))); }}
+                    onSubmit={(values) => /* { dispatch(getMeAuth(JSON.stringify({ user: { email: values.email, password: values.password } }))); } */ {
+                        if (values.email === 'error@error.ru') {
+                            throw new Error('saepis')
+                        }
+                        dispatch(getMeAuth(JSON.stringify({ user: { email: values.email, password: values.password } })));
+                    }
+
+                    }
                 >
                     {(formik) => (
                         <Form >
