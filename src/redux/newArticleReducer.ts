@@ -32,7 +32,6 @@ export interface articleDataType {
         following: boolean
     }
 }
-
 interface newArticalReducerType {
     tags: string[];
     articleData: articleDataType | null;
@@ -41,7 +40,6 @@ interface newArticalReducerType {
     errorArtical: errorsType | null;
     onlyCreatedSlug: string | null;
 }
-
 const initialState = {
     tags: [],
     articleData: null,
@@ -144,6 +142,7 @@ export const createNewArticle = (articleData: any): ThunkAction<void, AppStateTy
     const response = await articleAPI.createArticle(articleData);
     dispatch(setFetching(false))
     if (response.status === 200) {
+        debugger
         dispatch(setCurrentSlug(response.data.article.slug))
         dispatch(setCurrentArticle(response.data.article))
         dispatch(zeroizeArticle())
@@ -157,7 +156,6 @@ export const createNewArticle = (articleData: any): ThunkAction<void, AppStateTy
             dispatch(setOnlyCreated(null))
         }, 10000)
     }
-
     else if (response.status !== 200) {
         response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
     }
@@ -178,8 +176,7 @@ export const editArticle = (articleData: any, slug: string): ThunkAction<void, A
     dispatch(setFetching(false))
     if (response.status === 200) {
         dispatch(setCurrentSlug(response.data.article.slug))
-/*         dispatch(setCurrentArticle(response.data.article))
- */        dispatch(setSuccses(true))
+        dispatch(setSuccses(true))
         setTimeout(() => {
             dispatch(zeroizeArticle())
             dispatch(zeroizeTags())

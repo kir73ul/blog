@@ -1,5 +1,4 @@
 import styles from './Error.module.scss'
-import { errorsType } from '../../redux/authReducer'
 
 interface ErrorBlockPropsType {
     error: any;

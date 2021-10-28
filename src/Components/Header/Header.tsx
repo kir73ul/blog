@@ -14,13 +14,13 @@ export const Header = () => {
     const userData = useSelector((state: AppStateType) => state.auth.users)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
 
+    const isCooky = !!cookies.get('tokenData')
 
     useEffect(() => {
-        const isCooky = !!cookies.get('tokenData')
         if (isCooky && !isAuth) {
             dispatch(getUserInfo())
         }
-    }, [userData])
+    }, [userData, isCooky])
 
     const userName = useSelector((state: AppStateType) => state.auth.users.username)
     const avaImg = useSelector((state: AppStateType) => state.auth.users.image) || imgUrl
@@ -46,7 +46,7 @@ export const Header = () => {
     return (
         <div className={styles.wrapper_block}>
             <div onClick={() => { redirectToMainPage() }} className={styles.title}>Realworld Blog</div>
-            {isAuth ?
+            {isCooky ?
                 <div className={styles.withAuth_block}>
                     <Button onClick={() => { redirectToCreateArticle(); dispatch(zeroizeArticle()) }} className={styles.createArticleBtn}>Create article</Button>
                     <div onClick={() => { redirectToEditProfile() }} className={styles.userName}>{userName}</div>

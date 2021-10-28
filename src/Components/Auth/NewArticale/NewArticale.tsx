@@ -20,6 +20,7 @@ export const NewArticale = () => {
     const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
     const articleData = useSelector((state: AppStateType) => state.newArtical.articleData)
     const errorArticle = useSelector((state: AppStateType) => state.newArtical.errorArtical)
+    const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const title = articleData ? articleData.title : ''
     const description = articleData ? articleData.description : ''
@@ -44,7 +45,6 @@ export const NewArticale = () => {
         text: localText ? localText : text,
         tags: [...tags]
     }
-
     if (isFetching) {
         return <Preloader />
     }
@@ -52,8 +52,9 @@ export const NewArticale = () => {
         history.push('/sign-in')
     }
     if (isSuccess) {
+        console.log(currentSlug);
         setTimeout(() => {
-            articleData ? history.push(`/articles/:${articleData.slug}`) : redirectToMainPage()
+            articleData ? history.push(`/articles/:${currentSlug}`) : redirectToMainPage()
         }, 3000)
 
         const action = (articleData ? 'edited' : 'created')
@@ -76,8 +77,7 @@ export const NewArticale = () => {
                         shortDescription: Yup.string().required('The description should be filled'),
                         text: Yup.string().required('The text should be filled'),
                         tags: Yup.array().of(Yup.string().min(1, `It shouldn't be empty`)),
-/*                         tag: Yup.string().required().min(1, `It shouldn't be empty`)
- */                    })}
+                    })}
                     onSubmit={(values) => {
                         const articleDataJSON = JSON.stringify({
                             article: {

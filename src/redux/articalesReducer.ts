@@ -140,8 +140,6 @@ export const setLikePushed = (isLikePushed: boolean): setLikePushedType => ({ ty
 interface setIsModalOpenedType { type: typeof SET_MODAL_OPEN, isModalOpened: boolean };
 export const setIsModalOpened = (isModalOpened: boolean): setIsModalOpenedType => ({ type: SET_MODAL_OPEN, isModalOpened });
 
-
-
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articleAPI.getArticles(currentPage, pageSize)

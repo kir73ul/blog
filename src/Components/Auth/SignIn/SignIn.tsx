@@ -59,7 +59,6 @@ export const SignIn = () => {
                         }
                         dispatch(getMeAuth(JSON.stringify({ user: { email: values.email, password: values.password } })));
                     }
-
                     }
                 >
                     {(formik) => (
@@ -98,7 +97,6 @@ export const SignIn = () => {
                                     <p className={styles.under_button}>Don’t have an account?' <Link to='/sign-up'>Sign Up.</Link ></p>
                                 </div>
                             </div>
-
                         </Form>
                     )}
                 </Formik>

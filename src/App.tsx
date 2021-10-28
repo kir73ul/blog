@@ -7,15 +7,16 @@ import { SignIn } from './Components/Auth/SignIn/SignIn';
 import { EditProfile } from './Components/Auth/EditProfile/EditProfile';
 import { SignUp } from './Components/Auth/SignUp/SignUp';
 import { NewArticale } from './Components/Auth/NewArticale/NewArticale';
-import { useSelector } from 'react-redux';
-import { AppStateType } from './redux/rootReducer';
 import { ErrorBoundary } from './Components/ErroProcessing/ErrorBoundary';
-import { ArticlePreview } from './Components/ArticalList/ArticlePreview/ArticlePreview';
+import { useHistory } from 'react-router';
+
 
 const App = () => {
-  const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
-  const currentArticle = useSelector((state: AppStateType) => state.articles.currentArticle)
+  const history = useHistory()
+  const path = history.location.pathname
+  const currentSlug = path.slice((path.indexOf(':') + 1))
   console.log(currentSlug);
+
 
   return (
     <div className="App">
@@ -23,10 +24,10 @@ const App = () => {
         <Header />
       </ErrorBoundary>
       <ErrorBoundary>
-        <Route exact path={`/articles/${currentSlug}/edit`} component={NewArticale} />
+        <Route path={`/articles/${currentSlug}/edit`} component={NewArticale} />
       </ErrorBoundary>
       <ErrorBoundary>
-        <Route exact path={`/articles/:${currentSlug}`} component={Artical}/*  render={() => <ArticlePreview {...currentArticle} /> || null} */ />
+        <Route exact path={`/articles/:${currentSlug}`} component={Artical} />
       </ErrorBoundary>
       <ErrorBoundary>
         <Route exact path={'/' || '/articles'} component={ArticalList} />
@@ -43,7 +44,6 @@ const App = () => {
       <ErrorBoundary>
         <Route path='/new-article' component={NewArticale} />
       </ErrorBoundary>
-
     </div>
   );
 }

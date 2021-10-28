@@ -1,18 +1,14 @@
 import { ArticlePreview } from '../ArticalList/ArticlePreview/ArticlePreview';
 import styles from '../ArticalList/ArticlePreview/ArticlePreview.module.scss';
 import ReactMarkdown from 'react-markdown'
-import LikesImage from '../../assets/image/Vector.png';
-import FavoriteImage from '../../assets/image/path4.png';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/rootReducer';
-import { articlesType, getSingleArticle, removeArticle, setIsModalOpened } from '../../redux/articalesReducer';
-import { convertDate } from '../Common/helper';
-import { Button, Modal } from 'antd';
+import { getSingleArticle, removeArticle, setIsModalOpened } from '../../redux/articalesReducer';
+import { Modal } from 'antd';
 import Preloader from '../Common/Preloader';
 import { getArticleData } from '../../redux/newArticleReducer';
-import { useHistory, useLocation } from 'react-router';
-import { indexOf } from 'lodash';
+import { useHistory } from 'react-router';
 
 
 
@@ -31,7 +27,6 @@ export const Artical = () => {
     console.log(slugAterReset);
 
 
-
     const redirectToEditArticle = (slug: string) => {
         history.push(`/articles/${slug}/edit`)
     }
@@ -41,12 +36,10 @@ export const Artical = () => {
         }, 3000)
     }
     useEffect(() => {
-        debugger
+        console.log('render article ');
+
         dispatch(getSingleArticle(slugAterReset))
     }, [])
-    /*     useEffect(() => {
-            dispatch(getSingleArticle(slug))
-        }, [slug]) */
     if (isRemoveSuccess) {
         redirectToArticleList()
         return (
