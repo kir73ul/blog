@@ -4,8 +4,10 @@ import Cookies from 'universal-cookie';
 export const cookies = new Cookies();
 
 export const saveToken = (token: string | null) => {
-    const cookyToken = cookies.set('tokenData', ('Token ' + token), { expires: new Date(2021, 10, 1), path: '/' });
-    return cookyToken
+    const expiresCookies = new Date().getTime() + 2592000000
+    cookies.set('tokenData', ('Token ' + token), {
+        expires: new Date(expiresCookies), path: '/'
+    })
 }
 export const cooky = cookies.get('tokenData')
 export const removeToken = () => {

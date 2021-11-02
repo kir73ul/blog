@@ -17,15 +17,12 @@ export const Artical = () => {
     let slug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const article = useSelector((state: AppStateType) => state.articles.currentArticle)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
-    const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const isRemoveSuccess = useSelector((state: AppStateType) => state.articles.isRemoveSuccess)
     const isModalOpened = useSelector((state: AppStateType) => state.articles.isModalOpened)
     const dispatch = useDispatch()
     const history = useHistory()
     const path = history.location.pathname
     const slugAterReset = path.slice((path.indexOf(':') + 1))
-    console.log(slugAterReset);
-
 
     const redirectToEditArticle = (slug: string) => {
         history.push(`/articles/${slug}/edit`)
@@ -36,8 +33,6 @@ export const Artical = () => {
         }, 3000)
     }
     useEffect(() => {
-        console.log('render article ');
-
         dispatch(getSingleArticle(slugAterReset))
     }, [])
     if (isRemoveSuccess) {
@@ -47,9 +42,6 @@ export const Artical = () => {
                 <p className={styles.success}>&#9989; Article's succesefully removed</p>
             </p>
         )
-    }
-    if (isFetching) {
-        return <Preloader />
     }
     if (article) {
         return (

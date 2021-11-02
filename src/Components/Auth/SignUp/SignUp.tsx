@@ -17,7 +17,6 @@ export const SignUp = () => {
     const history = useHistory()
     const error = useSelector((state: AppStateType) => state.auth.allErrors?.signUp)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
-    const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const isSuccess = useSelector((state: AppStateType) => state.auth.isSuccess)
     const [localUserName, setLocalUserName] = useState('')
     const [localEmail, setlocalEmail] = useState('')
@@ -25,9 +24,6 @@ export const SignUp = () => {
     const [localRepeatPassword, setlocalRepeatPassword] = useState('')
     if (isAuth) {
         setTimeout(() => { history.push('/') }, 2500)
-    }
-    if (isFetching) {
-        return <Preloader />
     }
     return (
         <>

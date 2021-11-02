@@ -9,20 +9,20 @@ import { SignUp } from './Components/Auth/SignUp/SignUp';
 import { NewArticale } from './Components/Auth/NewArticale/NewArticale';
 import { ErrorBoundary } from './Components/ErroProcessing/ErrorBoundary';
 import { useHistory } from 'react-router';
+import Preloader from './Components/Common/Preloader';
 
 
 const App = () => {
   const history = useHistory()
   const path = history.location.pathname
   const currentSlug = path.slice((path.indexOf(':') + 1))
-  console.log(currentSlug);
-
 
   return (
     <div className="App">
       <ErrorBoundary>
         <Header />
       </ErrorBoundary>
+      <Preloader />
       <ErrorBoundary>
         <Route path={`/articles/${currentSlug}/edit`} component={NewArticale} />
       </ErrorBoundary>

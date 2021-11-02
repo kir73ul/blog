@@ -5,9 +5,8 @@ import * as Yup from 'yup';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { createNewArticle, editArticle, removeTag, setTags } from '../../../redux/newArticleReducer';
+import { createNewArticle, editArticle } from '../../../redux/newArticleReducer';
 import { AppStateType } from '../../../redux/rootReducer';
-import Preloader from '../../Common/Preloader';
 import { useHistory } from 'react-router';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 import { getArticles } from '../../../redux/articalesReducer';
@@ -15,38 +14,37 @@ import { cooky } from '../../../API/API';
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
-    const tagsForCreating = useSelector((state: AppStateType) => state.newArtical.tags)
-    const isFetching = useSelector((state: AppStateType) => state.newArtical.isFetching)
+    const history = useHistory()
+    const isEditingArticle = history.location.pathname.includes('edit')
     const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
-    const articleData = useSelector((state: AppStateType) => state.newArtical.articleData)
+    const articleData = useSelector((state: AppStateType) => state.articles.currentArticle)
     const errorArticle = useSelector((state: AppStateType) => state.newArtical.errorArtical)
     const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
-    const title = articleData ? articleData.title : ''
-    const description = articleData ? articleData.description : ''
-    const text = articleData ? articleData.body : ''
-    const tags: string[] = articleData ? articleData.tagList : tagsForCreating
-    const history = useHistory()
+    const title = isEditingArticle ? articleData?.title : ''
+    const description = isEditingArticle ? articleData?.description : ''
+    const text = isEditingArticle ? articleData?.body : ''
+    const tags: string[] | undefined = isEditingArticle ? articleData?.tagList : []
 
-    const [localTag, SetLocalTag] = useState('')
+    const [localTag, SetLocalTag] = useState<string>('')
     const [tagError, SetTagError] = useState<null | string>(null)
     const [localTitle, SetlocalTitle] = useState(title)
     const [localShortDescription, SetlocalShortDescription] = useState(description)
     const [localText, SetlocalText] = useState(text)
+    const [arrayOfTags, setArrayOfTags] = useState<string[]>(tags)
 
+    const removeTag = (tags: string[], index: number) => {
+        return tags.filter((_, idx) => idx !== index)
+    }
     const redirectToMainPage = () => {
         dispatch(getArticles(1, 5))
         history.push('/')
     }
-
     let initialValues = {
         title: localTitle ? localTitle : title,
         shortDescription: localShortDescription ? localShortDescription : description,
         text: localText ? localText : text,
-        tags: [...tags]
-    }
-    if (isFetching) {
-        return <Preloader />
+        tags: arrayOfTags
     }
     if (!cooky && !isAuth) {
         history.push('/sign-in')
@@ -56,8 +54,7 @@ export const NewArticale = () => {
         setTimeout(() => {
             articleData ? history.push(`/articles/:${currentSlug}`) : redirectToMainPage()
         }, 3000)
-
-        const action = (articleData ? 'edited' : 'created')
+        const action = (isEditingArticle ? 'edited' : 'created')
         return (
             <p className={styles.articleSuccess}>
                 <p className={styles.success}>&#9989;{`Your article is succesefully ${action}`}</p>
@@ -87,7 +84,7 @@ export const NewArticale = () => {
                                 tagList: values.tags
                             }
                         })
-                        articleData ? dispatch(editArticle(articleDataJSON, articleData.slug)) : dispatch(createNewArticle(articleDataJSON))
+                        isEditingArticle ? dispatch(editArticle(articleDataJSON, articleData?.slug)) : dispatch(createNewArticle(articleDataJSON))
                     }}
                 >
                     {(formik) => (
@@ -135,7 +132,7 @@ export const NewArticale = () => {
                                                 name='tag'
                                                 value={tag} />
                                             <Button
-                                                onClick={() => { dispatch(removeTag(idx)) }}
+                                                onClick={() => { setArrayOfTags(removeTag(arrayOfTags, idx)) }}
                                                 className={styles.singleTagBtn}
                                                 type="primary"> Delete</Button>
                                             <ErrorMessage
@@ -161,7 +158,7 @@ export const NewArticale = () => {
                                         onClick={() => {
                                             if (localTag) {
                                                 SetTagError(null);
-                                                dispatch(setTags(localTag));
+                                                setArrayOfTags([...arrayOfTags, localTag])
                                                 SetLocalTag('')
                                             } else if (!localTag) {
                                                 SetTagError('If you`d like to add tag, the tag field shouldn`t be empty')

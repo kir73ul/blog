@@ -1,11 +1,11 @@
-import { saveToken, usersAPI, loginAPI, removeToken } from './../API/API';
+import { saveToken, usersAPI, loginAPI, removeToken } from '../API/API';
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
+import { setFetching } from './commonReducer';
 
 const AUTH_USER = 'AUTH_USER';
 const GET_ERROR = 'GET_ERROR';
 const GET_USERS_DATA = 'GET_USERS_DATA';
-const SET_IS_FETCHING = 'SET_FETCHING';
 const CLEAN_ERROR = 'CLEAN_ERROR';
 const LOG_OUT = 'LOG_OUT';
 const SET_SUCCESS = 'SET_SUCCESS';
@@ -36,7 +36,6 @@ export interface userUpdateType {
     password: string;
 }
 interface authReducerType {
-    isFetching: boolean;
     isAuth: boolean;
     isSuccess: boolean;
     users: usersType;
@@ -45,7 +44,6 @@ interface authReducerType {
 }
 
 const initialState = {
-    isFetching: false,
     isAuth: false,
     isSuccess: false,
     users: {
@@ -73,12 +71,6 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
                 ...state,
                 allErrors: { [action.whichError]: action.error }
             }
-
-        case SET_IS_FETCHING:
-            return {
-                ...state,
-                isFetching: action.isFetching
-            }
         case GET_USERS_DATA:
             return {
                 ...state,
@@ -101,13 +93,11 @@ export const authReducer = (state: authReducerType = initialState, action: AuthA
         default: return state
     }
 }
-type AuthActionType = setUserAuthType | getErrorType | setIsFetchingType | setUsersDataType | cleanErrorType | logOutType | setSuccsesType
+type AuthActionType = setUserAuthType | getErrorType | setUsersDataType | cleanErrorType | logOutType | setSuccsesType
 interface setUserAuthType { type: typeof AUTH_USER };
 export const setUserAuth = (): setUserAuthType => ({ type: AUTH_USER });
 interface setUsersDataType { type: typeof GET_USERS_DATA, usersData: usersType };
 export const setUsersData = (usersData: usersType): setUsersDataType => ({ type: GET_USERS_DATA, usersData });
-interface setIsFetchingType { type: typeof SET_IS_FETCHING, isFetching: boolean };
-const setFetching = (isFetching: boolean): setIsFetchingType => ({ type: SET_IS_FETCHING, isFetching });
 interface cleanErrorType { type: typeof CLEAN_ERROR };
 export const cleanError = (): cleanErrorType => ({ type: CLEAN_ERROR });
 interface getErrorType { type: typeof GET_ERROR, error: errorsType, whichError: string };

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { updateUserInfo } from '../../../redux/authReducer';
 import { AppStateType } from '../../../redux/rootReducer';
-import Preloader from '../../Common/Preloader';
 import styles from '../Forms.module.scss';
 import _ from 'lodash';
 import { getDifferenceValue } from '../../Common/helper';
@@ -20,7 +19,6 @@ export const EditProfile = () => {
     let username = useSelector((state: AppStateType) => state.auth.users.username)
     let userEmail = useSelector((state: AppStateType) => state.auth.users.email)
     let userAvatarImage = useSelector((state: AppStateType) => state.auth.users.image)
-    const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const isSuccess = useSelector((state: AppStateType) => state.auth.isSuccess)
     const error = useSelector((state: AppStateType) => state.auth.allErrors?.updateError)
 
@@ -29,11 +27,6 @@ export const EditProfile = () => {
         username: username,
         password: '',
         image: userAvatarImage || ''
-    }
-    /*     const regMatch = '' || /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/; */
-
-    if (isFetching) {
-        return <Preloader />
     }
     if (!isAuth) {
         history.push('/sign-in')

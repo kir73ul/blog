@@ -17,7 +17,6 @@ export const SignIn = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
-    const isFetching = useSelector((state: AppStateType) => state.auth.isFetching)
     const error = useSelector((state: AppStateType) => state.auth.allErrors?.signIn)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
@@ -39,9 +38,6 @@ export const SignIn = () => {
             </p>
         )
     }
-    if (isFetching) {
-        return <Preloader />
-    }
     return (
         <>
             <div className={styles.all_forms_block}>
@@ -53,10 +49,7 @@ export const SignIn = () => {
                         email: Yup.string().email('Invalid email address').required('Email should be filled'),
                         password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Password should be filled')
                     })}
-                    onSubmit={(values) => /* { dispatch(getMeAuth(JSON.stringify({ user: { email: values.email, password: values.password } }))); } */ {
-                        if (values.email === 'error@error.ru') {
-                            throw new Error('saepis')
-                        }
+                    onSubmit={(values) => {
                         dispatch(getMeAuth(JSON.stringify({ user: { email: values.email, password: values.password } })));
                     }
                     }

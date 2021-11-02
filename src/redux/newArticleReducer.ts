@@ -3,10 +3,8 @@ import { articleAPI } from "../API/API";
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { errorsType } from './authReducer';
 import { setCurrentArticle, setCurrentSlug } from "./articalesReducer";
+import { setFetching } from "./commonReducer";
 
-const SET_TAGS = 'SET_TAGS';
-const REMOVE_TAG = 'REMOVE_TAG';
-const SET_IS_FETCHING = 'SET_FETCHING';
 const SET_NEW_ARTICLE = 'SET_NEW_ARTICLE';
 const SET_SUCCESS = 'SET_SUCCESS';
 const GET_ARTICLE_ERROR = 'GET_ARTICLE_ERROR';
@@ -35,7 +33,6 @@ export interface articleDataType {
 interface newArticalReducerType {
     tags: string[];
     articleData: articleDataType | null;
-    isFetching: boolean;
     isSuccess: boolean;
     errorArtical: errorsType | null;
     onlyCreatedSlug: string | null;
@@ -44,50 +41,16 @@ const initialState = {
     tags: [],
     articleData: null,
     isSuccess: false,
-    isFetching: false,
     errorArtical: null,
     onlyCreatedSlug: null
 }
 
 export const newArticalReducer = (state: newArticalReducerType = initialState, action: newArticalActionType) => {
     switch (action.type) {
-        case SET_TAGS:
-            return state.articleData ?
-                {
-                    ...state,
-                    articleData: {
-                        ...state.articleData,
-                        tagList: [...state.articleData.tagList, action.tag]
-                    },
-                }
-                :
-                {
-                    ...state,
-                    tags: [...state.tags, action.tag]
-                }
-        case REMOVE_TAG:
-            return state.articleData ?
-                {
-                    ...state,
-                    articleData: {
-                        ...state.articleData,
-                        tagList: [...state.articleData.tagList.filter((tag, idx) => idx !== action.index)]
-                    },
-                }
-                :
-                {
-                    ...state,
-                    tags: [...state.tags.filter((tag, idx) => idx !== action.index)]
-                }
         case SET_NEW_ARTICLE:
             return {
                 ...state,
                 articleData: { ...action.articleData }
-            }
-        case SET_IS_FETCHING:
-            return {
-                ...state,
-                isFetching: action.isFetching
             }
         case GET_ARTICLE_ERROR:
             return {
@@ -117,15 +80,10 @@ export const newArticalReducer = (state: newArticalReducerType = initialState, a
         default: return state
     }
 }
-type newArticalActionType = setTagsType | removeTagType | setNewArticleDataType | setIsFetchingType | getErrorType | setSuccsesType | zeroizeArticleType | zeroizeTagsType | setOnlyCreatedType
-interface setTagsType { type: typeof SET_TAGS, tag: string };
-export const setTags = (tag: string): setTagsType => ({ type: SET_TAGS, tag });
-interface removeTagType { type: typeof REMOVE_TAG, index: number };
-export const removeTag = (index: number): removeTagType => ({ type: REMOVE_TAG, index });
+type newArticalActionType =  setNewArticleDataType | getErrorType | setSuccsesType | zeroizeArticleType | zeroizeTagsType | setOnlyCreatedType
+
 interface setNewArticleDataType { type: typeof SET_NEW_ARTICLE, articleData: any };
 export const setNewArticleData = (articleData: any): setNewArticleDataType => ({ type: SET_NEW_ARTICLE, articleData });
-interface setIsFetchingType { type: typeof SET_IS_FETCHING, isFetching: boolean };
-const setFetching = (isFetching: boolean): setIsFetchingType => ({ type: SET_IS_FETCHING, isFetching });
 interface getErrorType { type: typeof GET_ARTICLE_ERROR, error: errorsType };
 export const getError = (error: errorsType): getErrorType => ({ type: GET_ARTICLE_ERROR, error });
 interface setSuccsesType { type: typeof SET_SUCCESS, isSuccess: boolean };
@@ -142,7 +100,6 @@ export const createNewArticle = (articleData: any): ThunkAction<void, AppStateTy
     const response = await articleAPI.createArticle(articleData);
     dispatch(setFetching(false))
     if (response.status === 200) {
-        debugger
         dispatch(setCurrentSlug(response.data.article.slug))
         dispatch(setCurrentArticle(response.data.article))
         dispatch(zeroizeArticle())

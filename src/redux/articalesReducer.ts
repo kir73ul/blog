@@ -1,9 +1,9 @@
 import { articleAPI, likeAPI } from './../API/API';
 import { ThunkAction } from "redux-thunk";
 import { AppDispatch, AppStateType } from "./rootReducer";
+import { setFetching } from './commonReducer';
 
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_FETCHING = 'SET_FETCHING';
 const SET_ARTICLES = 'SET_ARTICLES';
 const GET_TOTAL_ARTICLES = 'GET_TOTAL_ARTICLES';
 const SET_FAVORITE_UNFAVORITE = 'SET_FAVORITE_UNFAVORITE';
@@ -38,7 +38,6 @@ export interface articlesType {
 interface articlesReducerType {
     currentPage: number;
     pageSize: number;
-    isFetching: boolean;
     articleList: articlesType[];
     currentArticle: articlesType | null;
     total: number;
@@ -51,7 +50,6 @@ interface articlesReducerType {
 const initialState = {
     currentPage: 1,
     pageSize: 5,
-    isFetching: false,
     articleList: [],
     currentArticle: null,
     total: 0,
@@ -67,11 +65,6 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
             return {
                 ...state,
                 currentPage: action.currentPage
-            }
-        case SET_FETCHING:
-            return {
-                ...state,
-                isFetching: action.isFetching
             }
         case SET_ARTICLES:
             return {
@@ -118,11 +111,9 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
         default: return state
     }
 }
-type newArticalActionType = setCurrentPageType | setFetchingType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType | setIsRemoveSuccessType | setLikePushedType | setIsModalOpenedType
+type newArticalActionType = setCurrentPageType | setArticlesType | getTotalArticlesType | setFavoriteUnfavoriteType | setCurrentSlugType | setCurrentArticleType | setIsRemoveSuccessType | setLikePushedType | setIsModalOpenedType
 interface setCurrentPageType { type: typeof SET_CURRENT_PAGE, currentPage: number };
 export const setCurrentPage = (currentPage: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage });
-interface setFetchingType { type: typeof SET_FETCHING, isFetching: boolean };
-export const setFetching = (isFetching: boolean): setFetchingType => ({ type: SET_FETCHING, isFetching });
 interface setArticlesType { type: typeof SET_ARTICLES, articleList: Array<articlesType> };
 export const setArticles = (articleList: Array<articlesType>): setArticlesType => ({ type: SET_ARTICLES, articleList });
 interface getTotalArticlesType { type: typeof GET_TOTAL_ARTICLES, total: number };
@@ -144,6 +135,7 @@ export const getArticles = (currentPage: number, pageSize: number): ThunkAction<
     dispatch(setFetching(true))
     const response = await articleAPI.getArticles(currentPage, pageSize)
     dispatch(getTotalArticles(response.articlesCount))
+    dispatch(setCurrentPage(currentPage))
     dispatch(setArticles(response.articles))
     dispatch(setFetching(false))
 }
@@ -151,7 +143,7 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
     dispatch(setFetching(true))
     const response = await articleAPI.getSingleArticleData(slug)
     dispatch(setFetching(false))
-    
+
     if (response.status === 200) {
         dispatch(setCurrentSlug(response.data.article.slug))
         dispatch(setCurrentArticle(response.data.article))
