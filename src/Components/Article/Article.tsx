@@ -6,23 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/rootReducer';
 import { getSingleArticle, removeArticle, setIsModalOpened } from '../../redux/articalesReducer';
 import { Modal } from 'antd';
-import Preloader from '../Common/Preloader';
-import { getArticleData } from '../../redux/newArticleReducer';
 import { useHistory } from 'react-router';
 
-
-
 export const Artical = () => {
-
     let slug = useSelector((state: AppStateType) => state.articles.currentSlug)
-    const article = useSelector((state: AppStateType) => state.articles.currentArticle)
+    const articleList = useSelector((state: AppStateType) => state.articles.articleList)
+    const article = articleList.find(artic => artic.slug === slug)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const isRemoveSuccess = useSelector((state: AppStateType) => state.articles.isRemoveSuccess)
     const isModalOpened = useSelector((state: AppStateType) => state.articles.isModalOpened)
     const dispatch = useDispatch()
     const history = useHistory()
-    const path = history.location.pathname
-    const slugAterReset = path.slice((path.indexOf(':') + 1))
+    const slugAfterReset = history.location.pathname.slice((history.location.pathname.lastIndexOf('/') + 1))
 
     const redirectToEditArticle = (slug: string) => {
         history.push(`/articles/${slug}/edit`)
@@ -33,8 +28,9 @@ export const Artical = () => {
         }, 3000)
     }
     useEffect(() => {
-        dispatch(getSingleArticle(slugAterReset))
-    }, [])
+        dispatch(getSingleArticle(slugAfterReset))
+    }, [slugAfterReset])
+
     if (isRemoveSuccess) {
         redirectToArticleList()
         return (
@@ -43,13 +39,18 @@ export const Artical = () => {
             </p>
         )
     }
+
     if (article) {
         return (
             <>
                 <div className={styles.wrap_article_block}>
                     <ArticlePreview {...article} />
                     {article.author.username === username ? <div className={styles.buttons_block}>
-                        <button onClick={() => { dispatch(setIsModalOpened(true)) }} className={styles.delete_btn}>Delete
+                        <button
+                            onClick={() => { dispatch(setIsModalOpened(true)) }}
+                            className={styles.delete_btn}
+                        >
+                            Delete
                             <Modal title={
                                 <div>
                                     <span className={styles.sign}>&#33;</span>
@@ -75,7 +76,10 @@ export const Artical = () => {
                             </Modal>
                         </button>
                         <button
-                            onClick={() => { dispatch(getArticleData(slug)); redirectToEditArticle(slug) }} className={styles.edit_btn}>Edit
+                            onClick={() => redirectToEditArticle(slug)}
+                            className={styles.edit_btn}
+                        >
+                            Edit
                         </button>
                     </div> : null}
                     <div className={styles.text_block_wrap}>

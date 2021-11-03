@@ -4,4 +4,11 @@
     left: 50%;
     width: 10vw;
     height: 10vw;
+    z-index: 3;
+}
+.backPreloader {
+    background-color: rgba(218, 213, 213, 0.103);
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
 }

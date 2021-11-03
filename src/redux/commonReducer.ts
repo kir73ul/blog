@@ -1,13 +1,8 @@
-import { AppDispatch, AppStateType } from "./rootReducer";
-
 const SET_IS_FETCHING = 'SET_FETCHING';
-
-
 
 interface CommonReducerType {
     isFetching: boolean;
 }
-
 const initialState = {
     isFetching: false,
 }

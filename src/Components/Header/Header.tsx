@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/rootReducer';
 import { getUserInfo, logout } from '../../redux/authReducer';
 import imgUrl from '../../assets/image/userAva.png'
-import { zeroizeArticle } from '../../redux/newArticleReducer';
-import { useEffect } from 'react';
+/* import { zeroizeArticle } from '../../redux/newArticleReducer';
+ */import { useEffect } from 'react';
 import { cookies } from '../../API/API';
 import { getArticles } from '../../redux/articalesReducer';
 
@@ -47,9 +47,14 @@ export const Header = () => {
             <div onClick={() => { redirectToMainPage() }} className={styles.title}>Realworld Blog</div>
             {isCooky ?
                 <div className={styles.withAuth_block}>
-                    <Button onClick={() => { redirectToCreateArticle(); dispatch(zeroizeArticle()) }} className={styles.createArticleBtn}>Create article</Button>
-                    <div onClick={() => { redirectToEditProfile() }} className={styles.userName}>{userName}</div>
-                    <img onClick={() => { redirectToEditProfile() }} src={avaImg} className={styles.userAva} alt=''></img>
+                    <Button onClick={() => { redirectToCreateArticle(); /* dispatch(zeroizeArticle()) */ }} className={styles.createArticleBtn}>Create article</Button>
+                    <div
+                        onClick={() => redirectToEditProfile()}
+                        className={styles.users_block}
+                    >
+                        <p className={styles.userName}>{userName}</p>
+                        <img src={avaImg} className={styles.userAva} alt=''></img>
+                    </div>
                     <Button onClick={() => dispatch(logout())} className={styles.logOutBtn}>Log out</Button>
                 </div>
                 :

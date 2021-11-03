@@ -1,7 +1,9 @@
+import { useHistory } from 'react-router-dom';
 import { articleAPI, likeAPI } from './../API/API';
 import { ThunkAction } from "redux-thunk";
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { setFetching } from './commonReducer';
+import { getError, setOnlyCreated, setSuccses } from './newArticleReducer';
 
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_ARTICLES = 'SET_ARTICLES';
@@ -131,6 +133,44 @@ export const setLikePushed = (isLikePushed: boolean): setLikePushedType => ({ ty
 interface setIsModalOpenedType { type: typeof SET_MODAL_OPEN, isModalOpened: boolean };
 export const setIsModalOpened = (isModalOpened: boolean): setIsModalOpenedType => ({ type: SET_MODAL_OPEN, isModalOpened });
 
+export const editArticle = (articleData: any, slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    dispatch(setFetching(true))
+    const response = await articleAPI.editArticle(articleData, slug);
+    dispatch(setFetching(false))
+    if (response.status === 200) {
+        dispatch(setCurrentSlug(response.data.article.slug))
+        dispatch(setCurrentArticle(response.data.article))
+        dispatch(setSuccses(true))
+        setTimeout(() => {
+            dispatch(setSuccses(false))
+        }, 4000)
+    }
+    else if (response.data.error) {
+        dispatch(getError(response.data.errors))
+    }
+}
+
+export const createNewArticle = (articleData: any): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+    dispatch(setFetching(true))
+    const response = await articleAPI.createArticle(articleData);
+    dispatch(setFetching(false))
+    if (response.status === 200) {
+        dispatch(setCurrentSlug(response.data.article.slug))
+        dispatch(setCurrentArticle(response.data.article))
+        dispatch(setSuccses(true))
+        dispatch(setOnlyCreated(response.data.article.slug))
+        setTimeout(() => {
+            dispatch(setSuccses(false))
+        }, 4000)
+        setTimeout(() => {
+            dispatch(setOnlyCreated(null))
+        }, 10000)
+    }
+    else if (response.status !== 200) {
+        response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
+    }
+}
+
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articleAPI.getArticles(currentPage, pageSize)
@@ -143,7 +183,6 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
     dispatch(setFetching(true))
     const response = await articleAPI.getSingleArticleData(slug)
     dispatch(setFetching(false))
-
     if (response.status === 200) {
         dispatch(setCurrentSlug(response.data.article.slug))
         dispatch(setCurrentArticle(response.data.article))

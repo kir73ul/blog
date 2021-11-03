@@ -110,6 +110,12 @@ box-sizing: border-box;
 border-radius: 5px;
 background-color: white;
 }
+.users_block {
+    cursor: pointer;
+    :hover {
+        color: rgba(167, 159, 159, 0.521);
+    }
+}
 .userName {
     @include font ();
     position: relative;

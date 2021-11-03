@@ -1,6 +1,6 @@
 import './App.scss';
 import { Artical } from './Components/Article/Article';
-import { ArticalList } from './Components/ArticalList/ArticalList';
+import ArticalList from './Components/ArticalList/ArticalList';
 import { Header } from './Components/Header/Header';
 import { Route } from 'react-router-dom';
 import { SignIn } from './Components/Auth/SignIn/SignIn';
@@ -10,12 +10,18 @@ import { NewArticale } from './Components/Auth/NewArticale/NewArticale';
 import { ErrorBoundary } from './Components/ErroProcessing/ErrorBoundary';
 import { useHistory } from 'react-router';
 import Preloader from './Components/Common/Preloader';
+import { useSelector } from 'react-redux';
+import { AppStateType } from './redux/rootReducer';
 
 
 const App = () => {
-  const history = useHistory()
-  const path = history.location.pathname
-  const currentSlug = path.slice((path.indexOf(':') + 1))
+  const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
+  /*   const history = useHistory()
+    const path = history.location.pathname
+    const currentSlug = path.slice((path.indexOf(':') + 1))
+    console.log(path, currentSlug); */
+  console.log(currentSlug);
+
 
   return (
     <div className="App">
@@ -24,10 +30,7 @@ const App = () => {
       </ErrorBoundary>
       <Preloader />
       <ErrorBoundary>
-        <Route path={`/articles/${currentSlug}/edit`} component={NewArticale} />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <Route exact path={`/articles/:${currentSlug}`} component={Artical} />
+        <Route exact path={`/articles/${currentSlug}`} component={Artical} />
       </ErrorBoundary>
       <ErrorBoundary>
         <Route exact path={'/' || '/articles'} component={ArticalList} />
@@ -44,8 +47,10 @@ const App = () => {
       <ErrorBoundary>
         <Route path='/new-article' component={NewArticale} />
       </ErrorBoundary>
+      <ErrorBoundary>
+        <Route path={`/articles/${currentSlug}edit`} component={NewArticale} />
+      </ErrorBoundary>
     </div>
   );
 }
-
 export default App;

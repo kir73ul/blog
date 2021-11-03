@@ -7,9 +7,12 @@ const Preloader = () => {
     const isFetching = useSelector((state: AppStateType) => state.common.isFetching)
     return isFetching ?
         (
-            <div className={styles.preloader} >
-                <img src={loading} alt='' />
-            </div >
+            <div className={styles.backPreloader}>
+                <div className={styles.preloader} >
+                    <img src={loading} alt='' />
+                </div >
+            </div>
+
         )
         : null
 }

@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { createNewArticle, editArticle } from '../../../redux/newArticleReducer';
+import { createNewArticle, editArticle } from '../../../redux/articalesReducer';
 import { AppStateType } from '../../../redux/rootReducer';
 import { useHistory } from 'react-router';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
@@ -21,16 +21,17 @@ export const NewArticale = () => {
     const errorArticle = useSelector((state: AppStateType) => state.newArtical.errorArtical)
     const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
-    const title = isEditingArticle ? articleData?.title : ''
-    const description = isEditingArticle ? articleData?.description : ''
-    const text = isEditingArticle ? articleData?.body : ''
-    const tags: string[] | undefined = isEditingArticle ? articleData?.tagList : []
+    const title = (articleData && isEditingArticle) ? articleData.title : ''
+    const description = (articleData && isEditingArticle) ? articleData.description : ''
+    const text = (articleData && isEditingArticle) ? articleData.body : ''
+    const tags: string[] = (articleData && isEditingArticle) ? articleData.tagList : []
+    let slug: string = (articleData && isEditingArticle) ? articleData.slug : ''
 
     const [localTag, SetLocalTag] = useState<string>('')
     const [tagError, SetTagError] = useState<null | string>(null)
-    const [localTitle, SetlocalTitle] = useState(title)
-    const [localShortDescription, SetlocalShortDescription] = useState(description)
-    const [localText, SetlocalText] = useState(text)
+    const [localTitle, SetlocalTitle] = useState<string>(title)
+    const [localShortDescription, SetlocalShortDescription] = useState<string>(description)
+    const [localText, SetlocalText] = useState<string>(text)
     const [arrayOfTags, setArrayOfTags] = useState<string[]>(tags)
 
     const removeTag = (tags: string[], index: number) => {
@@ -50,9 +51,8 @@ export const NewArticale = () => {
         history.push('/sign-in')
     }
     if (isSuccess) {
-        console.log(currentSlug);
         setTimeout(() => {
-            articleData ? history.push(`/articles/:${currentSlug}`) : redirectToMainPage()
+            isEditingArticle ? history.push(`/articles/${currentSlug}`) : redirectToMainPage()
         }, 3000)
         const action = (isEditingArticle ? 'edited' : 'created')
         return (
@@ -65,7 +65,7 @@ export const NewArticale = () => {
         <>
             <div className={styles.createArticle_block}>
                 <ErrorBlock error={errorArticle} />
-                <h1 className={styles.title}>{articleData ? 'Edit article' : 'Create new article'}</h1>
+                <h1 className={styles.title}>{isEditingArticle ? 'Edit article' : 'Create new article'}</h1>
                 <Formik
                     initialValues={initialValues}
                     enableReinitialize
@@ -84,7 +84,11 @@ export const NewArticale = () => {
                                 tagList: values.tags
                             }
                         })
-                        isEditingArticle ? dispatch(editArticle(articleDataJSON, articleData?.slug)) : dispatch(createNewArticle(articleDataJSON))
+                        isEditingArticle ? dispatch(editArticle(articleDataJSON, slug)) : dispatch(createNewArticle(articleDataJSON))
+                        if (isEditingArticle && values.title !== title && isSuccess) {
+                            const secondPartOfSlug = slug.slice(slug.lastIndexOf('-') + 1)
+                            history.push(`/articles/${values.title}-${secondPartOfSlug}`)
+                        }
                     }}
                 >
                     {(formik) => (
