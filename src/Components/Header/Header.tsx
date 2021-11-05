@@ -55,12 +55,18 @@ export const Header = () => {
                         <p className={styles.userName}>{userName}</p>
                         <img src={avaImg} className={styles.userAva} alt=''></img>
                     </div>
-                    <Button onClick={() => dispatch(logout())} className={styles.logOutBtn}>Log out</Button>
+                    <Button
+                        onClick={() => dispatch(logout())}
+                        className={styles.logOutBtn}>Log out</Button>
                 </div>
                 :
-                <div className={styles.btn}>
-                    <Button onClick={() => { redirectToSignIn(); }} className={styles.SignInBtn}>Sign in</Button>
-                    <Button onClick={() => redirectToSignUp()} className={styles.SignUpBtn}>Sign up</Button>
+                <div className={styles.withAuth_block}>
+                    <Button
+                        onClick={() => { redirectToSignIn(); }}
+                        className={styles.SignInBtn}>Sign in</Button>
+                    <Button
+                        onClick={() => redirectToSignUp()}
+                        className={styles.SignUpBtn}>Sign up</Button>
                 </div>
             }
         </div>

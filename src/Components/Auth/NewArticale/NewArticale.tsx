@@ -42,9 +42,9 @@ export const NewArticale = () => {
         history.push('/')
     }
     let initialValues = {
-        title: localTitle ? localTitle : title,
-        shortDescription: localShortDescription ? localShortDescription : description,
-        text: localText ? localText : text,
+        title: localTitle,
+        shortDescription: localShortDescription,
+        text: localText,
         tags: arrayOfTags
     }
     if (!cooky && !isAuth) {
@@ -86,7 +86,10 @@ export const NewArticale = () => {
                         })
                         isEditingArticle ? dispatch(editArticle(articleDataJSON, slug)) : dispatch(createNewArticle(articleDataJSON))
                         if (isEditingArticle && values.title !== title && isSuccess) {
+
                             const secondPartOfSlug = slug.slice(slug.lastIndexOf('-') + 1)
+                            console.log(secondPartOfSlug);
+
                             history.push(`/articles/${values.title}-${secondPartOfSlug}`)
                         }
                     }}

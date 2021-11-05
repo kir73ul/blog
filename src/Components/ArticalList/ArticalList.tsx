@@ -15,8 +15,6 @@ const ArticalList = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        console.log(currentPage);
-
         dispatch(getArticles(currentPage, pageSize))
     }, [currentPage])
 

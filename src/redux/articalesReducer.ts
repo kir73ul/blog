@@ -145,8 +145,8 @@ export const editArticle = (articleData: any, slug: string): ThunkAction<void, A
             dispatch(setSuccses(false))
         }, 4000)
     }
-    else if (response.data.error) {
-        dispatch(getError(response.data.errors))
+    else if (response.status !== 200) {
+        response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
     }
 }
 

@@ -9,15 +9,24 @@ import { Modal } from 'antd';
 import { useHistory } from 'react-router';
 
 export const Artical = () => {
+    const history = useHistory()
+    const slugAfterReset = history.location.pathname.slice((history.location.pathname.lastIndexOf('/') + 1))
+
+    useEffect(() => {
+        dispatch(getSingleArticle(slugAfterReset))
+    }, [slugAfterReset])
+
     let slug = useSelector((state: AppStateType) => state.articles.currentSlug)
-    const articleList = useSelector((state: AppStateType) => state.articles.articleList)
-    const article = articleList.find(artic => artic.slug === slug)
+    const articleAfterRender = useSelector((state: AppStateType) => state.articles.currentArticle)
+    const favorited = useSelector((state: AppStateType) => state.articles.currentArticle?.favorited)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const isRemoveSuccess = useSelector((state: AppStateType) => state.articles.isRemoveSuccess)
     const isModalOpened = useSelector((state: AppStateType) => state.articles.isModalOpened)
     const dispatch = useDispatch()
-    const history = useHistory()
-    const slugAfterReset = history.location.pathname.slice((history.location.pathname.lastIndexOf('/') + 1))
+
+    useEffect(() => {
+        dispatch(getSingleArticle(slugAfterReset))
+    }, [favorited])
 
     const redirectToEditArticle = (slug: string) => {
         history.push(`/articles/${slug}/edit`)
@@ -27,9 +36,7 @@ export const Artical = () => {
             history.push('/')
         }, 3000)
     }
-    useEffect(() => {
-        dispatch(getSingleArticle(slugAfterReset))
-    }, [slugAfterReset])
+
 
     if (isRemoveSuccess) {
         redirectToArticleList()
@@ -40,12 +47,12 @@ export const Artical = () => {
         )
     }
 
-    if (article) {
+    if (articleAfterRender) {
         return (
             <>
                 <div className={styles.wrap_article_block}>
-                    <ArticlePreview {...article} />
-                    {article.author.username === username ? <div className={styles.buttons_block}>
+                    <ArticlePreview {...articleAfterRender} />
+                    {articleAfterRender.author.username === username ? <div className={styles.buttons_block}>
                         <button
                             onClick={() => { dispatch(setIsModalOpened(true)) }}
                             className={styles.delete_btn}
@@ -85,7 +92,7 @@ export const Artical = () => {
                     <div className={styles.text_block_wrap}>
                         <ReactMarkdown
                             className={styles.text_block}
-                            children={article.body} />
+                            children={articleAfterRender.body} />
                     </div>
                 </div>
             </>
