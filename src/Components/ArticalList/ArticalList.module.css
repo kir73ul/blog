@@ -8,7 +8,7 @@ span {
   margin: 0;
 }
 
-.body_block {
+.articleBody {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -16,11 +16,16 @@ span {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   width: 100vw;
   height: 100vh;
 }
 
 .pagination {
+  margin: 0 auto;
+  margin-top: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -28,9 +33,6 @@ span {
   -webkit-box-direction: normal !important;
       -ms-flex-direction: row !important;
           flex-direction: row !important;
-  position: absolute;
   width: 250px;
   height: 24px;
-  bottom: 17px;
-  left: 612px;
 }

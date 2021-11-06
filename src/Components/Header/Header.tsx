@@ -43,30 +43,35 @@ export const Header = () => {
         history.push('/')
     }
     return (
-        <div className={styles.wrapper_block}>
-            <div onClick={() => { redirectToMainPage() }} className={styles.title}>Realworld Blog</div>
+        <div className={styles.header}>
+            <div onClick={() => { redirectToMainPage() }} className={styles.header__title}>Realworld Blog</div>
             {isCooky ?
-                <div className={styles.withAuth_block}>
-                    <Button onClick={() => { redirectToCreateArticle(); /* dispatch(zeroizeArticle()) */ }} className={styles.createArticleBtn}>Create article</Button>
+                <div className={styles.header__withAuth}>
+                    <Button
+                        onClick={() => redirectToCreateArticle()}
+                        className={styles.header__withAuth__createArticleBtn}
+                    >
+                        Create article
+                    </Button>
                     <div
                         onClick={() => redirectToEditProfile()}
-                        className={styles.users_block}
+                        className={styles.header__withAuth__userInfo}
                     >
-                        <p className={styles.userName}>{userName}</p>
-                        <img src={avaImg} className={styles.userAva} alt=''></img>
+                        <p className={styles.userInfo__userName}>{userName}</p>
+                        <img src={avaImg} className={styles.userInfo__userAva} alt=''></img>
                     </div>
                     <Button
                         onClick={() => dispatch(logout())}
-                        className={styles.logOutBtn}>Log out</Button>
+                        className={styles.header__withAuth__logOutBtn}>Log out</Button>
                 </div>
                 :
-                <div className={styles.withAuth_block}>
+                <div className={styles.header__withAuth}>
                     <Button
                         onClick={() => { redirectToSignIn(); }}
-                        className={styles.SignInBtn}>Sign in</Button>
+                        className={styles.header__withAuth__signInBtn}>Sign in</Button>
                     <Button
                         onClick={() => redirectToSignUp()}
-                        className={styles.SignUpBtn}>Sign up</Button>
+                        className={styles.header__withAuth__signUpBtn}>Sign up</Button>
                 </div>
             }
         </div>

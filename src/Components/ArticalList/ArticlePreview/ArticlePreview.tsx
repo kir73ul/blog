@@ -7,6 +7,7 @@ import { convertDate } from '../../Common/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/rootReducer';
 import React from 'react';
+import { ManageButtons } from '../../Article/ManageButtons';
 
 export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slug, title, description, body, favorited, favoritesCount, author }) => {
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
@@ -15,6 +16,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
     const dispatch = useDispatch()
     const history = useHistory()
     const isSingleArticlePage = (`/articles/${slug}` === history.location.pathname)
+    const authorName = author.username
 
     const redirectToSignIn = () => {
         history.push('/sign-in', {})
@@ -24,7 +26,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
     }
     return (
         <div className={isSingleArticlePage ? '' : styles.wrapBlock}>
-            <div className={(slug === onlyCreatedSlug && !isSingleArticlePage) ? styles.wrapBlock_border : styles.wrapBlock__previewArticle}>
+            <div className={(slug === onlyCreatedSlug && !isSingleArticlePage) ? [styles.wrapBlock__previewArticle, styles.wrapBlock_border].join(' ') : styles.wrapBlock__previewArticle}>
                 <div className={styles.wrapBlock__previewArticle__leftPart}>
                     <div className={styles.leftPart__title}>
                         <Link
@@ -36,7 +38,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                         </Link>
                         <div
                             onClick={() => { isAuth ? setLikeOrDislike(slug) : redirectToSignIn() }}
-                            className={isLikePushed ? styles.leftPart__likes_unactive : styles.leftPart__likes}>
+                            className={isLikePushed ? [styles.leftPart__likes_unactive, styles.leftPart__likes].join(' ') : styles.leftPart__likes}>
                             <img
                                 src={favorited ? FavoriteImage : LikesImage}
                                 alt=""
@@ -50,7 +52,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                             {tagList.filter((tag, idx) => idx < 6).map((tag, idx) => {
                                 return <span
                                     key={tag}
-                                    className={idx === 0 ? styles.leftPart__tag__usial && styles.leftPart__tag_firstTag : styles.leftPart__tag__usial} >
+                                    className={idx === 0 ? [styles.leftPart__tag__usial, styles.leftPart__tag_firstTag].join(' ') : styles.leftPart__tag__usial} >
                                     {tag.length > 10 ? tag.slice(0, 10) + '...' : tag}</span>
                             })}
                         </div>
@@ -60,11 +62,16 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                     </p>
                 </div>
                 <div className={styles.previewArticle__authorBlock}>
-                    <div className={styles.previewArticle__authorBlock__name}>
-                        {author.username}
-                    </div>
-                    <div className={styles.previewArticle__authorBlock__dateOfPublik}>
-                        {convertDate(createdAt)}
+                    <div className={styles.previewArticle__authorBlock__direction}>
+                        <div className={styles.authorBlock__direction__name}>
+                            {author.username}
+                        </div>
+                        <div className={styles.authorBlock__direction__dateOfPublic}>
+                            {convertDate(createdAt)}
+                        </div>
+                        <div>
+                            {isSingleArticlePage && <ManageButtons authorName={authorName} />}
+                        </div>
                     </div>
                     <img
                         className={styles.previewArticle__authorBlock__image}

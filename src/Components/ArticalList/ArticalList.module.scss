@@ -8,18 +8,18 @@ span
 {
   margin: 0;
 }
-.body_block {
+.articleBody {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 100vw;
   height: 100vh;
 }
 .pagination {
-    display: flex;
-    flex-direction: row !important;
-    position: absolute;
-    width: 250px;
-    height: 24px;
-    bottom: 17px;
-    left: 612px; 
+  margin: 0 auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row !important;
+  width: 250px;
+  height: 24px;
 }

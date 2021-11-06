@@ -17,10 +17,10 @@ const ArticalList = () => {
     useEffect(() => {
         console.log(currentPage);
         dispatch(getArticles(currentPage, pageSize))
-    }, [])
+    }, [currentPage])
 
     return (
-        <div className={styles.body_block}>
+        <div className={styles.articleBody}>
             {articleList.map(article => {
                 return <ArticlePreview key={article.slug} {...article} />
             })}

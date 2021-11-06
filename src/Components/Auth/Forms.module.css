@@ -19,12 +19,11 @@ span {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  margin: 0 auto;
+  margin-top: 59px;
   padding: 48px 32px;
-  position: absolute;
   width: 384px;
   height: auto;
-  left: 523px;
-  top: 139px;
   background: #FFFFFF;
   border: 1px solid #D9D9D9;
   -webkit-box-sizing: border-box;

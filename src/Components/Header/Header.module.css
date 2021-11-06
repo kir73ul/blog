@@ -8,7 +8,7 @@ span {
   margin: 0;
 }
 
-.wrapper_block {
+.header {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -21,14 +21,13 @@ span {
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 100vw;
+  min-width: 400px;
   height: 80px;
-  /*     left: 0%;
-    right: 0%; */
   top: 0px;
   background: #FFFFFF;
 }
 
-.title {
+.header__title {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -44,7 +43,7 @@ span {
   color: rgba(0, 0, 0, 0.85);
 }
 
-.title:hover {
+.header__title:hover {
   padding: 10px;
   border: 1px solid #52C41A;
   color: #52C41A;
@@ -52,7 +51,7 @@ span {
   border-radius: 4px;
 }
 
-.SignInBtn {
+.header__withAuth__signInBtn {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -70,13 +69,13 @@ span {
   padding-left: 5px;
 }
 
-.SignInBtn:hover {
+.header__withAuth__signInBtn:hover {
   border: 1px solid #1890ff !important;
   border-radius: 4px;
   color: #1890ff;
 }
 
-.SignUpBtn {
+.header__withAuth__signUpBtn {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -95,7 +94,7 @@ span {
   background-color: #FFFFFF;
 }
 
-.withAuth_block {
+.header__withAuth {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -107,7 +106,7 @@ span {
   margin-right: 22px;
 }
 
-.createArticleBtn {
+.header__withAuth__createArticleBtn {
   width: 112.23px;
   height: 31.1px;
   margin-right: 27px;
@@ -119,7 +118,7 @@ span {
   background-color: white;
 }
 
-.users_block {
+.header__withAuth__userInfo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -129,11 +128,11 @@ span {
   cursor: pointer;
 }
 
-.users_block :hover {
+.header__withAuth__userInfo :hover {
   color: rgba(167, 159, 159, 0.521);
 }
 
-.userName {
+.userInfo__userName {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -148,14 +147,14 @@ span {
   color: rgba(0, 0, 0, 0.85);
 }
 
-.userAva {
+.userInfo__userAva {
   width: 46px;
   height: 46px;
   margin-right: 27px;
   border-radius: 50%;
 }
 
-.logOutBtn {
+.header__withAuth__logOutBtn {
   width: 109px;
   height: 51px;
   border: 1px solid rgba(0, 0, 0, 0.75);
