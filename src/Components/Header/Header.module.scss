@@ -9,46 +9,32 @@ span
   margin: 0;
 }
 $fontFam : Inter serif;
-@mixin headersFont ($fontFamily: $fontFam, $fontW : normal, $fontS : 18px, $lineH: 28px) {
+@mixin headersFont ($fontFamily: $fontFam, $fontSt: normal, $fontW : normal, $fontS : 18px, $lineH: 28px) {
         font-family: $fontFamily;
-        font-style: normal;
+        font-style: $fontSt;
         font-weight: $fontW;
         font-size: $fontS;
         line-height: $lineH;
 }
-
-@mixin positionAndSize ($posit: relative, $width, $heigth, $top, $left: null ){
-    position: $posit;
-    width: $width;
-    height: $heigth;
-    top: $top; 
-    left: $left;
-}
 .wrapper_block {
-    @include positionAndSize (absolute, 1440px,80px, 0px );
-/*     width:1440px ;
-    position: absolute;
+    @include headersFont();
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
     height: 80px;
-    left: 0%; */
-    right: 0%;
-  /*   top: 0px; */
+/*     left: 0%;
+    right: 0%; */
+    top: 0px;
     background: #FFFFFF;
 }
 .title {
-    @include font ();
-    @include positionAndSize (absolute, 147px,56px, 9px, 22px );
-  /*   position: absolute;
-    width: 147px;
-    height: 56px;
-    left: 22px;
-    top: 9px; */   
-    padding: 14px 5px 5px 5px;
-    text-align: center;
-    justify-content: center;
+    @include headersFont ();
+    display: flex; 
     align-items: center;
-    margin-top: 0 auto;
+    margin: 9px 22px 15px 22px;
     color: rgba(0, 0, 0, 0.85);
     &:hover {
+        padding: 10px;
         border: 1px solid #52C41A;
         color:#52C41A;
         text-align: center; 
@@ -59,19 +45,14 @@ $fontFam : Inter serif;
 
 }
 .SignInBtn {
-    @include font ();
-    position: relative;
-    width: 84px;
-    height: 35px;
-  /*   left: 1206px;
-    top: 22px; */
-    align-items: center;
-    justify-content: center;
+    @include headersFont ();
+    display: flex;
+    text-align: center;
+    margin-right: 19px;
     color: rgba(0, 0, 0, 0.85); 
     background-color: #FFFFFF; 
     border: none;
     outline: none;
-    text-align: center;
     padding-left: 5px;
     &:hover{
         border: 1px solid #1890ff !important;
@@ -80,75 +61,60 @@ $fontFam : Inter serif;
     }
 }
 .SignUpBtn {
-    @include font ();
-    position: relative;
+    @include headersFont ();
+    display: flex;
+    text-align: center;
     width: 109px;
     height: 51px;
-/*     float: right;
- */    margin-right: 22px;
-    top: 16px;
-    text-align: center;
+    padding: 10px 18px 10px 18px;
     color: #52C41A;
     border-radius: 5px;
     border: 1px solid #52C41A;
     background-color: #FFFFFF; 
 }
 .withAuth_block{
-    position: relative;
-    float: right;
+    display: flex;
+    align-items: center;
     width:auto;
-/*     min-width: 400px;
- */    height: 80px;
+    height: 80px;
     margin-right: 22px;
 }
 .createArticleBtn {
-    position: relative;
-width: 112.23px;
-height: 31.1px;
-top: 25px;
-float: left;
-margin-right: 27px;
-color:#52C41A ;
-border: 1px solid #52C41A;
-box-sizing: border-box;
-border-radius: 5px;
-background-color: white;
+    width: 112.23px;
+    height: 31.1px;
+    margin-right: 27px;
+    color:#52C41A ;
+    border: 1px solid #52C41A;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: white;
 }
 .users_block {
+    display: flex;
+    align-items: center;
     cursor: pointer;
     :hover {
         color: rgba(167, 159, 159, 0.521);
     }
 }
 .userName {
-    @include font ();
-    position: relative;
-height: 28px;
-min-width: 10px;
-top: 28px;
-float: left;
-margin-right: 12px;
-display: flex;
-align-items: flex-end;
-color: rgba(0, 0, 0, 0.85);
+    @include headersFont ();
+    height: 28px;
+    min-width: 10px;
+    margin-right: 12px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.85);
 }
 .userAva {
-    position: relative;
-width: 46px;
-height: 46px;
-top: 19px;
-margin-right: 27px;
-float: left;
-border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    margin-right: 27px;
+    border-radius: 50%;
 }
 .logOutBtn {
-    position: relative;
     width: 109px;
     height: 51px;
-    top: 16px;
-    float: left;
-position: relative;
-border: 1px solid rgba(0, 0, 0, 0.75);
-box-sizing: border-box;
-border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    box-sizing: border-box;
+    border-radius: 5px;
 }

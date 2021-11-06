@@ -1,14 +1,15 @@
 .preloader {
-    position: absolute;
-    top:20%;
-    left: 50%;
+    margin: auto;
     width: 10vw;
     height: 10vw;
-    z-index: 3;
+    z-index: 4;
 }
 .backPreloader {
-    background-color: rgba(218, 213, 213, 0.103);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(218, 213, 213, 1,0);
     width: 100vw;
     height: 100vh;
-    z-index: 2;
+    z-index: 4;
 }

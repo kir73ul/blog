@@ -9,11 +9,21 @@ span {
 }
 
 .wrapper_block {
-  width: 1440px;
-  position: absolute;
+  font-family: Inter serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100vw;
   height: 80px;
-  left: 0%;
-  right: 0%;
+  /*     left: 0%;
+    right: 0%; */
   top: 0px;
   background: #FFFFFF;
 }
@@ -24,34 +34,22 @@ span {
   font-weight: normal;
   font-size: 18px;
   line-height: 28px;
-  position: absolute;
-  width: 147px;
-  height: 56px;
-  left: 22px;
-  top: 9px;
-  padding: 14px 5px 5px 5px;
-  text-align: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-top: 0 auto;
+  margin: 9px 22px 15px 22px;
   color: rgba(0, 0, 0, 0.85);
 }
 
 .title:hover {
+  padding: 10px;
   border: 1px solid #52C41A;
   color: #52C41A;
   text-align: center;
   border-radius: 4px;
-}
-
-.SignInBtn:hover {
-  border: 1px solid #1890ff !important;
-  border-radius: 4px;
-  color: #1890ff;
 }
 
 .SignInBtn {
@@ -60,23 +58,22 @@ span {
   font-weight: normal;
   font-size: 18px;
   line-height: 28px;
-  position: absolute;
-  width: 84px;
-  height: 35px;
-  left: 1206px;
-  top: 22px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  margin-right: 19px;
   color: rgba(0, 0, 0, 0.85);
   background-color: #FFFFFF;
   border: none;
   outline: none;
-  text-align: center;
   padding-left: 5px;
+}
+
+.SignInBtn:hover {
+  border: 1px solid #1890ff !important;
+  border-radius: 4px;
+  color: #1890ff;
 }
 
 .SignUpBtn {
@@ -85,13 +82,13 @@ span {
   font-weight: normal;
   font-size: 18px;
   line-height: 28px;
-  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
   width: 109px;
   height: 51px;
-  float: right;
-  margin-right: 22px;
-  top: 16px;
-  text-align: center;
+  padding: 10px 18px 10px 18px;
   color: #52C41A;
   border-radius: 5px;
   border: 1px solid #52C41A;
@@ -99,19 +96,20 @@ span {
 }
 
 .withAuth_block {
-  position: relative;
-  float: right;
-  min-width: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: auto;
   height: 80px;
   margin-right: 22px;
 }
 
 .createArticleBtn {
-  position: relative;
   width: 112.23px;
   height: 31.1px;
-  top: 25px;
-  float: left;
   margin-right: 27px;
   color: #52C41A;
   border: 1px solid #52C41A;
@@ -121,44 +119,45 @@ span {
   background-color: white;
 }
 
+.users_block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.users_block :hover {
+  color: rgba(167, 159, 159, 0.521);
+}
+
 .userName {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 28px;
-  position: relative;
   height: 28px;
   min-width: 10px;
-  top: 28px;
-  float: left;
   margin-right: 12px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
   color: rgba(0, 0, 0, 0.85);
 }
 
 .userAva {
-  position: relative;
   width: 46px;
   height: 46px;
-  top: 19px;
   margin-right: 27px;
-  float: left;
   border-radius: 50%;
 }
 
 .logOutBtn {
-  position: relative;
   width: 109px;
   height: 51px;
-  top: 16px;
-  float: left;
-  position: relative;
   border: 1px solid rgba(0, 0, 0, 0.75);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;

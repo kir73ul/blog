@@ -18,16 +18,10 @@ export const Artical = () => {
 
     let slug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const articleAfterRender = useSelector((state: AppStateType) => state.articles.currentArticle)
-    const favorited = useSelector((state: AppStateType) => state.articles.currentArticle?.favorited)
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const isRemoveSuccess = useSelector((state: AppStateType) => state.articles.isRemoveSuccess)
     const isModalOpened = useSelector((state: AppStateType) => state.articles.isModalOpened)
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getSingleArticle(slugAfterReset))
-    }, [favorited])
-
     const redirectToEditArticle = (slug: string) => {
         history.push(`/articles/${slug}/edit`)
     }
@@ -36,17 +30,14 @@ export const Artical = () => {
             history.push('/')
         }, 3000)
     }
-
-
     if (isRemoveSuccess) {
         redirectToArticleList()
         return (
-            <p className={styles.success_block}>
+            <div className={styles.success_block}>
                 <p className={styles.success}>&#9989; Article's succesefully removed</p>
-            </p>
+            </div>
         )
     }
-
     if (articleAfterRender) {
         return (
             <>
@@ -54,7 +45,7 @@ export const Artical = () => {
                     <ArticlePreview {...articleAfterRender} />
                     {articleAfterRender.author.username === username ? <div className={styles.buttons_block}>
                         <button
-                            onClick={() => { dispatch(setIsModalOpened(true)) }}
+                            onClick={() => dispatch(setIsModalOpened(true))}
                             className={styles.delete_btn}
                         >
                             Delete

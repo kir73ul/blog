@@ -5,20 +5,21 @@ div,
 button,
 input,
 span
- {
+{
   margin: 0;
 }
-/* .body_block {
-position: relative;
-width: 1440px;
-height: 977px;
-} */
+.body_block {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
 .pagination {
     display: flex;
     flex-direction: row !important;
     position: absolute;
-width: 250px;
-height: 24px;
-bottom: 17px;
-left: 612px; 
+    width: 250px;
+    height: 24px;
+    bottom: 17px;
+    left: 612px; 
 }

@@ -15,8 +15,9 @@ const ArticalList = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        console.log(currentPage);
         dispatch(getArticles(currentPage, pageSize))
-    }, [currentPage])
+    }, [])
 
     return (
         <div className={styles.body_block}>
@@ -25,11 +26,11 @@ const ArticalList = () => {
             })}
             <span className={styles.pagination}>
                 <Pagination
+                    current={currentPage}
                     onChange={(current) => dispatch(setCurrentPage(current))}
                     pageSize={pageSize}
                     size="small"
                     total={totalArticles}
-                    current={currentPage}
                 />
             </span>
         </div>

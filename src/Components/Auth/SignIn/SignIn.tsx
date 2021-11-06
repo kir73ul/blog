@@ -75,7 +75,7 @@ export const SignIn = () => {
                                     <Input
                                         onChange={(event) => setLocalPassword(event.target.value)}
                                         placeholder='Password'
-                                        className={formik.errors.password && formik.touched.password ? styles.errorInput : styles.input_elem}
+                                        className={(formik.errors.password && formik.touched.password) ? styles.errorInput : styles.input_elem}
                                         type="password"
                                         name="password" />
                                     <ErrorMessage

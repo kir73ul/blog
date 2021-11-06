@@ -1,39 +1,44 @@
-.wrap_block {
-    position: relative;
+$fontFam : Inter serif;
+@mixin ArticleFont ($fontFamily: $fontFam, $fontSt: normal, $fontW : normal, $fontS : 12px, $lineH: 22px) {
+        font-family: $fontFamily;
+        font-style: $fontSt;
+        font-weight: $fontW;
+        font-size: $fontS;
+        line-height: $lineH;
+}
+.wrapBlock {
+    display: flex;
     width: 938px;
-    height: 140px;
-    left: calc(50% - 938px/2);
-    top: 106px;
+    height: 140px; 
+    margin:0 auto;
+    margin-top: 26px;
     filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
 }
-.wrap_block_border {
+.wrapBlock_border {
+    display: flex;
     border: 2.5px solid 
     #52C41A;
-    position: relative;
     width: 941px;
     height: 140px;
-    /* left: -3px; */
-    top: 0px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+.wrapBlock__previewArticle { 
+    display: flex;
+    width: 941px;
+    height: 140px;
     background: #FFFFFF;
     border-radius: 5px;
     margin-top: 26px;
 }
-.articlePreview_block { 
-position: relative;
-width: 941px;
-height: 140px;
-/* left: -3px;
- */top: 0px;
-background: #FFFFFF;
-border-radius: 5px;
-margin-top: 26px;
+.wrapBlock__previewArticle__leftPart {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 19px 24px 19px
 }
-.title {
-    position: absolute;
-width: 682px;
+.leftPart__title {
+width: auto;
 height: 28px;
-left: 16px;
-top: 15px;
 font-style: normal;
 font-weight: normal;
 font-size: 20px;
@@ -42,15 +47,10 @@ display: flex;
 align-items: center;
 
 }
-.link {
+.leftPart__link {
     color: #1890FF;
-font-family: Inter, serif;
-font-style: normal;
-font-weight: normal;
-font-size: 20px;
-line-height: 28px;
-text-decoration: none;
-
+    @include ArticleFont ($fontFam, normal, normal, 20px, 28px);
+    text-decoration: none;
 }
 /* .tag_wrap { 
 position: absolute;
@@ -59,23 +59,18 @@ height: 20px;
 left: 16px;
 top: 47px;
 } */
-.tag_block {
-    position: absolute;
+.leftPart__tag {
+    @include ArticleFont ($fontFam, normal, normal, 12px, 15px);
     width: 682px;
     height: 20px;
-    left: 19px;
-    top: 49px;
-    font-family: Inter, serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 15px;
+  /*   left: 19px;
+    top: 49px; */
     color: rgba(0, 0, 0, 0.5);
 }
-.firstTag {
+.leftPart__tag_firstTag {
     border: 1px solid rgba(0, 0, 0, 1); 
     color: black;
-    position: relative;
+ /*    position: relative;
     width: auto;
     height: 20px;
     left: 0px;
@@ -83,9 +78,9 @@ top: 47px;
     box-sizing: border-box;
     border-radius: 2px;
     margin-right: 8px;
-    padding: 2px 5px 3px 6px;
+    padding: 2px 5px 3px 6px; */
 }
-.tag{
+.leftPart__tag__usial{
     position: relative;
 width: auto;
 height: 20px;
@@ -97,13 +92,12 @@ border-radius: 2px;
 margin-right: 8px;
 padding: 2px 5px 3px 6px;
 }
-.likes_block {
+.leftPart__likes {
     position: relative;
     width: 34px;
     height: 22px;
-margin-left: 13px;
-cursor: pointer;
-
+    margin-left: 13px;
+    cursor: pointer;
 }
 .likes_block_unactive {
     position: relative;
@@ -112,10 +106,10 @@ cursor: pointer;
 margin-left: 13px;
     pointer-events: none;
 }
-.icon_unactive {
+.leftPart__likes_unactive {
     color:rgba(87, 85, 85, 0.15);  
 }
-.icon {
+.leftPart__likes__icon {
     position: absolute;
 left: 0%;
 right: 0%;
@@ -124,7 +118,7 @@ bottom: 5.56%;
 padding: 1px 3.89px 1px 3.89px;
 
 }
-.likes_count{
+.leftPart__likes__count{
     position: absolute;
     width: 13px;
     height: 22px;
@@ -139,14 +133,14 @@ padding: 1px 3.89px 1px 3.89px;
     padding: 1px 3.89px 1px 3.89px;
 
 }
-.author_block {
+.previewArticle__authorBlock {
     position: absolute;
 width: auto;
 height: 46px;
 right:  14px;   
 top: 15px;
 }
-.author_name {
+.previewArticle__authorBlock__name {
     position: relative;
 width: auto;
 height: 28px;
@@ -160,7 +154,7 @@ line-height: 28px;
 float: right;
 color: rgba(0, 0, 0, 0.85);
 }
-.dateOfPublik {
+.previewArticle__authorBlock__dateOfPubliks {
     position: relative;
 width: auto;
 height: 22px;
@@ -175,7 +169,7 @@ display: flex;
 float: right;
 color: rgba(0, 0, 0, 0.5);
 }
-.author_image {
+.previewArticle__authorBlock__image {
     position: absolute;
 width: 46px;
 height: 46px;
@@ -184,7 +178,7 @@ top: 15px;
 border-radius: 50%;
 /* background: url('../../../assets/image/Rectangle 1.png'); */
 }
-.articleText {
+.leftPart__description {
     position: absolute;
 width: 682px;
 height: 45px;

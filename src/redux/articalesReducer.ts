@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom';
 import { articleAPI, likeAPI } from './../API/API';
 import { ThunkAction } from "redux-thunk";
 import { AppDispatch, AppStateType } from "./rootReducer";
@@ -15,13 +14,11 @@ const SET_IS_REMOVE_SUCCESS = 'SET_IS_REMOVE_SUCCESS';
 const SET_IS_LIKE_PUSHED = 'SET_IS_LIKE_PUSHED';
 const SET_MODAL_OPEN = 'SET_MODAL_OPEN';
 
-
 interface authorType {
     username: string;
     bio: string;
     image: string;
     following: boolean;
-
 }
 export interface articlesType {
     slug: string;
@@ -34,7 +31,6 @@ export interface articlesType {
     favoritesCount: number;
     author: authorType;
     tagList: string[];
-
 }
 
 interface articlesReducerType {
@@ -79,12 +75,16 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 total: action.total
             }
         case SET_FAVORITE_UNFAVORITE:
-            return {
+            return state.articleList ? {
                 ...state,
                 articleList: state.articleList.map(article => {
                     return article.slug === action.slug ? { ...article, ...action.articleData } : article
                 })
-            }
+            } :
+                {
+                    ...state,
+                    currentArticle: { ...state.currentArticle, ...action.articleData }
+                }
         case SET_CURRENT_SLUG:
             return {
                 ...state,
@@ -179,6 +179,7 @@ export const getArticles = (currentPage: number, pageSize: number): ThunkAction<
     dispatch(setArticles(response.articles))
     dispatch(setFetching(false))
 }
+
 export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articleAPI.getSingleArticleData(slug)
