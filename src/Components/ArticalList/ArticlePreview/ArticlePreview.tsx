@@ -2,7 +2,7 @@ import styles from './ArticlePreview.module.scss';
 import LikesImage from '../../../assets/image/Vector.png';
 import FavoriteImage from '../../../assets/image/path4.png';
 import { Link, useHistory } from 'react-router-dom';
-import { articlesType, getSingleArticle, makeFavorite, makeUnfavorite } from '../../../redux/articalesReducer';
+import { articlesType, getSingleArticle, makeFavoriteUnfavorite } from '../../../redux/articalesReducer';
 import { convertDate } from '../../Common/helper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/rootReducer';
@@ -21,24 +21,24 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
     const redirectToSignIn = () => {
         history.push('/sign-in', {})
     }
-    const setLikeOrDislike = (slug: string) => {
-        return favorited ? dispatch(makeUnfavorite(slug)) : dispatch(makeFavorite(slug))
-    }
     return (
         <div className={isSingleArticlePage ? '' : styles.wrapBlock}>
-            <div className={(slug === onlyCreatedSlug && !isSingleArticlePage) ? [styles.wrapBlock__previewArticle, styles.wrapBlock_border].join(' ') : styles.wrapBlock__previewArticle}>
+            <div className={(slug === onlyCreatedSlug && !isSingleArticlePage) ? `${styles.wrapBlock__previewArticle} ${styles.wrapBlock_border}` : styles.wrapBlock__previewArticle}>
                 <div className={styles.wrapBlock__previewArticle__leftPart}>
                     <div className={styles.leftPart__title}>
-                        <Link
-                            onClick={() => { dispatch(getSingleArticle(slug)) }}
-                            to={`/articles/${slug}`}
-                            className={styles.leftPart__link}
-                        >
-                            {title.length > 30 ? title.slice(0, 30) + '...' : title}
-                        </Link>
+                        {!isSingleArticlePage ?
+                            <Link
+                                onClick={() => dispatch(getSingleArticle(slug))}
+                                to={`/articles/${slug}`}
+                                className={styles.leftPart__link}
+                            >
+                                {title.length > 30 ? title.slice(0, 30) + '...' : title}
+                            </Link>
+                            : <p className={styles.leftPart__link}>{title.length > 30 ? title.slice(0, 30) + '...' : title}</p>
+                        }
                         <div
-                            onClick={() => { isAuth ? setLikeOrDislike(slug) : redirectToSignIn() }}
-                            className={isLikePushed ? [styles.leftPart__likes_unactive, styles.leftPart__likes].join(' ') : styles.leftPart__likes}>
+                            onClick={() => { isAuth ? dispatch(makeFavoriteUnfavorite(slug, favorited, isSingleArticlePage))/* setLikeOrDislike(slug, favorited) */ : redirectToSignIn() }}
+                            className={isLikePushed ? `${styles.leftPart__likes_unactive} ${styles.leftPart__likes}` : styles.leftPart__likes}>
                             <img
                                 src={favorited ? FavoriteImage : LikesImage}
                                 alt=""
@@ -52,7 +52,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                             {tagList.filter((tag, idx) => idx < 6).map((tag, idx) => {
                                 return <span
                                     key={tag}
-                                    className={idx === 0 ? [styles.leftPart__tag__usial, styles.leftPart__tag_firstTag].join(' ') : styles.leftPart__tag__usial} >
+                                    className={idx === 0 ? `${styles.leftPart__tag__usial} ${styles.leftPart__tag_firstTag}` : styles.leftPart__tag__usial} >
                                     {tag.length > 10 ? tag.slice(0, 10) + '...' : tag}</span>
                             })}
                         </div>

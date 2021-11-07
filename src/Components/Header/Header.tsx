@@ -8,7 +8,7 @@ import imgUrl from '../../assets/image/userAva.png'
 /* import { zeroizeArticle } from '../../redux/newArticleReducer';
  */import { useEffect } from 'react';
 import { cookies } from '../../API/API';
-import { getArticles } from '../../redux/articalesReducer';
+import { getArticles, setCurrentPage } from '../../redux/articalesReducer';
 
 export const Header = () => {
     const userData = useSelector((state: AppStateType) => state.auth.users)
@@ -39,7 +39,7 @@ export const Header = () => {
         history.push('/new-article')
     }
     const redirectToMainPage = () => {
-        dispatch(getArticles(1, 5))
+        dispatch(setCurrentPage(1))
         history.push('/')
     }
     return (

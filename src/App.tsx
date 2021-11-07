@@ -9,8 +9,11 @@ import { SignUp } from './Components/Auth/SignUp/SignUp';
 import { NewArticale } from './Components/Auth/NewArticale/NewArticale';
 import { ErrorBoundary } from './Components/ErroProcessing/ErrorBoundary';
 import Preloader from './Components/Common/Preloader';
+import { useSelector } from 'react-redux';
+import { AppStateType } from './redux/rootReducer';
 
 const App = () => {
+  const isFetching = useSelector((state: AppStateType) => state.common.isFetching)
   return (
     <div className="App">
       <ErrorBoundary>

@@ -5,11 +5,10 @@ import * as Yup from 'yup';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { createNewArticle, editArticle } from '../../../redux/articalesReducer';
+import {createOrEditArticle,  setCurrentPage } from '../../../redux/articalesReducer';
 import { AppStateType } from '../../../redux/rootReducer';
 import { useHistory } from 'react-router';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
-import { getArticles } from '../../../redux/articalesReducer';
 import { cooky } from '../../../API/API';
 
 export const NewArticale = () => {
@@ -38,7 +37,7 @@ export const NewArticale = () => {
         return tags.filter((_, idx) => idx !== index)
     }
     const redirectToMainPage = () => {
-        dispatch(getArticles(1, 5))
+        dispatch(setCurrentPage(1))
         history.push('/')
     }
     let initialValues = {
@@ -63,7 +62,7 @@ export const NewArticale = () => {
     }
     return (
         <>
-            <div className={styles.createArticle}>
+            <div className={styles[`create-Article`]}>
                 <ErrorBlock error={errorArticle} />
                 <h1 className={styles.createArticle__title}>{isEditingArticle ? 'Edit article' : 'Create new article'}</h1>
                 <Formik
@@ -84,14 +83,7 @@ export const NewArticale = () => {
                                 tagList: values.tags
                             }
                         })
-                        isEditingArticle ? dispatch(editArticle(articleDataJSON, slug)) : dispatch(createNewArticle(articleDataJSON))
-                        if (isEditingArticle && values.title !== title && isSuccess) {
-
-                            const secondPartOfSlug = slug.slice(slug.lastIndexOf('-') + 1)
-                            console.log(secondPartOfSlug);
-
-                            history.push(`/articles/${values.title}-${secondPartOfSlug}`)
-                        }
+                        dispatch(createOrEditArticle(articleDataJSON, slug, isEditingArticle))
                     }}
                 >
                     {(formik) => (
@@ -172,7 +164,7 @@ export const NewArticale = () => {
                                             }
                                         }}
                                         className={styles.createArticle__tags__singleTag__addBtn}
-                                        type="primary" > Add</Button>
+                                        type="primary" > Add tag</Button>
                                     <ErrorMessage
                                         className={styles.createArticle__error}
                                         name='tag'

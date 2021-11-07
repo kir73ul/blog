@@ -8,14 +8,19 @@ span
 {
   margin: 0;
 }
-.articleBody {
+.articleWrap{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+}
+.articleWrap__body {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 100vw;
   height: 100vh;
 }
-.pagination {
+.articleWrap__pagination {
   margin: 0 auto;
   margin-top: 20px;
   display: flex;

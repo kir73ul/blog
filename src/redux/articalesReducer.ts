@@ -75,16 +75,12 @@ export const articalesReducer = (state: articlesReducerType = initialState, acti
                 total: action.total
             }
         case SET_FAVORITE_UNFAVORITE:
-            return state.articleList ? {
+            return {
                 ...state,
                 articleList: state.articleList.map(article => {
                     return article.slug === action.slug ? { ...article, ...action.articleData } : article
                 })
-            } :
-                {
-                    ...state,
-                    currentArticle: { ...state.currentArticle, ...action.articleData }
-                }
+            }
         case SET_CURRENT_SLUG:
             return {
                 ...state,
@@ -133,9 +129,10 @@ export const setLikePushed = (isLikePushed: boolean): setLikePushedType => ({ ty
 interface setIsModalOpenedType { type: typeof SET_MODAL_OPEN, isModalOpened: boolean };
 export const setIsModalOpened = (isModalOpened: boolean): setIsModalOpenedType => ({ type: SET_MODAL_OPEN, isModalOpened });
 
-export const editArticle = (articleData: any, slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+export const createOrEditArticle = (articleData: any, slug: string, isEditingArticle: boolean): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
-    const response = await articleAPI.editArticle(articleData, slug);
+    let response
+    isEditingArticle ? response = await articleAPI.editArticle(articleData, slug) : response = await articleAPI.createArticle(articleData);
     dispatch(setFetching(false))
     if (response.status === 200) {
         dispatch(setCurrentSlug(response.data.article.slug))
@@ -144,27 +141,12 @@ export const editArticle = (articleData: any, slug: string): ThunkAction<void, A
         setTimeout(() => {
             dispatch(setSuccses(false))
         }, 4000)
-    }
-    else if (response.status !== 200) {
-        response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
-    }
-}
-
-export const createNewArticle = (articleData: any): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
-    dispatch(setFetching(true))
-    const response = await articleAPI.createArticle(articleData);
-    dispatch(setFetching(false))
-    if (response.status === 200) {
-        dispatch(setCurrentSlug(response.data.article.slug))
-        dispatch(setCurrentArticle(response.data.article))
-        dispatch(setSuccses(true))
-        dispatch(setOnlyCreated(response.data.article.slug))
-        setTimeout(() => {
-            dispatch(setSuccses(false))
-        }, 4000)
-        setTimeout(() => {
-            dispatch(setOnlyCreated(null))
-        }, 10000)
+        if (!isEditingArticle) {
+            dispatch(setOnlyCreated(response.data.article.slug))
+            setTimeout(() => {
+                dispatch(setOnlyCreated(null))
+            }, 10000)
+        }
     }
     else if (response.status !== 200) {
         response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
@@ -191,23 +173,15 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
         console.log(response.data.errors);
     }
 }
-export const makeFavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
-    dispatch(setLikePushed(true))
-    const response = await likeAPI.addLike(slug)
-    dispatch(setLikePushed(false))
-    if (response.status === 200) {
-        dispatch(setFavoriteUnfavorite(response.data.article, slug))
-    } else if (response.status !== 200) {
-        console.log(response.data.errors)
-    }
-}
-export const makeUnfavorite = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
+
+export const makeFavoriteUnfavorite = (slug: string, favorite: boolean, isSingleArticlePage: boolean): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     try {
+        let response
         dispatch(setLikePushed(true))
-        const response = await likeAPI.removeLike(slug)
+        favorite ? response = await likeAPI.removeLike(slug) : response = await likeAPI.addLike(slug)
         dispatch(setLikePushed(false))
         if (response.status === 200 || response.status === 204) {
-            dispatch(setFavoriteUnfavorite(response.data.article, slug))
+            isSingleArticlePage ? dispatch(setCurrentArticle(response.data.article)) : dispatch(setFavoriteUnfavorite(response.data.article, slug))
         } else if (!!response?.data?.errors) {
             console.log(response.data.errors)
         }
