@@ -24,14 +24,14 @@ export const ManageButtons: React.FC<ManageButtonsType> = ({ authorName }) => {
             history.push('/')
         }, 3000)
     }
-    if (isRemoveSuccess) {
+    if (isRemoveSuccess ) {
         redirectToArticleList()
         return (
             <div className={styles.successBlock}>
                 <p className={styles.successBlock__success}>&#9989; Article's succesefully removed</p>
             </div>
         )
-    }
+    } 
     return (
         <>
             {authorName === username && <div className={styles.manageButtons}>

@@ -1,11 +1,5 @@
-$fontFam : Inter serif;
-@mixin ArticleFont ($fontFamily: $fontFam, $fontSt: normal, $fontW : normal, $fontS : 12px, $lineH: 22px) {
-        font-family: $fontFamily;
-        font-style: $fontSt;
-        font-weight: $fontW;
-        font-size: $fontS;
-        line-height: $lineH;
-}
+@import './../../../Variables.scss';
+
 .wrapBlock {
     display: flex;
     width: 100%;
@@ -36,23 +30,23 @@ $fontFam : Inter serif;
 .leftPart__title {
     width: auto;
     height: 28px;
-    @include ArticleFont ($fontFam, normal, normal, 20px, 28px);    
+    @include fontInter ($fontFamInter, normal, normal, 20px, 28px);    
     display: flex;
     align-items: center;
 }
 .leftPart__link {
     color: #1890FF;
-    @include ArticleFont ($fontFam, normal, normal, 20px, 28px);
+    @include fontInter ($fontFamInter, normal, normal, 20px, 28px);
     text-decoration: none;
 }
 .leftPart__tag {
-    @include ArticleFont ($fontFam, normal, normal, 12px, 15px);
+    @include fontInter ($fontFamInter, normal, normal, 12px, 15px);
     width: auto;
     height: 20px;
     color: rgba(0, 0, 0, 0.5);
 }
 .leftPart__tag_firstTag {  
-    border: 2px solid rgba(0, 0, 0, 1) !important; 
+    border: 2px solid rgba(0, 0, 0, 1); 
     color: black;
 }
 .leftPart__tag__usial{
@@ -84,7 +78,7 @@ $fontFam : Inter serif;
     height: 16px;
 }
 .leftPart__likes__count{
-    @include ArticleFont ($fontFam, normal, normal, 12px, 22px);
+    @include fontInter ($fontFamInter, normal, normal, 12px, 22px);
     color: rgba(0, 0, 0, 0.75);
     padding: 1px 3.89px 1px 3.89px;
 }
@@ -102,7 +96,7 @@ $fontFam : Inter serif;
 .authorBlock__direction__name {
     display: flex;
     justify-content: flex-end;
-    @include ArticleFont ($fontFam, normal, normal, 18px, 28px);
+    @include fontInter ($fontFamInter, normal, normal, 18px, 28px);
     width: auto;
     height: 28px;
     color: rgba(0, 0, 0, 0.85);
@@ -111,7 +105,7 @@ $fontFam : Inter serif;
     width: auto;
     height: 22px;
     justify-content: flex-end;
-    @include ArticleFont ($fontFam, normal, normal, 12px, 22px);
+    @include fontInter ($fontFamInter, normal, normal, 12px, 22px);
     display: flex;
     margin-top: -2px;
     color: rgba(0, 0, 0, 0.5);
@@ -124,7 +118,7 @@ $fontFam : Inter serif;
 }
 .leftPart__description {
     margin-top: 4px;
-    @include ArticleFont ($fontFam, normal, normal, 12px, 22px);
+    @include fontInter ($fontFamInter, normal, normal, 12px, 22px);
     width: auto;
     height: 45px;
     color: rgba(0, 0, 0, 0.75);
@@ -134,12 +128,12 @@ $fontFam : Inter serif;
     position: relative;
     width: 880px;
     max-height: 685px;  
-    @include ArticleFont ($fontFam, normal, normal, 20px, 28px);
+    @include fontInter ($fontFamInter, normal, normal, 20px, 28px);
     color: rgba(0, 0, 0, 0.75); 
     }
 .successBlock__text__body {
     position: relative;
-    @include ArticleFont ($fontFam, normal, normal, 18px, 28px);
+    @include fontInter ($fontFamInter, normal, normal, 18px, 28px);
     color: rgba(0, 0, 0, 0.75);
     overflow-y:auto;
     word-wrap: break-word; 
@@ -170,7 +164,7 @@ $fontFam : Inter serif;
     width: 78px;
     height: 31.1px;  
     align-items: center;
-    @include ArticleFont ($fontFam, normal, normal, 16px, 24px);
+    @include fontInter ($fontFamInter, normal, normal, 16px, 24px);
     border: 1px solid #F5222D;
     box-sizing: border-box;
     border-radius: 5px;
@@ -183,7 +177,7 @@ $fontFam : Inter serif;
     height: 31.1px; 
     padding: 0 17px;
     align-items: center;
-    @include ArticleFont ($fontFam, normal, normal, 16px, 24px);
+    @include fontInter ($fontFamInter, normal, normal, 16px, 24px);
     border: 1px solid #52C41A;
     box-sizing: border-box;
     border-radius: 5px;
@@ -216,19 +210,17 @@ $fontFam : Inter serif;
     width: 880px;
     height: 630px;
     left: 16px;
-    @include ArticleFont ($fontFam, normal, normal, 20px, 28px);
+    @include fontInter (fontFamInterInter, normal, normal, 20px, 28px);
     color: rgba(0, 0, 0, 0.75);
     }
 .successBlock{
-        position: absolute;
-        right: 0px;
-        left: calc(100%/2 - 384px/2);
-        top: 140px;
-        width: 384px;
-        height: 100px;
-        background-color: white;
-        border: 1px solid grey ;
-        border-radius: 6px;  
+    display: flex;
+    margin: 0 auto;
+    width: 384px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid grey ;
+    border-radius: 6px;  
     }
 .successBlock__success{
         position: relative;
@@ -236,5 +228,5 @@ $fontFam : Inter serif;
         font-size: 16px;
         width: 384px;
         top: 30px;
-        color: #52C41A;
+        color: $btnColorGreen;
     }

@@ -1,0 +1,28 @@
+/* @import 'btnColorGreen';
+@import 'btnColorBlue';
+@import 'fontColorBlack';
+@import 'backgroundCol';
+@import 'fontFamInter';
+@import 'headersFont'; */
+
+$btnColorGreen:#52C41A; 
+$btnColorBlue:#1890ff; 
+$backgroundCol : #FFFFFF;
+$fontColorBlack : rgba(0, 0, 0, 0.85);
+$fontFamInter : Inter serif;
+$fontFamRoboto : Roboto serif;
+
+%resetStyle {
+  body,h1,p,div,button,input,span
+{
+    margin: 0;
+}
+}
+
+@mixin fontInter ($fontFamily: $fontFamInter, $fontSt: normal, $fontW : normal, $fontS : 18px, $lineH: 28px) {
+        font-family: $fontFamily;
+        font-style: $fontSt;
+        font-weight: $fontW;
+        font-size: $fontS;
+        line-height: $lineH;
+}

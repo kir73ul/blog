@@ -11,6 +11,7 @@ import { ErrorBoundary } from './Components/ErroProcessing/ErrorBoundary';
 import Preloader from './Components/Common/Preloader';
 import { useSelector } from 'react-redux';
 import { AppStateType } from './redux/rootReducer';
+import Body from './Components/Body/Body';
 
 const App = () => {
   const isFetching = useSelector((state: AppStateType) => state.common.isFetching)
@@ -19,6 +20,7 @@ const App = () => {
       <ErrorBoundary>
         <Header />
       </ErrorBoundary>
+      {/* <Body /> */}
       <Preloader />
       <ErrorBoundary>
         <Route path={`/articles/:slug/edit`} component={NewArticale} />

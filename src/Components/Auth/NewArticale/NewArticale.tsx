@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import {createOrEditArticle,  setCurrentPage } from '../../../redux/articalesReducer';
+import { createOrEditArticle, setCurrentPage } from '../../../redux/articalesReducer';
 import { AppStateType } from '../../../redux/rootReducer';
 import { useHistory } from 'react-router';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
@@ -93,7 +93,7 @@ export const NewArticale = () => {
                                 <Input
                                     onChange={(event) => SetlocalTitle(event.target.value)}
                                     placeholder='Title'
-                                    className={(formik.errors.title && formik.touched.title) ? [styles.input_inputError, styles.input__elem].join(' ') : styles.input__elem}
+                                    className={(formik.errors.title && formik.touched.title) ? `${styles.input_inputError} ${styles.input__elem}` : styles.input__elem}
                                     type="input"
                                     name="title" />
                                 <ErrorMessage className={styles.createArticle__error} name="title" component="div" />
@@ -102,7 +102,7 @@ export const NewArticale = () => {
                                 <span className={styles.createArticle__label}> Short description </span>
                                 <Input
                                     onChange={(event) => SetlocalShortDescription(event.target.value)} placeholder='Short description'
-                                    className={(formik.errors.shortDescription && formik.touched.shortDescription) ? [styles.input_inputError, styles.input__elem].join(' ') : styles.input__elem}
+                                    className={(formik.errors.shortDescription && formik.touched.shortDescription) ? `${styles.input_inputError} ${styles.input__elem}` : styles.input__elem}
                                     type="input"
                                     name="shortDescription" />
                                 <ErrorMessage className={styles.createArticle__error} name="shortDescription" component="div" />
@@ -112,7 +112,7 @@ export const NewArticale = () => {
                                 <Input.TextArea
                                     onChange={(event) => SetlocalText(event.target.value)}
                                     placeholder='Text'
-                                    className={(formik.errors.text && formik.touched.text) ? [styles.input_textError, styles.input__textInput].join(' ') : styles.input__textInput}
+                                    className={(formik.errors.text && formik.touched.text) ? `${styles.input_textError} ${styles.input__textInput}` : styles.input__textInput}
                                     name="text" />
                                 <ErrorMessage
                                     className={styles.createArticle__error}
@@ -145,7 +145,7 @@ export const NewArticale = () => {
                                     <Input
                                         onChange={(event) => SetLocalTag(event.target.value)}
                                         placeholder='Tag'
-                                        className={(formik.errors.tags && formik.touched.tags) ? [styles.input_inputError, styles.createArticle__tags__singleTag__input].join(' ') : styles.createArticle__tags__singleTag__input}
+                                        className={(formik.errors.tags && formik.touched.tags) ? `${styles.input_inputError} ${styles.createArticle__tags__singleTag__input}` : styles.createArticle__tags__singleTag__input}
                                         type="text"
                                         name='tag'
                                         value={localTag} />
