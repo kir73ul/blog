@@ -4,6 +4,7 @@ import { AppStateType } from '../../redux/rootReducer';
 import { removeArticle, setIsModalOpened } from '../../redux/articalesReducer';
 import { Modal } from 'antd';
 import { useHistory } from 'react-router';
+import sign from './../../assets/image/sign.png';
 
 interface ManageButtonsType {
     authorName: string;
@@ -24,27 +25,28 @@ export const ManageButtons: React.FC<ManageButtonsType> = ({ authorName }) => {
             history.push('/')
         }, 3000)
     }
-    if (isRemoveSuccess ) {
+    if (isRemoveSuccess) {
         redirectToArticleList()
         return (
             <div className={styles.successBlock}>
-                <p className={styles.successBlock__success}>&#9989; Article's succesefully removed</p>
+                <p className={styles.successInfo}>&#9989; Article's succesefully removed</p>
             </div>
         )
-    } 
+    }
     return (
         <>
-            {authorName === username && <div className={styles.manageButtons}>
+            {authorName === username && <div className={styles.managePanel}>
                 <button
                     onClick={() => dispatch(setIsModalOpened(true))}
-                    className={styles.manageButtons__delete}
+                    className={`${styles.button} ${styles.button__del}`}
                 >
                     Delete
                     <Modal title={
-                        <div>
-                            <span className={styles.manageButtons__delete__modal__sign}>&#33;</span>
-                            <span>Are you sure to delete this article?</span>
-                        </div>}
+                        <div className={styles.modalInfo}>
+                            <img src={sign} alt='' />
+                            <p>Are you sure to delete this article?</p>
+                        </div>
+                    }
                         visible={isModalOpened}
                         width='240px'
                         onOk={(e) => { e.stopPropagation(); dispatch(removeArticle(slug)); dispatch(setIsModalOpened(false)) }}
@@ -55,18 +57,19 @@ export const ManageButtons: React.FC<ManageButtonsType> = ({ authorName }) => {
                         mask={false}
                         bodyStyle={{
                             display: 'none',
+
                         }}
                         style={{
-                            position: 'relative',
+                            display: 'flex',
                             top: 150,
                             right: 96,
                         }}
-                        wrapClassName={styles.manageButtons__delete__body}>
+                    >
                     </Modal>
                 </button>
                 <button
                     onClick={() => redirectToEditArticle(slug)}
-                    className={styles.manageButtons__edit}
+                    className={`${styles.button} ${styles.button__edit}`}
                 >
                     Edit
                 </button>

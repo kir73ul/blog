@@ -1,9 +1,4 @@
-/* @import 'btnColorGreen';
-@import 'btnColorBlue';
-@import 'fontColorBlack';
-@import 'backgroundCol';
-@import 'fontFamInter';
-@import 'headersFont'; */
+@import url(c:\React\Projects\blog\node_modules\antd\lib\modal\style\index.css);
 .wrapBlock {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -64,7 +59,7 @@
 }
 
 .leftPart__link {
-  color: #1890FF;
+  color: #1890ff;
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -258,7 +253,7 @@
   background: #FFFFFF;
 }
 
-.manageButtons {
+.managePanel {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -268,37 +263,27 @@
   margin-right: -58px;
 }
 
-.manageButtons__delete {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.button__del {
+  border: 1px solid #F5222D;
+  color: #F5222D;
   margin-right: 12px;
   padding: 0 17px;
   width: 78px;
   height: 31.1px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-family: Inter serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 24px;
-  border: 1px solid #F5222D;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  border-radius: 5px;
-  color: #F5222D;
-  background: #FFFFFF;
 }
 
-.manageButtons__edit {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.button__edit {
+  color: #52C41A;
+  border: 1px solid #52C41A;
   width: 65.23px;
   height: 31.1px;
   padding: 0 17px;
+}
+
+.button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -307,26 +292,32 @@
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
-  border: 1px solid #52C41A;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border-radius: 5px;
-  color: #52C41A;
   background: #FFFFFF;
 }
 
-.manageButtons__delete__body {
-  width: 1440px;
-  height: 977px;
-  -webkit-filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.15));
-          filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.15));
+.ant-modal-header {
+  border-bottom: 0px;
 }
 
-.manageButtons__delete__modal__sign {
-  width: 40px;
-  height: 40px;
-  color: white;
-  background-color: #FAAD14;
+.modalInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: Roboto serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.modalInfo > img {
+  margin: 4px 9px 0 0;
+  width: 14px;
+  height: 14px;
+  color: #FFFFFF;
   border-radius: 50%;
 }
 
@@ -349,7 +340,7 @@
   width: 880px;
   height: 630px;
   left: 16px;
-  font-family: fontFamInterInter;
+  font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
@@ -364,12 +355,12 @@
   margin: 0 auto;
   width: 384px;
   height: 100px;
-  background-color: white;
+  background-color: #FFFFFF;
   border: 1px solid grey;
   border-radius: 6px;
 }
 
-.successBlock__success {
+.successInfo {
   position: relative;
   text-align: center;
   font-size: 16px;

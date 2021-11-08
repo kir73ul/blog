@@ -14,7 +14,7 @@ export interface errorsType {
     [key: string]: string[];
 }
 interface allErrorsType {
-    [key: string]: errorsType | string
+    [key: string]: errorsType
 }
 interface usersType {
     bio: string;
@@ -129,9 +129,6 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
     } else if (response.data.errors) {
         dispatch(setFetching(false))
         dispatch(getError(response.data.errors, 'signIn'))
-        setTimeout(() => {
-            dispatch(cleanError())
-        }, 5000)
     }
 }
 export const getRegistration = (redisterData: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
@@ -173,7 +170,7 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
         } else if (response.status !== 200) {
             response.data.errors ? dispatch(getError(response.data.errors, 'updateError'))
                 :
-                dispatch(getError({ [response.status]: response.data }, 'updateError'))
+                dispatch(getError({ [response.status]: [response.data] }, 'updateError'))
             setTimeout(() => {
                 dispatch(cleanError())
             }, 5000)

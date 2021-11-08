@@ -10,6 +10,8 @@ import { AppStateType } from '../../../redux/rootReducer';
 import { useHistory } from 'react-router';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 import { cooky } from '../../../API/API';
+import { getErrorInfo, hasErrorOnInput } from '../../Common/helper';
+import { getError } from '../../../redux/newArticleReducer';
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
@@ -91,12 +93,13 @@ export const NewArticale = () => {
                             <div className={styles.createArticle__input}>
                                 <span className={styles.createArticle__label}>Title</span>
                                 <Input
-                                    onChange={(event) => SetlocalTitle(event.target.value)}
+                                    onChange={(event) => { SetlocalTitle(event.target.value); errorArticle && dispatch(getError(null)) }}
                                     placeholder='Title'
-                                    className={(formik.errors.title && formik.touched.title) ? `${styles.input_inputError} ${styles.input__elem}` : styles.input__elem}
+                                    className={((formik.errors.title && formik.touched.title) || hasErrorOnInput(errorArticle, "title")) ? `${styles.input_inputError} ${styles.input__elem}` : styles.input__elem}
                                     type="input"
                                     name="title" />
                                 <ErrorMessage className={styles.createArticle__error} name="title" component="div" />
+                                {hasErrorOnInput(errorArticle, "title") ? <div className={styles.createArticle__error} >{getErrorInfo(errorArticle, "title")}</div> : null}
                             </div>
                             <div className={styles.createArticle__input}>
                                 <span className={styles.createArticle__label}> Short description </span>

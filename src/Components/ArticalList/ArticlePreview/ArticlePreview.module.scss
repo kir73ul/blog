@@ -1,4 +1,5 @@
 @import './../../../Variables.scss';
+@import "../../../../node_modules/antd/lib/modal/style/index.css";
 
 .wrapBlock {
     display: flex;
@@ -10,7 +11,7 @@
     filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
 }
 .wrapBlock_border {
-    border: 2.5px solid #52C41A;
+    border: 2.5px solid $btnColorGreen;
 }
 .wrapBlock__previewArticle { 
     display: flex;
@@ -19,7 +20,7 @@
     max-width: 941px;
     min-width: 400px;
     height: 140px;
-    background: #FFFFFF;
+    background: $backgroundCol;
     border-radius: 5px;
     padding: 15px;
 }
@@ -30,17 +31,17 @@
 .leftPart__title {
     width: auto;
     height: 28px;
-    @include fontInter ($fontFamInter, normal, normal, 20px, 28px);    
+    @include fontRules ($fontFamInter, normal, normal, 20px, 28px);    
     display: flex;
     align-items: center;
 }
 .leftPart__link {
-    color: #1890FF;
-    @include fontInter ($fontFamInter, normal, normal, 20px, 28px);
+    color: $btnColorBlue;
+    @include fontRules ($fontFamInter, normal, normal, 20px, 28px);
     text-decoration: none;
 }
 .leftPart__tag {
-    @include fontInter ($fontFamInter, normal, normal, 12px, 15px);
+    @include fontRules ($fontFamInter, normal, normal, 12px, 15px);
     width: auto;
     height: 20px;
     color: rgba(0, 0, 0, 0.5);
@@ -78,7 +79,7 @@
     height: 16px;
 }
 .leftPart__likes__count{
-    @include fontInter ($fontFamInter, normal, normal, 12px, 22px);
+    @include fontRules ($fontFamInter, normal, normal, 12px, 22px);
     color: rgba(0, 0, 0, 0.75);
     padding: 1px 3.89px 1px 3.89px;
 }
@@ -96,7 +97,7 @@
 .authorBlock__direction__name {
     display: flex;
     justify-content: flex-end;
-    @include fontInter ($fontFamInter, normal, normal, 18px, 28px);
+    @include fontRules ($fontFamInter, normal, normal, 18px, 28px);
     width: auto;
     height: 28px;
     color: rgba(0, 0, 0, 0.85);
@@ -105,7 +106,7 @@
     width: auto;
     height: 22px;
     justify-content: flex-end;
-    @include fontInter ($fontFamInter, normal, normal, 12px, 22px);
+    @include fontRules ($fontFamInter, normal, normal, 12px, 22px);
     display: flex;
     margin-top: -2px;
     color: rgba(0, 0, 0, 0.5);
@@ -118,7 +119,7 @@
 }
 .leftPart__description {
     margin-top: 4px;
-    @include fontInter ($fontFamInter, normal, normal, 12px, 22px);
+    @include fontRules ($fontFamInter, normal, normal, 12px, 22px);
     width: auto;
     height: 45px;
     color: rgba(0, 0, 0, 0.75);
@@ -128,12 +129,12 @@
     position: relative;
     width: 880px;
     max-height: 685px;  
-    @include fontInter ($fontFamInter, normal, normal, 20px, 28px);
+    @include fontRules ($fontFamInter, normal, normal, 20px, 28px);
     color: rgba(0, 0, 0, 0.75); 
     }
 .successBlock__text__body {
     position: relative;
-    @include fontInter ($fontFamInter, normal, normal, 18px, 28px);
+    @include fontRules ($fontFamInter, normal, normal, 18px, 28px);
     color: rgba(0, 0, 0, 0.75);
     overflow-y:auto;
     word-wrap: break-word; 
@@ -148,53 +149,53 @@
     min-width: 400px;
     height: 807px;
     filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
-    background: #FFFFFF;
+    background: $backgroundCol;
 }
-.manageButtons {
+.managePanel {
     display: flex;
     width: 155px;
     height: 31,1px;
     margin-top: 30px;
     margin-right: -58px;
 }
-.manageButtons__delete {
-    display: flex;
+.button__del {
+    border: 1px solid $btnColorRed;
+    color: $btnColorRed;
     margin-right: 12px;
     padding: 0 17px;
     width: 78px;
     height: 31.1px;  
-    align-items: center;
-    @include fontInter ($fontFamInter, normal, normal, 16px, 24px);
-    border: 1px solid #F5222D;
-    box-sizing: border-box;
-    border-radius: 5px;
-    color: #F5222D;
-    background: #FFFFFF;
 }
-.manageButtons__edit {
-    display: flex;
+.button__edit {
+    color: $btnColorGreen;
+    border: 1px solid $btnColorGreen;
     width: 65.23px;
     height: 31.1px; 
     padding: 0 17px;
+}
+.button {
+    display: flex;
     align-items: center;
-    @include fontInter ($fontFamInter, normal, normal, 16px, 24px);
-    border: 1px solid #52C41A;
+    @include fontRules ($fontFamInter, normal, normal, 16px, 24px);
     box-sizing: border-box;
     border-radius: 5px;
-    color: #52C41A;
-    background: #FFFFFF; 
+    background: $backgroundCol; 
 }
-.manageButtons__delete__body {
-    width: 1440px;
-    height: 977px;
-    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.15)),
+.ant-modal-header {
+    border-bottom: 0px;
 }
-.manageButtons__delete__modal__sign {
-    width: 40px;
-    height: 40px;
-    color: white;
-    background-color: #FAAD14;
-    border-radius: 50%;
+.modalInfo {
+    display: flex;
+    @include fontRules($fontFamRoboto, normal, normal, 14px, 22px);
+       
+    >img {
+        margin: 4px 9px 0 0;
+        width: 14px;
+        height: 14px;
+        color: $backgroundCol;
+        border-radius: 50%;
+    }
+    
 }
 .singleArticle__text {
     display: flex;
@@ -210,7 +211,7 @@
     width: 880px;
     height: 630px;
     left: 16px;
-    @include fontInter (fontFamInterInter, normal, normal, 20px, 28px);
+    @include fontRules ($fontFamInter, normal, normal, 20px, 28px);
     color: rgba(0, 0, 0, 0.75);
     }
 .successBlock{
@@ -218,11 +219,11 @@
     margin: 0 auto;
     width: 384px;
     height: 100px;
-    background-color: white;
+    background-color: $backgroundCol;
     border: 1px solid grey ;
     border-radius: 6px;  
     }
-.successBlock__success{
+.successInfo{
         position: relative;
         text-align: center;
         font-size: 16px;

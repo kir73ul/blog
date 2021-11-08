@@ -4,10 +4,12 @@ const SET_SUCCESS = 'SET_SUCCESS';
 const GET_ARTICLE_ERROR = 'GET_ARTICLE_ERROR';
 const SET_ONLY_CREATED = 'SET_ONLY_CREATED';
 
-/*   */
+export interface ArticalError {
+    [key: string]: string[]
+}
 interface newArticalReducerType {
     isSuccess: boolean;
-    errorArtical: errorsType | null;
+    errorArtical: ArticalError | null;
     onlyCreatedSlug: string | null;
 }
 const initialState = {
@@ -38,8 +40,8 @@ export const newArticalReducer = (state: newArticalReducerType = initialState, a
 }
 type newArticalActionType = | getErrorType | setSuccsesType | setOnlyCreatedType
 
-interface getErrorType { type: typeof GET_ARTICLE_ERROR, error: errorsType };
-export const getError = (error: errorsType): getErrorType => ({ type: GET_ARTICLE_ERROR, error });
+interface getErrorType { type: typeof GET_ARTICLE_ERROR, error: errorsType | null };
+export const getError = (error: errorsType | null): getErrorType => ({ type: GET_ARTICLE_ERROR, error });
 interface setSuccsesType { type: typeof SET_SUCCESS, isSuccess: boolean };
 export const setSuccses = (isSuccess: boolean): setSuccsesType => ({ type: SET_SUCCESS, isSuccess });
 interface setOnlyCreatedType { type: typeof SET_ONLY_CREATED, onlyCreatedSlug: string | null };

@@ -1,11 +1,5 @@
-/* @import 'btnColorGreen';
-@import 'btnColorBlue';
-@import 'fontColorBlack';
-@import 'backgroundCol';
-@import 'fontFamInter';
-@import 'headersFont'; */
-
 $btnColorGreen:#52C41A; 
+$btnColorRed:#F5222D; 
 $btnColorBlue:#1890ff; 
 $backgroundCol : #FFFFFF;
 $fontColorBlack : rgba(0, 0, 0, 0.85);
@@ -19,7 +13,7 @@ $fontFamRoboto : Roboto serif;
 }
 }
 
-@mixin fontInter ($fontFamily: $fontFamInter, $fontSt: normal, $fontW : normal, $fontS : 18px, $lineH: 28px) {
+@mixin fontRules ($fontFamily: $fontFamInter, $fontSt: normal, $fontW : normal, $fontS : 18px, $lineH: 28px) {
         font-family: $fontFamily;
         font-style: $fontSt;
         font-weight: $fontW;

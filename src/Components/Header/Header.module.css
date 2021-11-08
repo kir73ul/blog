@@ -1,9 +1,3 @@
-/* @import 'btnColorGreen';
-@import 'btnColorBlue';
-@import 'fontColorBlack';
-@import 'backgroundCol';
-@import 'fontFamInter';
-@import 'headersFont'; */
 body, h1, p, div, button, input, span {
   margin: 0;
 }

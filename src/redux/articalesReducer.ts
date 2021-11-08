@@ -20,6 +20,7 @@ interface authorType {
     image: string;
     following: boolean;
 }
+
 export interface articlesType {
     slug: string;
     title: string;
@@ -149,7 +150,7 @@ export const createOrEditArticle = (articleData: any, slug: string, isEditingArt
         }
     }
     else if (response.status !== 200) {
-        response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: response.data }))
+        response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: [response.data] }))
     }
 }
 

@@ -3,14 +3,14 @@ import { Form, Input } from 'formik-antd';
 import * as Yup from 'yup';
 import styles from '../Forms.module.scss';
 import { Link } from 'react-router-dom';
-import { getMeAuth } from '../../../redux/authReducer';
+import { cleanError, getMeAuth } from '../../../redux/authReducer';
 import { UsersLType } from '../../../API/API';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../redux/rootReducer';
-import Preloader from '../../Common/Preloader';
 import { useState } from 'react';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
+import { getErrorInfo, hasErrorOnInput } from '../../Common/helper';
 
 
 export const SignIn = () => {
@@ -45,6 +45,7 @@ export const SignIn = () => {
                 <h1 className={styles.title}>Sign in</h1>
                 <Formik
                     initialValues={initialValues}
+                    enableReinitialize
                     validationSchema={Yup.object({
                         email: Yup.string().email('Invalid email address').required('Email should be filled'),
                         password: Yup.string().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`).required('Password should be filled')
@@ -60,28 +61,38 @@ export const SignIn = () => {
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}> Email address </span>
                                     <Input
-                                        onChange={(event) => setLocalEmail((event.target.value))}
+                                        onChange={(event) => { setLocalEmail((event.target.value)); error && dispatch(cleanError()) }}
                                         placeholder='Email address'
-                                        className={formik.errors.email && formik.touched.email ? styles.errorInput : styles.input_elem}
+                                        className={((formik.errors.email && formik.touched.email) || hasErrorOnInput(error, "email"))
+                                            ?
+                                            styles.errorInput
+                                            :
+                                            styles.input_elem}
                                         type="email"
                                         name="email" />
                                     <ErrorMessage
                                         className={styles.error}
                                         name="email"
                                         component="div" />
+                                    {hasErrorOnInput(error, "email") ? <div className={styles.error} >{getErrorInfo(error, "email")}</div> : null}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}> Password </span>
                                     <Input
-                                        onChange={(event) => setLocalPassword(event.target.value)}
+                                        onChange={(event) => { setLocalPassword(event.target.value); dispatch(cleanError()) }}
                                         placeholder='Password'
-                                        className={(formik.errors.password && formik.touched.password) ? styles.errorInput : styles.input_elem}
+                                        className={((formik.errors.password && formik.touched.password) || hasErrorOnInput(error, "email"))
+                                            ?
+                                            styles.errorInput
+                                            :
+                                            styles.input_elem}
                                         type="password"
                                         name="password" />
                                     <ErrorMessage
                                         className={styles.error}
                                         name="password"
                                         component="div" />
+                                    {hasErrorOnInput(error, "password") ? <div className={styles.error} >{getErrorInfo(error, "password")}</div> : null}
                                 </div>
                                 <div className={styles.button_block}>
                                     <button className={styles.button} type="submit">
