@@ -298,6 +298,10 @@
   background: #FFFFFF;
 }
 
+:global(.ant-modal-header) {
+  border-bottom: 0px solid white;
+}
+
 .ant-modal-header {
   border-bottom: 0px;
 }

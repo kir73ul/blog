@@ -22,6 +22,7 @@ export const SignIn = () => {
     const username = useSelector((state: AppStateType) => state.auth.users.username)
     const [localEmail, setLocalEmail] = useState('')
     const [localPassword, setLocalPassword] = useState('')
+    const serverError = 'email or password'
     const initialValues: UsersLType = {
         email: localEmail,
         password: localPassword
@@ -63,9 +64,9 @@ export const SignIn = () => {
                                     <Input
                                         onChange={(event) => { setLocalEmail((event.target.value)); error && dispatch(cleanError()) }}
                                         placeholder='Email address'
-                                        className={((formik.errors.email && formik.touched.email) || hasErrorOnInput(error, "email"))
+                                        className={((formik.errors.email && formik.touched.email) || (error?.[serverError] || error?.email))
                                             ?
-                                            styles.errorInput
+                                            `${styles.errorInput} ${styles.input_elem}`
                                             :
                                             styles.input_elem}
                                         type="email"
@@ -74,16 +75,17 @@ export const SignIn = () => {
                                         className={styles.error}
                                         name="email"
                                         component="div" />
-                                    {hasErrorOnInput(error, "email") ? <div className={styles.error} >{getErrorInfo(error, "email")}</div> : null}
+                                    {(error?.[serverError] || error?.email) && <div className={styles.error}>{error?.[serverError] || error?.email}
+                                    </div>}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}> Password </span>
                                     <Input
                                         onChange={(event) => { setLocalPassword(event.target.value); dispatch(cleanError()) }}
                                         placeholder='Password'
-                                        className={((formik.errors.password && formik.touched.password) || hasErrorOnInput(error, "email"))
+                                        className={((formik.errors.password && formik.touched.password) || (error?.[serverError] || error?.password))
                                             ?
-                                            styles.errorInput
+                                            `${styles.errorInput} ${styles.input_elem}`
                                             :
                                             styles.input_elem}
                                         type="password"
@@ -92,7 +94,8 @@ export const SignIn = () => {
                                         className={styles.error}
                                         name="password"
                                         component="div" />
-                                    {hasErrorOnInput(error, "password") ? <div className={styles.error} >{getErrorInfo(error, "password")}</div> : null}
+                                    {(error?.[serverError] || error?.password) && <div className={styles.error}>{error?.[serverError] || error?.password}
+                                    </div>}
                                 </div>
                                 <div className={styles.button_block}>
                                     <button className={styles.button} type="submit">

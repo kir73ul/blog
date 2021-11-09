@@ -181,6 +181,9 @@
     border-radius: 5px;
     background: $backgroundCol; 
 }
+:global(.ant-modal-header) {
+    border-bottom: 0px solid white;
+}
 .ant-modal-header {
     border-bottom: 0px;
 }

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRegistration } from '../../../redux/authReducer';
 import { AppStateType } from '../../../redux/rootReducer';
 import { useHistory } from 'react-router-dom';
-import Preloader from '../../Common/Preloader';
 import { useState } from 'react';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 
@@ -50,35 +49,39 @@ export const SignUp = () => {
                                     <Input
                                         onChange={(event) => setLocalUserName(event.target.value)}
                                         placeholder='Username'
-                                        className={(formik.errors.userName && formik.touched.userName) ? styles.errorInput : styles.input_elem}
+                                        className={(formik.errors.userName && formik.touched.userName) || error?.username ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
                                         type="string"
                                         name="userName" />
-                                    {formik.errors.userName ? <ErrorMessage className={styles.error} name="userName" component="p" /> : null}
+                                    <ErrorMessage className={styles.error} name="image" component="div" />
+                                    {(error?.username && <div className={styles.error}>{error?.username}</div>)}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}>Email address</span>
                                     <Input
                                         onChange={(event) => setlocalEmail(event.target.value)}
                                         placeholder='Email address'
-                                        className={((formik.errors.email && formik.touched.email)) ? styles.errorInput : styles.input_elem}
+                                        className={((formik.errors.email && formik.touched.email)) || error?.email ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
                                         type="email"
                                         name="email" />
                                     <ErrorMessage
                                         className={styles.error}
                                         name="email"
                                         component="div" />
+                                    {(error?.email && <div className={styles.error}>{error?.email}</div>)}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}> Password </span>
                                     <Input
                                         onChange={(event) => setlocalPassword(event.target.value)}
                                         placeholder='Password'
-                                        className={(formik.errors.password && formik.touched.password) ? styles.errorInput : styles.input_elem}
+                                        className={(formik.errors.password && formik.touched.password) || error?.password ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
                                         type="password" name="password" />
                                     <ErrorMessage
                                         className={styles.error}
                                         name="password"
                                         component="div" />
+                                    {(error?.password && <div className={styles.error}>{error?.password}
+                                    </div>)}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}>Repeat Password </span>

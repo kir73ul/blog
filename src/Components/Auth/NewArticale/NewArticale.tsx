@@ -66,7 +66,7 @@ export const NewArticale = () => {
         <>
             <div className={styles[`create-Article`]}>
                 <ErrorBlock error={errorArticle} />
-                <h1 className={styles.createArticle__title}>{isEditingArticle ? 'Edit article' : 'Create new article'}</h1>
+                <h1 className={styles.formTitle}>{isEditingArticle ? 'Edit article' : 'Create new article'}</h1>
                 <Formik
                     initialValues={initialValues}
                     enableReinitialize
@@ -90,71 +90,71 @@ export const NewArticale = () => {
                 >
                     {(formik) => (
                         <Form >
-                            <div className={styles.createArticle__input}>
-                                <span className={styles.createArticle__label}>Title</span>
+                            <div className={styles.inputBlock}>
+                                <span className={styles.inputLabel}>Title</span>
                                 <Input
                                     onChange={(event) => { SetlocalTitle(event.target.value); errorArticle && dispatch(getError(null)) }}
                                     placeholder='Title'
-                                    className={((formik.errors.title && formik.touched.title) || hasErrorOnInput(errorArticle, "title")) ? `${styles.input_inputError} ${styles.input__elem}` : styles.input__elem}
+                                    className={((formik.errors.title && formik.touched.title) || errorArticle?.title) ? `${styles.inputElem_error} ${styles.inputElem}` : styles.inputElem}
                                     type="input"
                                     name="title" />
-                                <ErrorMessage className={styles.createArticle__error} name="title" component="div" />
-                                {hasErrorOnInput(errorArticle, "title") ? <div className={styles.createArticle__error} >{getErrorInfo(errorArticle, "title")}</div> : null}
+                                <ErrorMessage className={styles.inputError} name="title" component="div" />
+                                {(errorArticle?.title && <div className={styles.inputError}>{errorArticle?.title}</div>)}
                             </div>
-                            <div className={styles.createArticle__input}>
-                                <span className={styles.createArticle__label}> Short description </span>
+                            <div className={styles.inputBlock}>
+                                <span className={styles.inputLabel}> Short description </span>
                                 <Input
                                     onChange={(event) => SetlocalShortDescription(event.target.value)} placeholder='Short description'
-                                    className={(formik.errors.shortDescription && formik.touched.shortDescription) ? `${styles.input_inputError} ${styles.input__elem}` : styles.input__elem}
+                                    className={(formik.errors.shortDescription && formik.touched.shortDescription) ? `${styles.inputElem_error} ${styles.inputElem}` : styles.inputElem}
                                     type="input"
                                     name="shortDescription" />
-                                <ErrorMessage className={styles.createArticle__error} name="shortDescription" component="div" />
+                                <ErrorMessage className={styles.inputError} name="shortDescription" component="div" />
                             </div>
-                            <div className={styles.createArticle__text}>
-                                <span className={styles.createArticle__label}> Text </span>
+                            <div className={styles.textAreaBlock}>
+                                <span className={styles.inputLabel}> Text </span>
                                 <Input.TextArea
                                     onChange={(event) => SetlocalText(event.target.value)}
                                     placeholder='Text'
-                                    className={(formik.errors.text && formik.touched.text) ? `${styles.input_textError} ${styles.input__textInput}` : styles.input__textInput}
+                                    className={(formik.errors.text && formik.touched.text) ? `${styles.textAreaInput_error} ${styles.textAreaInput}` : styles.textAreaInput}
                                     name="text" />
                                 <ErrorMessage
-                                    className={styles.createArticle__error}
+                                    className={styles.inputError}
                                     name="text"
                                     component="div" />
                             </div>
-                            <div className={styles.createArticle__tags}>
-                                <span className={styles.createArticle__label}> Tags </span>
+                            <div className={styles.tagsBlock}>
+                                <span className={styles.inputLabel}> Tags </span>
                                 {formik.values.tags.map((tag, idx) => {
                                     return (
-                                        <div key={tag} className={styles.createArticle__tags__singleTag} >
+                                        <div key={tag} className={styles.singleTag} >
                                             <Input
                                                 disabled={true}
-                                                className={styles.createArticle__tags__singleTag__input}
+                                                className={styles.singleTagInput}
                                                 type="text"
                                                 name='tag'
                                                 value={tag} />
                                             <Button
                                                 onClick={() => { setArrayOfTags(removeTag(arrayOfTags, idx)) }}
-                                                className={styles.createArticle__tags__singleTag__btn}
+                                                className={styles.singleTagBtn}
                                                 type="primary"> Delete</Button>
                                             <ErrorMessage
-                                                className={styles.createArticle__error}
+                                                className={styles.inputError}
                                                 name='tag'
                                                 component="div" />
                                         </div>
                                     )
                                 })}
-                                <div className={styles.createArticle__tags__singleTag}>
+                                <div className={styles.singleTag}>
                                     <Input
                                         onChange={(event) => SetLocalTag(event.target.value)}
                                         placeholder='Tag'
-                                        className={(formik.errors.tags && formik.touched.tags) ? `${styles.input_inputError} ${styles.createArticle__tags__singleTag__input}` : styles.createArticle__tags__singleTag__input}
+                                        className={(formik.errors.tags && formik.touched.tags) ? `${styles.inputElem_error} ${styles.singleTagInput}` : styles.singleTagInput}
                                         type="text"
                                         name='tag'
                                         value={localTag} />
                                     <Button
                                         onClick={() => { SetLocalTag('') }}
-                                        className={styles.createArticle__tags__singleTag__btn}
+                                        className={styles.singleTagBtn}
                                         type="primary"> Delete</Button>
                                     <Button
                                         onClick={() => {
@@ -166,16 +166,16 @@ export const NewArticale = () => {
                                                 SetTagError('If you`d like to add tag, the tag field shouldn`t be empty')
                                             }
                                         }}
-                                        className={styles.createArticle__tags__singleTag__addBtn}
+                                        className={styles.singleTagAddBtn}
                                         type="primary" > Add tag</Button>
                                     <ErrorMessage
-                                        className={styles.createArticle__error}
+                                        className={styles.inputError}
                                         name='tag'
                                         component="div" />
-                                    {!localTag ? <p className={styles.createArticle__error}>{tagError} </p> : null}
+                                    {!localTag ? <p className={styles.inputError}>{tagError} </p> : null}
                                 </div>
                             </div>
-                            <button className={styles.createArticle__button} type="submit">
+                            <button className={styles.createButton} type="submit">
                                 Send
                             </button>
                         </Form>

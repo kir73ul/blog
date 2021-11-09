@@ -1,3 +1,6 @@
+@import './../../Variables.scss';
+
+
 body,
 h1,
 p, 
@@ -7,14 +10,7 @@ span
 {
     margin: 0;
 }
-$fontFam : Roboto serif;
-@mixin createArticleFont ($fontFamily: $fontFam, $fontSt: normal, $fontW : normal, $fontS : 18px, $lineH: 28px) {
-    font-family: $fontFamily;
-    font-style: $fontSt;
-    font-weight: $fontW;
-    font-size: $fontS;
-    line-height: $lineH;
-}
+
 .create-Article {
     display: flex;
     flex-direction: column;
@@ -33,8 +29,8 @@ $fontFam : Roboto serif;
     box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198), 0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035), 0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
     border-radius: 6px;
 }
-.createArticle__title {
-    @include createArticleFont ($fontFam, normal, 500, 20px, 28px);
+.formTitle {
+    @include fontRules ($fontFamRoboto, normal, 500, 20px, 28px);
     width: 100%;  
     max-width: 938px;
     min-width: 400px;
@@ -47,8 +43,8 @@ $fontFam : Roboto serif;
     flex: none;
     align-self: center;
 }
-.createArticle__input{
-    @include createArticleFont ($fontFam, normal, normal, 14px, 22px);
+.inputBlock{
+    @include fontRules ($fontFamRoboto, normal, normal, 14px, 22px);
     padding: 0px;
     position: relative;
     width: 100%;  
@@ -58,14 +54,14 @@ $fontFam : Roboto serif;
     height: auto;
     margin-bottom: 12px;
 }
-.createArticle__label{
+.inputLabel{
     position: relative;
     height: 22px;
     align-items: center;
     color: #262626;
     margin-bottom: 2px;
 }
-.input__elem {
+.inputElem {
     display: flex;
 /*     position: relative;
  */    height: 40px;
@@ -77,8 +73,8 @@ $fontFam : Roboto serif;
     border-radius: 4px;
 }
 
-.createArticle__text{
-    @include createArticleFont ($fontFam, normal, normal, 14px, 22px);
+.textAreaBlock{
+    @include fontRules ($fontFamRoboto, normal, normal, 14px, 22px);
     padding: 0px;
     position: relative;
     width: 100%;  
@@ -88,11 +84,12 @@ $fontFam : Roboto serif;
     height: auto;
     margin-bottom: 12px;
 }
-.input__textInput {
-    position: relative;
-    resize: none;
+.textAreaInput {
+    display: flex;
+/*     position: relative;
+ */    resize: none;
     left: 0px;
-    width: 100%;  
+    width: calc(100% - 80px);
     max-width: 874px;
     min-width: 400px;
     min-height: 168px !important;
@@ -101,7 +98,7 @@ $fontFam : Roboto serif;
     border-radius: 4px;
     overflow-wrap: break-word;
 }
-.createArticle__tags{
+.tagsBlock{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -111,15 +108,16 @@ $fontFam : Roboto serif;
     flex-grow: 0;
     margin: 21px 0px;
 }
-.createArticle__tags__singleTag{
+.singleTag{
     display: flex;
     min-height: 40px;
     height: auto;
     margin: 5px 0px;
 }
-.createArticle__tags__singleTag__input{
+.singleTagInput{
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     width: 100%;
     max-width:300px;
     min-width: 250px;
@@ -128,8 +126,8 @@ $fontFam : Roboto serif;
     border: 1px solid #D9D9D9;
     border-radius: 4px;
 }
-.createArticle__tags__singleTag__btn {
-    @include createArticleFont ($fontFam, normal, normal, 16px, 24px);
+.singleTagBtn {
+    @include fontRules ($fontFamRoboto, normal, normal, 16px, 24px);
     width: 120px;
     height: 40px;
     align-items: center;
@@ -141,8 +139,8 @@ $fontFam : Roboto serif;
     margin-left: 17px;
 
 }
-.createArticle__tags__singleTag__addBtn {
-    @include createArticleFont ($fontFam, normal, normal, 16px, 24px);
+.singleTagAddBtn {
+    @include fontRules ($fontFamRoboto, normal, normal, 16px, 24px);
     width: 136px;
     height: 40px;
     display: flex;
@@ -158,7 +156,7 @@ $fontFam : Roboto serif;
     margin-left: 17px;
 
 }
-.createArticle__button {
+.createButton {
     align-items: center;
     padding: 8px 16px;
     position: relative;
@@ -168,21 +166,21 @@ $fontFam : Roboto serif;
     background: #1890FF;
     border-radius: 4px;
     border: none;
-    @include createArticleFont ($fontFam, normal, normal, 16px, 24px);
+    @include fontRules ($fontFamRoboto, normal, normal, 16px, 24px);
     margin-top: 9px;
 }
-.createArticle__error {
+.inputError {
     position: relative;
     color: #F5222D;
     margin-top: 2px;
     min-height: 24px;
     resize: none;
 }
-.input_textError {
+.textAreaInput_error {
     color: #F5222D;
     border: 1px solid red !important;
 }
-.input_inputError{
+.inputElem_error{
     color: #F5222D;
     border: 1px solid red !important;
 }

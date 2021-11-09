@@ -10,6 +10,7 @@ import _ from 'lodash';
 import { getDifferenceValue } from '../../Common/helper';
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
 import { useHistory } from 'react-router';
+import { cooky } from '../../../API/API';
 
 export const EditProfile = () => {
     const [isSomethingChanged, setisSomethingChanged] = useState(false)
@@ -28,7 +29,7 @@ export const EditProfile = () => {
         password: '',
         image: userAvatarImage || ''
     }
-    if (!isAuth) {
+    if (!isAuth && !cooky) {
         history.push('/sign-in')
     }
     return (
@@ -72,37 +73,42 @@ export const EditProfile = () => {
                                     <span className={styles.label_elem}>Username</span><br />
                                     <Input
                                         placeholder='Username'
-                                        className={(formik.errors.username && formik.touched.username) ? styles.errorInput : styles.input_elem}
+                                        className={(formik.errors.username && formik.touched.username) || error?.username ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
                                         type="string"
                                         name="username" />
                                     <ErrorMessage className={styles.error} name="username" component="p" />
+                                    {(error?.username && <div className={styles.inputError}>{error?.username}</div>)}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}>Email address</span>
                                     <Input
                                         placeholder='Email address'
-                                        className={(formik.errors.email && formik.touched.email) ? styles.errorInput : styles.input_elem}
+                                        className={(formik.errors.email && formik.touched.email) || error?.userEmail ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
                                         type="email"
                                         name="email" />
                                     <ErrorMessage className={styles.error} name="email" component="div" />
+                                    {(error?.email && <div className={styles.inputError}>{error?.email}</div>)}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}> New password </span>
                                     <Input
                                         placeholder='New password'
-                                        className={(formik.errors.password && formik.touched.password) ? styles.errorInput : styles.input_elem}
+                                        className={(formik.errors.password && formik.touched.password) || error?.password ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
                                         type="password"
                                         name="password" />
                                     <ErrorMessage className={styles.error} name="password" component="div" />
+                                    {(error?.password && <div className={styles.inputError}>{error?.password}</div>)}
+
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}>Avatar image (url)</span>
                                     <Input
                                         placeholder='Avatar image'
-                                        className={(formik.errors.image && formik.touched.image) ? styles.errorInput : styles.input_elem}
+                                        className={(formik.errors.image && formik.touched.image) || error?.image ? `${styles.errorInput}  ${styles.input_elem}` : styles.input_elem}
                                         type="text"
                                         name="image" />
                                     <ErrorMessage className={styles.error} name="image" component="div" />
+                                    {(error?.image && <div className={styles.inputError}>{error?.image}</div>)}
                                 </div>
                                 <div className={styles.button_block}>
                                     <button className={styles.button} type="submit">
