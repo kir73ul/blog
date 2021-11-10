@@ -89,7 +89,7 @@ export const NewArticale = () => {
                     }}
                 >
                     {(formik) => (
-                        <Form >
+                        <Form className={styles.formWrap}>
                             <div className={styles.inputBlock}>
                                 <span className={styles.inputLabel}>Title</span>
                                 <Input
@@ -172,7 +172,7 @@ export const NewArticale = () => {
                                         className={styles.inputError}
                                         name='tag'
                                         component="div" />
-                                    {!localTag ? <p className={styles.inputError}>{tagError} </p> : null}
+                                    {!localTag ? <p className={`${styles.inputError} ${styles.nextLine}`}>{tagError} </p> : null}
                                 </div>
                             </div>
                             <button className={styles.createButton} type="submit">

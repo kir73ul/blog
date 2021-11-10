@@ -54,15 +54,13 @@ export const ManageButtons: React.FC<ManageButtonsType> = ({ authorName }) => {
                         okText='Yes'
                         cancelText='No'
                         closable={false}
-                        mask={false}
+                        mask={true}
                         bodyStyle={{
                             display: 'none',
-
                         }}
                         style={{
                             display: 'flex',
-                            top: 150,
-                            right: 96,
+                            margin: 'auto'
                         }}
                     >
                     </Modal>

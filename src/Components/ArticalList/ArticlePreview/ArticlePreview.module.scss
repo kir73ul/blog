@@ -1,6 +1,6 @@
 @import './../../../Variables.scss';
-@import "../../../../node_modules/antd/lib/modal/style/index.css";
-
+/* @import "../../../../node_modules/antd/lib/modal/style/modal.less";
+ */
 .wrapBlock {
     display: flex;
     width: 100%;
@@ -181,24 +181,29 @@
     border-radius: 5px;
     background: $backgroundCol; 
 }
-:global(.ant-modal-header) {
+/* :global(.ant-modal-header) {
     border-bottom: 0px solid white;
 }
-.ant-modal-header {
-    border-bottom: 0px;
-}
+:global(.ant-modal-footer) {
+    border-bottom: 0px solid white;
+} */
 .modalInfo {
     display: flex;
     @include fontRules($fontFamRoboto, normal, normal, 14px, 22px);
-       
+    border-bottom: 0px;
+    .ant-modal-header {
+        border-bottom: 0px;
+    }
+    .ant-modal-footer {
+        border-bottom: 0px;
+    }    
     >img {
         margin: 4px 9px 0 0;
         width: 14px;
         height: 14px;
         color: $backgroundCol;
         border-radius: 50%;
-    }
-    
+    }  
 }
 .singleArticle__text {
     display: flex;

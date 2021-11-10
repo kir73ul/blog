@@ -1,4 +1,5 @@
-@import url(c:\React\Projects\blog\node_modules\antd\lib\modal\style\index.css);
+/* @import "../../../../node_modules/antd/lib/modal/style/modal.less";
+ */
 .wrapBlock {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -298,14 +299,12 @@
   background: #FFFFFF;
 }
 
-:global(.ant-modal-header) {
-  border-bottom: 0px solid white;
+/* :global(.ant-modal-header) {
+    border-bottom: 0px solid white;
 }
-
-.ant-modal-header {
-  border-bottom: 0px;
-}
-
+:global(.ant-modal-footer) {
+    border-bottom: 0px solid white;
+} */
 .modalInfo {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -315,6 +314,15 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
+  border-bottom: 0px;
+}
+
+.modalInfo .ant-modal-header {
+  border-bottom: 0px;
+}
+
+.modalInfo .ant-modal-footer {
+  border-bottom: 0px;
 }
 
 .modalInfo > img {

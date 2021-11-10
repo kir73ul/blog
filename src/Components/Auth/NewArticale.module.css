@@ -35,6 +35,14 @@ span {
   border-radius: 6px;
 }
 
+.formWrap {
+  width: 100%;
+}
+
+.formWrap .form.ant-form.ant-form-horizontal {
+  width: 100%;
+}
+
 .formTitle {
   font-family: Roboto serif;
   font-style: normal;
@@ -57,6 +65,10 @@ span {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
+}
+
+.formTitle .form.ant-form.ant-form-horizontal {
+  width: 100%;
 }
 
 .inputBlock {
@@ -124,7 +136,7 @@ span {
  */
   resize: none;
   left: 0px;
-  width: calc(100% - 80px);
+  width: 100%;
   max-width: 874px;
   min-width: 400px;
   min-height: 168px !important;
@@ -165,6 +177,9 @@ span {
 }
 
 .singleTagInput {
+  /*     display: grid;
+    grid-template-rows: auto;
+    grid-column-end :3; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -181,6 +196,10 @@ span {
   background: #FFFFFF;
   border: 1px solid #D9D9D9;
   border-radius: 4px;
+}
+
+.nextLine {
+  display: inline-block;
 }
 
 .singleTagBtn {
@@ -253,7 +272,6 @@ span {
   color: #F5222D;
   margin-top: 2px;
   min-height: 24px;
-  resize: none;
 }
 
 .textAreaInput_error {
