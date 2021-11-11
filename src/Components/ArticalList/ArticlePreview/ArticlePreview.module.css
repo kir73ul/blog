@@ -17,7 +17,7 @@
   border: 2.5px solid #52C41A;
 }
 
-.wrapBlock__previewArticle {
+.previewArticle {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -33,7 +33,7 @@
   padding: 15px;
 }
 
-.wrapBlock__previewArticle__leftPart {
+.leftPart {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -43,7 +43,7 @@
           flex-direction: column;
 }
 
-.leftPart__title {
+.title {
   width: auto;
   height: 28px;
   font-family: Inter serif;
@@ -59,7 +59,7 @@
           align-items: center;
 }
 
-.leftPart__link {
+.link {
   color: #1890ff;
   font-family: Inter serif;
   font-style: normal;
@@ -69,7 +69,7 @@
   text-decoration: none;
 }
 
-.leftPart__tag {
+.tags {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -78,14 +78,18 @@
   width: auto;
   height: 20px;
   color: rgba(0, 0, 0, 0.5);
+  /*     :nth-child(1) {
+        border: 2px solid rgba(0, 0, 0, 1); 
+        color: black;
+    } */
 }
 
-.leftPart__tag_firstTag {
+.firstTag {
   border: 2px solid black;
   color: black;
 }
 
-.leftPart__tag__usial {
+.usialTag {
   position: relative;
   width: auto;
   height: 20px;
@@ -99,7 +103,7 @@
   padding: 2px 5px 3px 6px;
 }
 
-.leftPart__likes {
+.likes {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -112,17 +116,17 @@
   cursor: pointer;
 }
 
-.leftPart__likes_unactive {
+.likes_unactive {
   color: rgba(87, 85, 85, 0.15);
   pointer-events: none;
 }
 
-.leftPart__likes__icon {
+.likesIcon {
   width: 16px;
   height: 16px;
 }
 
-.leftPart__likes__count {
+.likesCount {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -132,7 +136,7 @@
   padding: 1px 3.89px 1px 3.89px;
 }
 
-.previewArticle__authorBlock {
+.authorBlock {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -143,7 +147,7 @@
   height: 46px;
 }
 
-.previewArticle__authorBlock__direction {
+.direction {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -154,7 +158,7 @@
   margin-right: 12px;
 }
 
-.authorBlock__direction__name {
+.authorName {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -171,7 +175,7 @@
   color: rgba(0, 0, 0, 0.85);
 }
 
-.authorBlock__direction__dateOfPublic {
+.dateOfPublic {
   width: auto;
   height: 22px;
   -webkit-box-pack: end;
@@ -189,7 +193,7 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
-.previewArticle__authorBlock__image {
+.image {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

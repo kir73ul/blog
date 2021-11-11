@@ -20,8 +20,8 @@ const App = () => {
       <ErrorBoundary>
         <Header />
       </ErrorBoundary>
-      {/* <Body /> */}
-      <Preloader />
+      <Body />
+      {/* <Preloader />
       <ErrorBoundary>
         <Route path={`/articles/:slug/edit`} component={NewArticale} />
       </ErrorBoundary>
@@ -42,7 +42,7 @@ const App = () => {
       </ErrorBoundary>
       <ErrorBoundary>
         <Route path='/new-article' component={NewArticale} />
-      </ErrorBoundary>
+      </ErrorBoundary> */}
     </div>
   );
 }

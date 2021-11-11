@@ -74,7 +74,7 @@ export const articleAPI = {
         return instanceWithAuth.get(`articles/${slug}`).then(response => (response)).catch(error => (error));
     },
     getArticles(currentPage: number = 1, pageSize: number = 5) {
-        return instanceWithAuth.get(`articles?limit=${pageSize}&offset=${currentPage * pageSize - pageSize}`).then(response => (response.data)).catch(error => (error));
+        return instanceWithAuth.get(`articles?limit=${pageSize}&offset=${currentPage * pageSize - pageSize}`).then(response => (response)).catch(error => (error));
     },
     deleteArticle(slug: string) {
         return instanceWithAuth.delete(`articles/${slug}`).then(response => (response)).catch(error => (error));

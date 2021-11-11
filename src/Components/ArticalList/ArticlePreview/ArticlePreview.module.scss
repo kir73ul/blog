@@ -13,7 +13,7 @@
 .wrapBlock_border {
     border: 2.5px solid $btnColorGreen;
 }
-.wrapBlock__previewArticle { 
+.previewArticle { 
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -24,33 +24,37 @@
     border-radius: 5px;
     padding: 15px;
 }
-.wrapBlock__previewArticle__leftPart {
+.leftPart {
     display: flex;
     flex-direction: column;
 }
-.leftPart__title {
+.title {
     width: auto;
     height: 28px;
     @include fontRules ($fontFamInter, normal, normal, 20px, 28px);    
     display: flex;
     align-items: center;
 }
-.leftPart__link {
+.link {
     color: $btnColorBlue;
     @include fontRules ($fontFamInter, normal, normal, 20px, 28px);
     text-decoration: none;
 }
-.leftPart__tag {
+.tags {
     @include fontRules ($fontFamInter, normal, normal, 12px, 15px);
     width: auto;
     height: 20px;
     color: rgba(0, 0, 0, 0.5);
+/*     :nth-child(1) {
+        border: 2px solid rgba(0, 0, 0, 1); 
+        color: black;
+    } */
 }
-.leftPart__tag_firstTag {  
+.firstTag {
     border: 2px solid rgba(0, 0, 0, 1); 
     color: black;
 }
-.leftPart__tag__usial{
+.usialTag{
     position: relative;
     width: auto;
     height: 20px;
@@ -62,7 +66,7 @@
     margin-right: 8px;
     padding: 2px 5px 3px 6px;
 }
-.leftPart__likes {
+.likes {
     display: flex;
     align-items: center;
     width: 34px;
@@ -70,31 +74,31 @@
     margin-left: 13px;
     cursor: pointer;
 }
-.leftPart__likes_unactive {
+.likes_unactive {
     color:rgba(87, 85, 85, 0.15);  
     pointer-events: none;
 }
-.leftPart__likes__icon {
+.likesIcon {
     width: 16px;
     height: 16px;
 }
-.leftPart__likes__count{
+.likesCount{
     @include fontRules ($fontFamInter, normal, normal, 12px, 22px);
     color: rgba(0, 0, 0, 0.75);
     padding: 1px 3.89px 1px 3.89px;
 }
-.previewArticle__authorBlock {
+.authorBlock {
     justify-content: flex-end;
     display: flex;
     width: auto;
     height: 46px;
 }
-.previewArticle__authorBlock__direction{
+.direction{
     display: flex;
     flex-direction: column;
     margin-right: 12px;
 }
-.authorBlock__direction__name {
+.authorName {
     display: flex;
     justify-content: flex-end;
     @include fontRules ($fontFamInter, normal, normal, 18px, 28px);
@@ -102,7 +106,7 @@
     height: 28px;
     color: rgba(0, 0, 0, 0.85);
 }
-.authorBlock__direction__dateOfPublic {
+.dateOfPublic {
     width: auto;
     height: 22px;
     justify-content: flex-end;
@@ -111,7 +115,7 @@
     margin-top: -2px;
     color: rgba(0, 0, 0, 0.5);
 }
-.previewArticle__authorBlock__image {
+.image {
     display: flex;
     width: 46px;
     height: 46px;

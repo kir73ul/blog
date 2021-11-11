@@ -23,36 +23,36 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
     }
     return (
         <div className={isSingleArticlePage ? '' : styles.wrapBlock}>
-            <div className={(slug === onlyCreatedSlug && !isSingleArticlePage) ? `${styles.wrapBlock__previewArticle} ${styles.wrapBlock_border}` : styles.wrapBlock__previewArticle}>
-                <div className={styles.wrapBlock__previewArticle__leftPart}>
-                    <div className={styles.leftPart__title}>
+            <div className={(slug === onlyCreatedSlug && !isSingleArticlePage) ? `${styles.previewArticle} ${styles.wrapBlock_border}` : styles.previewArticle}>
+                <div className={styles.leftPart}>
+                    <div className={styles.title}>
                         {!isSingleArticlePage ?
                             <Link
                                 onClick={() => dispatch(getSingleArticle(slug))}
                                 to={`/articles/${slug}`}
-                                className={styles.leftPart__link}
+                                className={styles.link}
                             >
                                 {title.length > 30 ? title.slice(0, 30) + '...' : title}
                             </Link>
-                            : <p className={styles.leftPart__link}>{title.length > 30 ? title.slice(0, 30) + '...' : title}</p>
+                            : <p className={styles.link}>{title.length > 30 ? title.slice(0, 30) + '...' : title}</p>
                         }
                         <div
-                            onClick={() => { isAuth ? dispatch(makeFavoriteUnfavorite(slug, favorited, isSingleArticlePage))/* setLikeOrDislike(slug, favorited) */ : redirectToSignIn() }}
-                            className={isLikePushed ? `${styles.leftPart__likes_unactive} ${styles.leftPart__likes}` : styles.leftPart__likes}>
+                            onClick={() => { isAuth ? dispatch(makeFavoriteUnfavorite(slug, favorited, isSingleArticlePage)) : redirectToSignIn() }}
+                            className={isLikePushed ? `${styles.likes_unactive} ${styles.likes}` : styles.likes}>
                             <img
                                 src={favorited ? FavoriteImage : LikesImage}
                                 alt=""
-                                className={styles.leftPart__likes__icon}>
+                                className={styles.likesIcon}>
                             </img>
-                            <div className={styles.leftPart__likes__count}>{favoritesCount}</div>
+                            <div className={styles.likesCount}>{favoritesCount}</div>
                         </div>
                     </div>
-                    <div className={styles.leftPart__tag}>
+                    <div className={styles.tags}>
                         <div>
                             {tagList.filter((tag, idx) => idx < 6).map((tag, idx) => {
                                 return <span
                                     key={tag}
-                                    className={idx === 0 ? `${styles.leftPart__tag__usial} ${styles.leftPart__tag_firstTag}` : styles.leftPart__tag__usial} >
+                                    className={idx === 0 ? `${styles.usialTag} ${styles.firstTag}` : styles.usialTag} >
                                     {tag.length > 10 ? tag.slice(0, 10) + '...' : tag}</span>
                             })}
                         </div>
@@ -61,12 +61,12 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                         {description.length > 200 ? description.slice(0, 200) + '...' : description}
                     </p>
                 </div>
-                <div className={styles.previewArticle__authorBlock}>
-                    <div className={styles.previewArticle__authorBlock__direction}>
-                        <div className={styles.authorBlock__direction__name}>
+                <div className={styles.authorBlock}>
+                    <div className={styles.direction}>
+                        <div className={styles.authorName}>
                             {author.username}
                         </div>
-                        <div className={styles.authorBlock__direction__dateOfPublic}>
+                        <div className={styles.dateOfPublic}>
                             {convertDate(createdAt)}
                         </div>
                         <div>
@@ -74,7 +74,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                         </div>
                     </div>
                     <img
-                        className={styles.previewArticle__authorBlock__image}
+                        className={styles.image}
                         src={author.image || '../../../assets/image/Rectangle 1.png'}
                         alt=''>
                     </img>

@@ -157,10 +157,15 @@ export const createOrEditArticle = (articleData: any, slug: string, isEditingArt
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articleAPI.getArticles(currentPage, pageSize)
-    dispatch(getTotalArticles(response.articlesCount))
-    dispatch(setCurrentPage(currentPage))
-    dispatch(setArticles(response.articles))
+    if (response.status === 200) {
+        dispatch(getTotalArticles(response.data.articlesCount))
+        dispatch(setCurrentPage(currentPage))
+        dispatch(setArticles(response.data.articles))
+    } else if (response.status !== 200) {
+        console.log(response.data.errors);
+    }
     dispatch(setFetching(false))
+
 }
 
 export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
