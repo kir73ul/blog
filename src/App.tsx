@@ -1,4 +1,4 @@
-import './App.scss';
+import styles from './App.module.scss';
 import { Artical } from './Components/Article/Article';
 import ArticalList from './Components/ArticalList/ArticalList';
 import { Header } from './Components/Header/Header';
@@ -11,38 +11,38 @@ import { ErrorBoundary } from './Components/ErroProcessing/ErrorBoundary';
 import Preloader from './Components/Common/Preloader';
 import { useSelector } from 'react-redux';
 import { AppStateType } from './redux/rootReducer';
-import Body from './Components/Body/Body';
 
 const App = () => {
   const isFetching = useSelector((state: AppStateType) => state.common.isFetching)
   return (
-    <div className="App">
+    <div className={styles.app}>
       <ErrorBoundary>
         <Header />
       </ErrorBoundary>
-      <Body />
-      {/* <Preloader />
-      <ErrorBoundary>
-        <Route path={`/articles/:slug/edit`} component={NewArticale} />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <Route exact path={`/articles/:slug`} component={Artical} />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <Route exact path={'/' || '/articles'} component={ArticalList} />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <Route path='/sign-in' component={SignIn} />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <Route path='/sign-up' component={SignUp} />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <Route path='/profile' component={EditProfile} />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <Route path='/new-article' component={NewArticale} />
-      </ErrorBoundary> */}
+      <Preloader />
+      <div className={isFetching ? styles.hidden : ''}>
+        <ErrorBoundary>
+          <Route path={`/articles/:slug/edit`} component={NewArticale} />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Route exact path={`/articles/:slug`} component={Artical} />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Route exact path={'/' || '/articles'} component={ArticalList} />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Route path='/sign-in' component={SignIn} />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Route path='/sign-up' component={SignUp} />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Route path='/profile' component={EditProfile} />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Route path='/new-article' component={NewArticale} />
+        </ErrorBoundary>
+      </div>
     </div>
   );
 }

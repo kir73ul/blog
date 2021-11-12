@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import 'antd/dist/antd.css'
 import { getArticles, setCurrentPage } from '../../redux/articalesReducer'
 import { AppStateType } from '../../redux/rootReducer'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const ArticalList = () => {
     const pageSize = useSelector((state: AppStateType) => state.articles.pageSize)

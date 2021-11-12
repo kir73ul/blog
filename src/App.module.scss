@@ -8,11 +8,14 @@ span
 {
   margin: 0;
 }
-.App {
+.app {
   display: flex;
   flex-direction: column;
   min-width: 400px;
   width: 100vw;
   height: 100vh;
   background: #EBEEF3;
+}
+.hidden {
+  display: none;
 }
