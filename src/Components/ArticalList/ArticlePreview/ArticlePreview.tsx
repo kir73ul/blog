@@ -57,7 +57,7 @@ export const ArticlePreview: React.FC<articlesType> = ({ createdAt, tagList, slu
                             })}
                         </div>
                     </div>
-                    <p className={styles.leftPart__description}>
+                    <p className={styles.description}>
                         {description.length > 200 ? description.slice(0, 200) + '...' : description}
                     </p>
                 </div>

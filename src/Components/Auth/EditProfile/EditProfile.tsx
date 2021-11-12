@@ -46,7 +46,7 @@ export const EditProfile = () => {
                         username: Yup.string().required('Username should be filled'),
                         email: Yup.string().email('Invalid email address').required('Email should be filled'),
                         password: Yup.string().nullable().min(3, 'The pasword should be longer than 3').max(40, `The pasword shouldn't be longer than 40`),
-                        image: Yup.string().nullable().url(/* matches(regMatch ||  */ "Website should be a valid URL")
+                        image: Yup.string().nullable().url("Website should be a valid URL")
                     })}
                     onSubmit={(values) => {
                         const userData = {
@@ -77,17 +77,18 @@ export const EditProfile = () => {
                                         type="string"
                                         name="username" />
                                     <ErrorMessage className={styles.error} name="username" component="p" />
-                                    {(error?.username && <div className={styles.inputError}>{error?.username}</div>)}
+                                    {(error?.username && <div className={styles.error}>{error?.username}</div>)}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}>Email address</span>
                                     <Input
+                                        onChange={() => { error?.email && delete error.email }}
                                         placeholder='Email address'
-                                        className={(formik.errors.email && formik.touched.email) || error?.userEmail ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
+                                        className={(formik.errors.email && formik.touched.email) || error?.email ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
                                         type="email"
                                         name="email" />
                                     <ErrorMessage className={styles.error} name="email" component="div" />
-                                    {(error?.email && <div className={styles.inputError}>{error?.email}</div>)}
+                                    {(error?.email && <div className={styles.error}>{error?.email}</div>)}
                                 </div>
                                 <div className={styles.input_block}>
                                     <span className={styles.label_elem}> New password </span>
@@ -97,7 +98,7 @@ export const EditProfile = () => {
                                         type="password"
                                         name="password" />
                                     <ErrorMessage className={styles.error} name="password" component="div" />
-                                    {(error?.password && <div className={styles.inputError}>{error?.password}</div>)}
+                                    {(error?.password && <div className={styles.error}>{error?.password}</div>)}
 
                                 </div>
                                 <div className={styles.input_block}>
@@ -108,7 +109,7 @@ export const EditProfile = () => {
                                         type="text"
                                         name="image" />
                                     <ErrorMessage className={styles.error} name="image" component="div" />
-                                    {(error?.image && <div className={styles.inputError}>{error?.image}</div>)}
+                                    {(error?.image && <div className={styles.error}>{error?.image}</div>)}
                                 </div>
                                 <div className={styles.button_block}>
                                     <button className={styles.button} type="submit">

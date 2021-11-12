@@ -113,6 +113,9 @@ margin-bottom: 12px;
     margin-bottom: 2px;
 }
 .input_elem {
+    .ant-input {
+        
+    }
     position: relative;
     height: 40px;
     width: 320px;
@@ -216,6 +219,9 @@ margin-right:8px;
     min-height: 24px;
 }
 .errorInput{
-    color: #F5222D !important;
-    border: 1px solid red !important;
+    color: #F5222D /* !important */;
+    border: 1px solid red /* !important */;
+    :hover {
+        border: 1px solid red !important;
+    }
 }

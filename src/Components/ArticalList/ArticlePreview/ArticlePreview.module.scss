@@ -121,13 +121,14 @@
     height: 46px;
     border-radius: 50%;
 }
-.leftPart__description {
+.description {
     margin-top: 4px;
     @include fontRules ($fontFamInter, normal, normal, 12px, 22px);
     width: auto;
     height: 45px;
     color: rgba(0, 0, 0, 0.75);
     overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 .successBlock__text {   
     position: relative;

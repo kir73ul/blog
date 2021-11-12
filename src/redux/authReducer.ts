@@ -2,6 +2,7 @@ import { saveToken, usersAPI, loginAPI, removeToken } from '../API/API';
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
 import { setFetching } from './commonReducer';
+import { getErrorInormation } from '../Components/Common/helper';
 
 const AUTH_USER = 'AUTH_USER';
 const GET_ERROR = 'GET_ERROR';
@@ -155,6 +156,8 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
         dispatch(cleanError())
         dispatch(setFetching(true))
         const response = await loginAPI.updateUserData(updateDataJSON);
+        console.log(response);
+
         dispatch(setFetching(false))
         if (response.status === 200) {
             getUserInfo()
@@ -165,13 +168,11 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
                 dispatch(setSuccses(false))
             }, 4000)
         } else if (response.status !== 200) {
-            console.log({ [response.status]: [response.data] });
             console.log(response.data.errors);
-
-
             response.data.errors ? dispatch(getError(response.data.errors, 'updateError'))
                 :
-                dispatch(getError({ [response.status]: [response.data] }, 'updateError'))
+                dispatch(getError({ [getErrorInormation(response.data)]: [response.data] }, 'updateError'))
+            console.log({ [getErrorInormation(response.data)]: [response.data] });
         }
     }
     catch (err: any) {

@@ -1,3 +1,4 @@
+import { indexOf } from 'lodash';
 import { ArticalError } from './../../redux/newArticleReducer';
 export const convertDate = (inboxDate: string) => {
     const months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'Oktomber', 'November', 'December']
@@ -22,15 +23,9 @@ export const getDifferenceValue = (obj1: objType, obj2: objType) => {
     return result
 }
 export const hasErrorOnInput = (error: ArticalError | null | undefined, value: string) => {
-    console.log(value);
-    console.log(error ? Object.keys(error) : null);
-
     return (error && Object.keys(error).find(elem => elem.includes(value)))
 }
-
 export const getErrorInfo = (error: ArticalError | null | undefined, value: string) => {
-    console.log(error);
-
     for (let key in error) {
         if (key.includes(value)) {
             return error[key]
@@ -38,3 +33,7 @@ export const getErrorInfo = (error: ArticalError | null | undefined, value: stri
     }
     return
 }
+export const getErrorInormation = (data: string) => {
+    return data.slice(data.indexOf('`') + 1, data.lastIndexOf('`'))
+}
+

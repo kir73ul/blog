@@ -1,17 +1,16 @@
-import styles from './../NewArticale.module.scss';
-import { Formik, ErrorMessage } from 'formik';
-import { Form, Input } from 'formik-antd';
-import * as Yup from 'yup';
-import { Button } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import { createOrEditArticle, setCurrentPage } from '../../../redux/articalesReducer';
-import { AppStateType } from '../../../redux/rootReducer';
-import { useHistory } from 'react-router';
-import { ErrorBlock } from '../../ErroProcessing/ErrorBlock';
-import { cooky } from '../../../API/API';
-import { getErrorInfo, hasErrorOnInput } from '../../Common/helper';
-import { getError } from '../../../redux/newArticleReducer';
+import styles from './../NewArticale.module.scss'
+import { Formik, ErrorMessage } from 'formik'
+import { Form, Input } from 'formik-antd'
+import * as Yup from 'yup'
+import { Button } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { createOrEditArticle, setCurrentPage } from '../../../redux/articalesReducer'
+import { AppStateType } from '../../../redux/rootReducer'
+import { useHistory } from 'react-router'
+import { ErrorBlock } from '../../ErroProcessing/ErrorBlock'
+import { cooky } from '../../../API/API'
+import { getError } from '../../../redux/newArticleReducer'
 
 export const NewArticale = () => {
     const dispatch = useDispatch()
