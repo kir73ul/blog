@@ -2,14 +2,16 @@ import { saveToken, usersAPI, loginAPI, removeToken } from '../API/API';
 import { AppDispatch, AppStateType } from "./rootReducer";
 import { ThunkAction } from 'redux-thunk';
 import { setFetching } from './commonReducer';
-import { getErrorInormation } from '../Components/Common/helper';
-
+/* import { getErrorInormation } from '../Components/Common/helper';
+ */
 const AUTH_USER = 'AUTH_USER';
 const GET_ERROR = 'GET_ERROR';
 const GET_USERS_DATA = 'GET_USERS_DATA';
 const CLEAN_ERROR = 'CLEAN_ERROR';
 const LOG_OUT = 'LOG_OUT';
 const SET_SUCCESS = 'SET_SUCCESS';
+const emailErr = 'Unique constraint failed on the fields: (`email`)'
+const usernameErr = 'Unique constraint failed on the fields: (`username`)'
 
 export interface errorsType {
     [key: string]: string[];
@@ -41,7 +43,6 @@ interface authReducerType {
     isSuccess: boolean;
     users: usersType;
     allErrors: allErrorsType | null;
-
 }
 
 const initialState = {
@@ -114,7 +115,7 @@ export const getUserInfo = (): ThunkAction<void, AppStateType, unknown, AuthActi
         dispatch(setUserAuth())
         dispatch(setUsersData(response.data.user))
     } else if (response.status !== 200) {
-        throw new Error(response.data.errors)
+        throw new Error(`Something went wrong. Please try again`)
     }
 }
 
@@ -128,9 +129,8 @@ export const getMeAuth = (loginData: string): ThunkAction<void, AppStateType, un
         saveToken(getState().auth.users.token)
         dispatch(setUserAuth())
     } else if (response.data.errors) {
-        dispatch(setFetching(false))
-        dispatch(getError(response.data.errors, 'signIn'))
-    }
+        return dispatch(getError(response.data.errors, 'signIn'))
+    } else throw new Error(`Something went wrong. Please try again`)
 }
 export const getRegistration = (redisterData: string): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(cleanError())
@@ -146,9 +146,8 @@ export const getRegistration = (redisterData: string): ThunkAction<void, AppStat
             dispatch(setSuccses(false))
         }, 4000)
     } else if (response.status !== 200) {
-        dispatch(setFetching(false))
         dispatch(getError(response.data.errors, 'signUp'))
-    }
+    } else throw new Error(`Something went wrong. Please try again`)
 }
 export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppStateType, unknown, AuthActionType> => async (dispatch: AppDispatch, getState) => {
     try {
@@ -156,8 +155,6 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
         dispatch(cleanError())
         dispatch(setFetching(true))
         const response = await loginAPI.updateUserData(updateDataJSON);
-        console.log(response);
-
         dispatch(setFetching(false))
         if (response.status === 200) {
             getUserInfo()
@@ -167,17 +164,19 @@ export const updateUserInfo = (updateData: userDataType): ThunkAction<void, AppS
             setTimeout(() => {
                 dispatch(setSuccses(false))
             }, 4000)
-        } else if (response.status !== 200) {
-            console.log(response.data.errors);
-            response.data.errors ? dispatch(getError(response.data.errors, 'updateError'))
-                :
-                dispatch(getError({ [getErrorInormation(response.data)]: [response.data] }, 'updateError'))
-            console.log({ [getErrorInormation(response.data)]: [response.data] });
+        } if (response.data.errors) {
+            dispatch(getError(response.data.errors, 'updateError'))
+        } else if (response.status === 500) {
+            if (response.data === emailErr) {
+                dispatch(getError({ email: ['This email had been already token. Take another'] }, 'updateError'))
+            }
+            if (response.data === usernameErr) {
+                dispatch(getError({ username: ['This username already had been used. Choose another'] }, 'updateError'))
+            }
         }
     }
     catch (err: any) {
-        console.log(err);
-        dispatch(getError({ [err.name]: [err.message] }, 'updateError'))
+        throw new Error(`Something went wrong. Please try again`)
     }
 
 }

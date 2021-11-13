@@ -89,7 +89,7 @@ export const SignUp = () => {
                                     <Input
                                         onChange={(event) => setlocalRepeatPassword(event.target.value)}
                                         placeholder='Password'
-                                        className={(formik.errors.repeatPassword && formik.touched.repeatPassword) ? styles.errorInput : styles.input_elem}
+                                        className={(formik.errors.repeatPassword && formik.touched.repeatPassword) ? `${styles.errorInput} ${styles.input_elem}` : styles.input_elem}
                                         type="password"
                                         name="repeatPassword" />
                                     <ErrorMessage

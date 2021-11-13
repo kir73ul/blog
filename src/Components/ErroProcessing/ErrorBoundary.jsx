@@ -1,4 +1,6 @@
 import React from 'react'
+import styles from './Error.module.scss'
+
 
 export class ErrorBoundary extends React.Component {
     state = { hasError: false };
@@ -8,8 +10,8 @@ export class ErrorBoundary extends React.Component {
     render() {
         if (this.state.hasError) {
             return (
-                <div>
-                    <h1>Oops, we done goofed up</h1>
+                <div className={styles.errBoundary}>
+                    <h1>Something went wrong. Please try again</h1>
                     <button type="button" onClick={() => this.setState({ hasError: false })}>
                         Try again?
                     </button>

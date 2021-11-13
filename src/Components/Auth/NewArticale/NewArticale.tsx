@@ -4,8 +4,8 @@ import { Form, Input } from 'formik-antd'
 import * as Yup from 'yup'
 import { Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
-import { createOrEditArticle, setCurrentPage } from '../../../redux/articalesReducer'
+import { useEffect, useState } from 'react'
+import { createOrEditArticle, getSingleArticle, setCurrentPage } from '../../../redux/articalesReducer'
 import { AppStateType } from '../../../redux/rootReducer'
 import { useHistory } from 'react-router'
 import { ErrorBlock } from '../../ErroProcessing/ErrorBlock'
@@ -15,9 +15,18 @@ import { getError } from '../../../redux/newArticleReducer'
 export const NewArticale = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const isEditingArticle = history.location.pathname.includes('edit')
-    const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
+    const currPath = history.location.pathname
+    const isEditingArticle = currPath.includes('edit')
+    const slugAfterReset = currPath.slice(currPath.indexOf('/articles/') + 10, currPath.lastIndexOf('/'))
+
+    useEffect(() => {
+        if (isEditingArticle && !Boolean(articleData)) {
+            dispatch(getSingleArticle(slugAfterReset))
+        }
+    }, [])
+
     const articleData = useSelector((state: AppStateType) => state.articles.currentArticle)
+    const isSuccess = useSelector((state: AppStateType) => state.newArtical.isSuccess)
     const errorArticle = useSelector((state: AppStateType) => state.newArtical.errorArtical)
     const currentSlug = useSelector((state: AppStateType) => state.articles.currentSlug)
     const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
@@ -26,6 +35,7 @@ export const NewArticale = () => {
     const text = (articleData && isEditingArticle) ? articleData.body : ''
     const tags: string[] = (articleData && isEditingArticle) ? articleData.tagList : []
     let slug: string = (articleData && isEditingArticle) ? articleData.slug : ''
+    console.log(articleData, isEditingArticle);
 
     const [localTag, SetLocalTag] = useState<string>('')
     const [tagError, SetTagError] = useState<null | string>(null)
@@ -41,12 +51,20 @@ export const NewArticale = () => {
         dispatch(setCurrentPage(1))
         history.push('/')
     }
+/*     let initialValues = {
+        title: localTitle,
+        shortDescription: localShortDescription,
+        text: localText,
+        tags: arrayOfTags
+    } */
     let initialValues = {
         title: localTitle,
         shortDescription: localShortDescription,
         text: localText,
         tags: arrayOfTags
     }
+    console.log(initialValues);
+
     if (!cooky && !isAuth) {
         history.push('/sign-in')
     }
@@ -70,10 +88,10 @@ export const NewArticale = () => {
                     initialValues={initialValues}
                     enableReinitialize
                     validationSchema={Yup.object({
-                        title: Yup.string().required('The title should be filled'),
-                        shortDescription: Yup.string().required('The description should be filled'),
-                        text: Yup.string().required('The text should be filled'),
-                        tags: Yup.array().of(Yup.string().min(1, `It shouldn't be empty`)),
+                        title: Yup.string().required('The title should be filled').max(100, 'It`s too large title'),
+                        shortDescription: Yup.string().required('The description should be filled').max(200, 'It`s too large title'),
+                        text: Yup.string().required('The text should be filled').max(20000, 'It`s too large article'),
+                        tags: Yup.array().of(Yup.string().min(1, `It shouldn't be empty`).max(30, 'It`s too large tag')),
                     })}
                     onSubmit={(values) => {
                         const articleDataJSON = JSON.stringify({
@@ -125,7 +143,7 @@ export const NewArticale = () => {
                                 <span className={styles.inputLabel}> Tags </span>
                                 {formik.values.tags.map((tag, idx) => {
                                     return (
-                                        <div key={tag} className={styles.singleTag} >
+                                        <div key={tag} className={`${styles.singleTag} ${styles.derection}`} >
                                             <Input
                                                 disabled={true}
                                                 className={styles.singleTagInput}
@@ -136,37 +154,35 @@ export const NewArticale = () => {
                                                 onClick={() => { setArrayOfTags(removeTag(arrayOfTags, idx)) }}
                                                 className={styles.singleTagBtn}
                                                 type="primary"> Delete</Button>
-                                            <ErrorMessage
-                                                className={styles.inputError}
-                                                name='tag'
-                                                component="div" />
                                         </div>
                                     )
                                 })}
                                 <div className={styles.singleTag}>
-                                    <Input
-                                        onChange={(event) => SetLocalTag(event.target.value)}
-                                        placeholder='Tag'
-                                        className={(formik.errors.tags && formik.touched.tags) ? `${styles.inputElem_error} ${styles.singleTagInput}` : styles.singleTagInput}
-                                        type="text"
-                                        name='tag'
-                                        value={localTag} />
-                                    <Button
-                                        onClick={() => { SetLocalTag('') }}
-                                        className={styles.singleTagBtn}
-                                        type="primary"> Delete</Button>
-                                    <Button
-                                        onClick={() => {
-                                            if (localTag) {
-                                                SetTagError(null);
-                                                setArrayOfTags([...arrayOfTags, localTag])
-                                                SetLocalTag('')
-                                            } else if (!localTag) {
-                                                SetTagError('If you`d like to add tag, the tag field shouldn`t be empty')
-                                            }
-                                        }}
-                                        className={styles.singleTagAddBtn}
-                                        type="primary" > Add tag</Button>
+                                    <div className={styles.derection}>
+                                        <Input
+                                            onChange={(event) => SetLocalTag(event.target.value)}
+                                            placeholder='Tag'
+                                            className={(formik.errors.tags && formik.touched.tags) ? `${styles.inputElem_error} ${styles.singleTagInput}` : styles.singleTagInput}
+                                            type="text"
+                                            name='tag'
+                                            value={localTag} />
+                                        <Button
+                                            onClick={() => { SetLocalTag(''); SetTagError(null) }}
+                                            className={styles.singleTagBtn}
+                                            type="primary"> Delete</Button>
+                                        <Button
+                                            onClick={() => {
+                                                if (localTag) {
+                                                    SetTagError(null);
+                                                    setArrayOfTags([...arrayOfTags, localTag])
+                                                    SetLocalTag('')
+                                                } else if (!localTag) {
+                                                    SetTagError('If you`d like to add tag, the tag field shouldn`t be empty')
+                                                }
+                                            }}
+                                            className={styles.singleTagAddBtn}
+                                            type="primary" > Add tag</Button>
+                                    </div>
                                     <ErrorMessage
                                         className={styles.inputError}
                                         name='tag'

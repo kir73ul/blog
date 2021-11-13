@@ -1,39 +1,59 @@
 @import './../../Variables.scss';
-
-
+* {
+    box-sizing: border-box;
+}
+@media (max-width: 941px) {
+    .header {
+        font-size: calc(12px + (18 - 12) * ((100vw - $minScreenWidth) /(941px - $minScreenWidth)));
+    }
+    .createArticleBtn {
+        width: calc(75px + (112.23 -75) * ((100vw - $minScreenWidth) /(941px - $minScreenWidth)));
+    }
+    .title {
+        width: calc(75px + (147 -75) * ((100vw - $minScreenWidth) /(941px - $minScreenWidth)));
+    }
+    .logOutBtn {
+        width: calc(80px + (109 -80) * ((100vw - $minScreenWidth) /(941px - $minScreenWidth)));
+    }
+}
 body,h1,p,div,button,input,span
 {
     margin: 0;
 }
-
-
 .header {
-    @include fontInter();
+    @include fontRules();
     display: flex;
     justify-content: space-between;
     width: 100vw;
-    min-width: 400px;
+    min-width: 520px;
     height: 80px;
     top: 0px;
     background: $backgroundCol;
+    box-sizing: border-box;
 }
-.header__title {
-    @include fontInter ();
-    display: flex; 
-    align-items: center;
-    margin: 9px 22px 15px 22px;
+.title {
+/*     @include fontRules ();
+ */    display: flex;
+    align-items: center; 
+    text-align: center; 
+    justify-items: center;
+    width: 147px;
+    height: 58px;
+    padding: 10px;
+    margin: 9px 22px;
     color: $fontColorBlack;
+    box-sizing: border-box;
     &:hover {
-        padding: 10px;
         border: 1px solid $btnColorGreen;
         color: $btnColorGreen;
         text-align: center; 
         border-radius: 4px;
+        box-sizing: border-box;
     }
 }
-.header__signInBtn {
-    @include fontInter ();
-    display: flex;
+.signInBtn {
+/*     @include fontRules ();
+ */    display: flex;
     text-align: center;
     margin-right: 19px;
     color: $fontColorBlack; 
@@ -47,9 +67,8 @@ body,h1,p,div,button,input,span
         color: $btnColorBlue;
     }
 }
-
-.header__signUpBtn {
-    @include fontInter ();
+.signUpBtn {
+    @include fontRules ();
     display: flex;
     text-align: center;
     width: 109px;
@@ -60,24 +79,28 @@ body,h1,p,div,button,input,span
     border: 1px solid $btnColorGreen;
     background-color: $backgroundCol; 
 }
-.header__btnPanel{
+.btnPanel {
     display: flex;
     align-items: center;
     width:auto;
     height: 80px;
     margin-right: 22px;
 }
-.header__createArticleBtn {
-    width: 112.23px;
+.createArticleBtn {
+    /* display: flex; */
+/*     width: 100%;
+ */    width: 112.23px;
+    /* min-width: 75px; */
     height: 31.1px;
     margin-right: 27px;
     color: $btnColorGreen;
     border: 1px solid $btnColorGreen;
-    box-sizing: border-box;
     border-radius: 5px;
     background-color: $backgroundCol;
+    text-align: center;
+    flex-wrap: wrap;
 }
-.header__userInfo {
+.userInfo {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -85,23 +108,26 @@ body,h1,p,div,button,input,span
         color: rgba(167, 159, 159, 0.521);
     }
 }
-.header__userName {
-    @include fontInter ();
+.userName {
+    @include fontRules ();
     height: 28px;
     min-width: 10px;
     margin-right: 12px;
     display: flex;
     color: $fontColorBlack;
+    flex-wrap: wrap;
 }
-.header__userAva {
+.userAva {
     width: 46px;
     height: 46px;
     margin-right: 27px;
     border-radius: 50%;
 }
-.header__logOutBtn {
-    width: 109px;
-    height: 51px;
+.logOutBtn {
+/*     width:100%;
+ */    width: 109px;
+/*     min-width: 80px;
+ */    height: 51px;
     border: 1px solid $fontColorBlack;
     box-sizing: border-box;
     border-radius: 5px;

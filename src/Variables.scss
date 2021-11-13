@@ -2,16 +2,13 @@ $btnColorGreen:#52C41A;
 $btnColorRed:#F5222D; 
 $btnColorBlue:#1890ff; 
 $backgroundCol : #FFFFFF;
+
 $fontColorBlack : rgba(0, 0, 0, 0.85);
+
 $fontFamInter : Inter serif;
 $fontFamRoboto : Roboto serif;
 
-%resetStyle {
-  body,h1,p,div,button,input,span
-{
-    margin: 0;
-}
-}
+$minScreenWidth: 520px;
 
 @mixin fontRules ($fontFamily: $fontFamInter, $fontSt: normal, $fontW : normal, $fontS : 18px, $lineH: 28px) {
         font-family: $fontFamily;

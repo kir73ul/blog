@@ -1,3 +1,5 @@
+@import './../../Variables.scss';
+
 body,
 h1,
 p, 
@@ -13,18 +15,19 @@ span
   justify-content: space-between;
   flex-direction: column;
   max-height: calc(100vh - 80px);
+  min-width: $minScreenWidth;
 }
-.articleWrap__body {
+.body {
   display: flex;
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+  min-width: $minScreenWidth;
 }
-.articleWrap__pagination {
+.pagination {
   margin: 0 auto;
   margin-top: 20px;
   display: flex;
-  flex-direction: row !important;
   width: 250px;
   height: 24px;
 }

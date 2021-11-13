@@ -148,24 +148,24 @@ export const createOrEditArticle = (articleData: any, slug: string, isEditingArt
                 dispatch(setOnlyCreated(null))
             }, 10000)
         }
-    }
-    else if (response.status !== 200) {
-        response.response.data.errors ? dispatch(getError(response.response.data.errors)) : dispatch(getError({ [response.status]: [response.data] }))
-    }
+    } else if (response.response.data.errors) {
+        return dispatch(getError(response.response.data.errors))
+    } else if (response.status === 500) {
+        return dispatch(getError({ [response.status]: [response.data] }))
+    } else throw new Error()
 }
 
 export const getArticles = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
     dispatch(setFetching(true))
     const response = await articleAPI.getArticles(currentPage, pageSize)
+    dispatch(setFetching(false))
     if (response.status === 200) {
         dispatch(getTotalArticles(response.data.articlesCount))
         dispatch(setCurrentPage(currentPage))
         dispatch(setArticles(response.data.articles))
     } else if (response.status !== 200) {
-        console.log(response.data.errors);
+        throw new Error(`Something went wrong. Please try again`)
     }
-    dispatch(setFetching(false))
-
 }
 
 export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, unknown, newArticalActionType> => async (dispatch: AppDispatch, getState) => {
@@ -176,7 +176,7 @@ export const getSingleArticle = (slug: string): ThunkAction<void, AppStateType, 
         dispatch(setCurrentSlug(response.data.article.slug))
         dispatch(setCurrentArticle(response.data.article))
     } else if (response.status !== 200) {
-        console.log(response.data.errors);
+        throw new Error(`Something went wrong. Please try again`)
     }
 }
 
@@ -188,12 +188,12 @@ export const makeFavoriteUnfavorite = (slug: string, favorite: boolean, isSingle
         dispatch(setLikePushed(false))
         if (response.status === 200 || response.status === 204) {
             isSingleArticlePage ? dispatch(setCurrentArticle(response.data.article)) : dispatch(setFavoriteUnfavorite(response.data.article, slug))
-        } else if (!!response?.data?.errors) {
-            console.log(response.data.errors)
+        } else if (response.data.errors) {
+            throw new Error(`Something went wrong. Please try again`)
         }
     }
     catch (error) {
-        throw error
+        throw new Error(`Something went wrong. Please try again`)
     }
 }
 
@@ -205,6 +205,6 @@ export const removeArticle = (slug: string): ThunkAction<void, AppStateType, unk
             dispatch(setIsRemoveSuccess(false))
         }, 3000)
     } else if (response.status !== 200) {
-        console.log(response.data.errors)
+        throw new Error(`Something went wrong. Please try again`)
     }
 }

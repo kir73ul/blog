@@ -274,6 +274,10 @@ span {
 }
 
 .errorInput {
-  color: #F5222D !important;
+  color: #F5222D;
+  border: 1px solid red;
+}
+
+.errorInput :hover {
   border: 1px solid red !important;
 }

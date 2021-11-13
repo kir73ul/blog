@@ -22,9 +22,9 @@ export const Artical = () => {
             <>
                 <div className={styles.singleArticle}>
                     <ArticlePreview {...currentArticle} />
-                    <div className={styles.singleArticle__text}>
+                    <div className={styles.textBlock}>
                         <ReactMarkdown
-                            className={styles.singleArticle__text__body}
+                            className={styles.articleText}
                             children={currentArticle.body} />
                     </div>
                 </div>

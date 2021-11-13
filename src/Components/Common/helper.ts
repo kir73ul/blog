@@ -1,5 +1,6 @@
 import { indexOf } from 'lodash';
 import { ArticalError } from './../../redux/newArticleReducer';
+
 export const convertDate = (inboxDate: string) => {
     const months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'Oktomber', 'November', 'December']
     const createDate = new Date(inboxDate)
@@ -33,7 +34,15 @@ export const getErrorInfo = (error: ArticalError | null | undefined, value: stri
     }
     return
 }
-export const getErrorInormation = (data: string) => {
-    return data.slice(data.indexOf('`') + 1, data.lastIndexOf('`'))
-}
+/* export const getErrorInormation = (data: string) => {
+    const errorValues = {
+        username: 'Unique constraint failed on the fields: (`username`)',
+        email: 'Unique constraint failed on the fields: (`email`)'
+    }
+    for (let key in errorValues) {
+        if (key.includes(data)) {
+            return errorValues[key]
+        }
+    }
+} */
 

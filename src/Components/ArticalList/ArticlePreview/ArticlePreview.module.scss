@@ -1,6 +1,5 @@
 @import './../../../Variables.scss';
-/* @import "../../../../node_modules/antd/lib/modal/style/modal.less";
- */
+
 .wrapBlock {
     display: flex;
     width: 100%;
@@ -8,6 +7,8 @@
     height: 140px; 
     margin:0 auto;
     margin-top: 26px;
+    padding: 5px;
+    box-sizing: border-box;
     filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
 }
 .wrapBlock_border {
@@ -210,22 +211,23 @@
         border-radius: 50%;
     }  
 }
-.singleArticle__text {
+.textBlock {
     display: flex;
     width: 880px;
     height: 630px;
     margin: 25px 19px 30px 42px;
     color: rgba(0, 0, 0, 0.75);
-    overflow-wrap: break-word;
-    word-wrap: break-word; 
     }
-.singleArticle__text__body {
+.articleText {
     display: flex;
     width: 880px;
     height: 630px;
     left: 16px;
     @include fontRules ($fontFamInter, normal, normal, 20px, 28px);
     color: rgba(0, 0, 0, 0.75);
+    overflow-wrap: break-word;
+    word-wrap: break-word; 
+    overflow-y: auto;
     }
 .successBlock{
     display: flex;

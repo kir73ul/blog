@@ -1,3 +1,23 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+@media (max-width: 941px) {
+  .header {
+    font-size: calc(12px + (18 - 12) * ((100vw - $minScreenWidth) /(941px - $minScreenWidth)));
+  }
+  .createArticleBtn {
+    width: calc(75px + (112.23 -75) * ((100vw - $minScreenWidth) /(941px - $minScreenWidth)));
+  }
+  .title {
+    width: calc(75px + (147 -75) * ((100vw - $minScreenWidth) /(941px - $minScreenWidth)));
+  }
+  .logOutBtn {
+    width: calc(80px + (109 -80) * ((100vw - $minScreenWidth) /(941px - $minScreenWidth)));
+  }
+}
+
 body, h1, p, div, button, input, span {
   margin: 0;
 }
@@ -15,42 +35,46 @@ body, h1, p, div, button, input, span {
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 100vw;
-  min-width: 400px;
+  min-width: 520px;
   height: 80px;
   top: 0px;
   background: #FFFFFF;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-.header__title {
-  font-family: Inter serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 28px;
+.title {
+  /*     @include fontRules ();
+ */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 9px 22px 15px 22px;
+  text-align: center;
+  justify-items: center;
+  width: 147px;
+  height: 58px;
+  padding: 10px;
+  margin: 9px 22px;
   color: rgba(0, 0, 0, 0.85);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-.header__title:hover {
-  padding: 10px;
+.title:hover {
   border: 1px solid #52C41A;
   color: #52C41A;
   text-align: center;
   border-radius: 4px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-.header__signInBtn {
-  font-family: Inter serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 28px;
+.signInBtn {
+  /*     @include fontRules ();
+ */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -63,13 +87,13 @@ body, h1, p, div, button, input, span {
   padding-left: 5px;
 }
 
-.header__signInBtn:hover {
+.signInBtn:hover {
   border: 1px solid #1890ff;
   border-radius: 4px;
   color: #1890ff;
 }
 
-.header__signUpBtn {
+.signUpBtn {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -88,7 +112,7 @@ body, h1, p, div, button, input, span {
   background-color: #FFFFFF;
 }
 
-.header__btnPanel {
+.btnPanel {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -100,19 +124,24 @@ body, h1, p, div, button, input, span {
   margin-right: 22px;
 }
 
-.header__createArticleBtn {
+.createArticleBtn {
+  /* display: flex; */
+  /*     width: 100%;
+ */
   width: 112.23px;
+  /* min-width: 75px; */
   height: 31.1px;
   margin-right: 27px;
   color: #52C41A;
   border: 1px solid #52C41A;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   border-radius: 5px;
   background-color: #FFFFFF;
+  text-align: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
-.header__userInfo {
+.userInfo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -122,11 +151,11 @@ body, h1, p, div, button, input, span {
   cursor: pointer;
 }
 
-.header__userInfo:hover {
+.userInfo:hover {
   color: rgba(167, 159, 159, 0.521);
 }
 
-.header__userName {
+.userName {
   font-family: Inter serif;
   font-style: normal;
   font-weight: normal;
@@ -139,17 +168,23 @@ body, h1, p, div, button, input, span {
   display: -ms-flexbox;
   display: flex;
   color: rgba(0, 0, 0, 0.85);
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
-.header__userAva {
+.userAva {
   width: 46px;
   height: 46px;
   margin-right: 27px;
   border-radius: 50%;
 }
 
-.header__logOutBtn {
+.logOutBtn {
+  /*     width:100%;
+ */
   width: 109px;
+  /*     min-width: 80px;
+ */
   height: 51px;
   border: 1px solid rgba(0, 0, 0, 0.85);
   -webkit-box-sizing: border-box;

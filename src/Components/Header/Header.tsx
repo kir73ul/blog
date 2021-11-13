@@ -1,13 +1,13 @@
-import styles from './Header.module.css';
-import { Button } from "antd";
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppStateType } from '../../redux/rootReducer';
-import { getUserInfo, logout } from '../../redux/authReducer';
+import styles from './Header.module.scss'
+import { Button } from "antd"
+import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppStateType } from '../../redux/rootReducer'
+import { getUserInfo, logout } from '../../redux/authReducer'
 import imgUrl from '../../assets/image/userAva.png'
-import { useEffect } from 'react';
-import { cookies } from '../../API/API';
-import { setCurrentPage } from '../../redux/articalesReducer';
+import { useEffect } from 'react'
+import { cookies } from '../../API/API'
+import { setCurrentPage } from '../../redux/articalesReducer'
 
 export const Header = () => {
     const userData = useSelector((state: AppStateType) => state.auth.users)
@@ -43,34 +43,37 @@ export const Header = () => {
     }
     return (
         <div className={styles.header}>
-            <div onClick={() => { redirectToMainPage() }} className={styles.header__title}>Realworld Blog</div>
+            <div
+                onClick={() => { redirectToMainPage() }}
+                className={styles.title}>Realworld Blog
+            </div>
             {isCooky ?
-                <div className={styles.header__btnPanel}>
+                <div className={styles.btnPanel}>
                     <Button
                         onClick={() => redirectToCreateArticle()}
-                        className={styles.header__createArticleBtn}
+                        className={styles.createArticleBtn}
                     >
                         Create article
                     </Button>
                     <div
                         onClick={() => redirectToEditProfile()}
-                        className={styles.header__userInfo}
+                        className={styles.userInfo}
                     >
-                        <p className={styles.header__userName}>{userName}</p>
-                        <img src={avaImg} className={styles.header__userAva} alt=''></img>
+                        <p className={styles.userName}>{userName}</p>
+                        <img src={avaImg} className={styles.userAva} alt=''></img>
                     </div>
                     <Button
                         onClick={() => dispatch(logout())}
-                        className={styles.header__logOutBtn}>Log out</Button>
+                        className={styles.logOutBtn}>Log out</Button>
                 </div>
                 :
-                <div className={styles.header__btnPanel}>
+                <div className={styles.btnPanel}>
                     <Button
                         onClick={() => { redirectToSignIn(); }}
-                        className={styles.header__signInBtn}>Sign in</Button>
+                        className={styles.signInBtn}>Sign in</Button>
                     <Button
                         onClick={() => redirectToSignUp()}
-                        className={styles.header__signUpBtn}>Sign up</Button>
+                        className={styles.signUpBtn}>Sign up</Button>
                 </div>
             }
         </div>

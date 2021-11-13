@@ -20,9 +20,10 @@ span {
       -ms-flex-direction: column;
           flex-direction: column;
   max-height: calc(100vh - 80px);
+  min-width: 520px;
 }
 
-.articleWrap__body {
+.body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -32,18 +33,15 @@ span {
           flex-direction: column;
   width: 100vw;
   height: 100vh;
+  min-width: 520px;
 }
 
-.articleWrap__pagination {
+.pagination {
   margin: 0 auto;
   margin-top: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal !important;
-  -webkit-box-direction: normal !important;
-      -ms-flex-direction: row !important;
-          flex-direction: row !important;
   width: 250px;
   height: 24px;
 }
